@@ -12,7 +12,7 @@
 
 // ========== CONFIGURACIÓN ==========
 // Reemplaza con el ID de tu Google Sheet (está en la URL del sheet)
-const SPREADSHEET_ID = 'TU_SPREADSHEET_ID_AQUI';
+const SPREADSHEET_ID = '1iNF7VwBPS_Txxk7c14JSefGKFD_D-0eZPc6s8geBGkk';
 const SHEET_NAME = 'Hoja1'; // Nombre de la pestaña en la parte inferior del Sheet
 
 // Mapeo de columnas (ajustar según tu sheet, índice base 0)

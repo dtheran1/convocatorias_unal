@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Convocatorias - UNAL Sede de La Paz</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+    :root {
+      --unal-green: #4CAF50;
+      --unal-green-dark: #388E3C;
+      --unal-green-light: #C8E6C9;
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --secondary: #64748b;
+      --success: #22c55e;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --bg-primary: #f8fafc;
+      --bg-card: #ffffff;
+      --text-primary: #1e293b;
+      --text-secondary: #64748b;
+      --border: #e2e8f0;
+      --shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+      --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+      --radius: 12px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+    }
+
+    /* Header */
+    .header {
+      background: linear-gradient(135deg, var(--unal-green) 0%, var(--unal-green-dark) 100%);
+      color: white;
+      padding: 2rem 1rem;
+      text-align: center;
+    }
+
+    .header h1 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .header p {
+      opacity: 0.9;
+      font-size: 0.95rem;
+    }
+
+    /* Container */
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 1.5rem;
+    }
+
+    /* Stats Bar */
+    .stats-bar {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+    }
+
+    .stat-item {
+      background: var(--bg-card);
+      padding: 1rem 1.5rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      flex: 1;
+      min-width: 140px;
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--unal-green);
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Search and Filters */
+    .controls {
+      background: var(--bg-card);
+      padding: 1.5rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      margin-bottom: 1.5rem;
+    }
+
+    .search-box {
+      position: relative;
+      margin-bottom: 1rem;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 0.875rem 1rem 0.875rem 3rem;
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 1rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .search-box input:focus {
+      outline: none;
+      border-color: var(--unal-green);
+      box-shadow: 0 0 0 3px var(--unal-green-light);
+    }
+
+    .search-box .material-icons {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-secondary);
+    }
+
+    .filters {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      padding: 0.5rem 1rem;
+      border: 2px solid var(--border);
+      border-radius: 50px;
+      background: var(--bg-card);
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .filter-btn:hover {
+      border-color: var(--unal-green);
+      color: var(--unal-green);
+    }
+
+    .filter-btn.active {
+      background: var(--unal-green);
+      border-color: var(--unal-green);
+      color: white;
+    }
+
+    .filter-btn .material-icons {
+      font-size: 1.1rem;
+    }
+
+    /* Cards Grid */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 1.5rem;
+    }
+
+    /* Card */
+    .card {
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .card-header {
+      padding: 1.25rem 1.25rem 0;
+    }
+
+    .card-badges {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.75rem;
+    }
+
+    .badge {
+      padding: 0.25rem 0.75rem;
+      border-radius: 50px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    .badge-practica {
+      background: #dbeafe;
+      color: #1d4ed8;
+    }
+
+    .badge-pasantia {
+      background: #fef3c7;
+      color: #b45309;
+    }
+
+    .badge-presencial {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .badge-hibrida {
+      background: #f3e8ff;
+      color: #7c3aed;
+    }
+
+    .badge-interna {
+      background: #e0e7ff;
+      color: #4338ca;
+    }
+
+    .badge-externa {
+      background: #fce7f3;
+      color: #be185d;
+    }
+
+    .badge-activa {
+      background: var(--success);
+      color: white;
+    }
+
+    .badge-cerrada {
+      background: var(--danger);
+      color: white;
+    }
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+      line-height: 1.4;
+    }
+
+    .card-body {
+      padding: 0 1.25rem;
+      flex: 1;
+    }
+
+    .card-info {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      margin-bottom: 0.75rem;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+
+    .card-info .material-icons {
+      font-size: 1.1rem;
+      color: var(--unal-green);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .card-description {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+      line-height: 1.5;
+    }
+
+    .card-description.collapsed {
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .btn-ver-mas {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      background: var(--bg-primary);
+      border: 1px solid var(--border);
+      color: var(--primary);
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      margin-bottom: 1rem;
+      transition: all 0.2s;
+    }
+
+    .btn-ver-mas:hover {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    .btn-ver-mas .material-icons {
+      font-size: 1rem;
+    }
+
+    .competencias {
+      background: var(--bg-primary);
+      padding: 0.75rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+    }
+
+    .competencias-title {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .competencias-text {
+      font-size: 0.8rem;
+      color: var(--text-primary);
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .card-footer {
+      padding: 1rem 1.25rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: auto;
+    }
+
+    .cupos {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .cupos .material-icons {
+      color: var(--unal-green);
+    }
+
+    .btn-contactar {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.625rem 1.25rem;
+      background: var(--unal-green);
+      color: white;
+      border: none;
+      border-radius: 50px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .btn-contactar:hover {
+      background: var(--unal-green-dark);
+    }
+
+    .btn-contactar .material-icons {
+      font-size: 1.1rem;
+    }
+
+    /* Empty State */
+    .empty-state {
+      text-align: center;
+      padding: 4rem 2rem;
+      color: var(--text-secondary);
+    }
+
+    .empty-state .material-icons {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      opacity: 0.5;
+    }
+
+    .empty-state h3 {
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+
+    /* Loading */
+    .loading {
+      text-align: center;
+      padding: 4rem 2rem;
+    }
+
+    .spinner {
+      width: 48px;
+      height: 48px;
+      border: 4px solid var(--border);
+      border-top-color: var(--unal-green);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 1rem;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Error */
+    .error-state {
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      text-align: center;
+      color: #991b1b;
+    }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 1rem;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s, visibility 0.3s;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal {
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      max-width: 600px;
+      width: 100%;
+      max-height: 80vh;
+      overflow-y: auto;
+      transform: translateY(20px);
+      transition: transform 0.3s;
+    }
+
+    .modal-overlay.active .modal {
+      transform: translateY(0);
+    }
+
+    .modal-header {
+      padding: 1.5rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .modal-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--text-secondary);
+      padding: 0.25rem;
+    }
+
+    .modal-close:hover {
+      color: var(--text-primary);
+    }
+
+    .modal-body {
+      padding: 1.5rem;
+    }
+
+    .modal-section {
+      margin-bottom: 1.5rem;
+    }
+
+    .modal-section:last-child {
+      margin-bottom: 0;
+    }
+
+    .modal-section-title {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .modal-section-content {
+      font-size: 0.95rem;
+      color: var(--text-primary);
+      white-space: pre-wrap;
+    }
+
+    .modal-contacto {
+      background: linear-gradient(135deg, var(--unal-green-light) 0%, #e8f5e9 100%);
+      border: 1px solid var(--unal-green);
+      border-radius: 8px;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    .modal-contacto-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--unal-green-dark);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .modal-contacto-email {
+      font-size: 0.95rem;
+      color: var(--text-primary);
+      margin-bottom: 0.75rem;
+      word-break: break-all;
+    }
+
+    .btn-enviar-email {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      background: var(--unal-green);
+      color: white;
+      border: none;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .btn-enviar-email:hover {
+      background: var(--unal-green-dark);
+      transform: scale(1.02);
+    }
+
+    .btn-enviar-email .material-icons {
+      font-size: 1.2rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .header h1 {
+        font-size: 1.5rem;
+      }
+
+      .stats-bar {
+        gap: 0.75rem;
+      }
+
+      .stat-item {
+        padding: 0.75rem 1rem;
+        min-width: 100px;
+      }
+
+      .stat-number {
+        font-size: 1.5rem;
+      }
+
+      .cards-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .filters {
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <h1>Convocatorias de Practicas y Pasantias</h1>
+    <p>Universidad Nacional de Colombia - Sede de La Paz</p>
+  </header>
+
+  <div class="container">
+    <!-- Stats -->
+    <div class="stats-bar" id="statsBar">
+      <div class="stat-item">
+        <div class="stat-number" id="statTotal">-</div>
+        <div class="stat-label">Convocatorias</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number" id="statCupos">-</div>
+        <div class="stat-label">Cupos disponibles</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number" id="statPracticas">-</div>
+        <div class="stat-label">Practicas</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number" id="statPasantias">-</div>
+        <div class="stat-label">Pasantias</div>
+      </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls">
+      <div class="search-box">
+        <span class="material-icons">search</span>
+        <input type="text" id="searchInput" placeholder="Buscar por titulo, dependencia, programa o palabras clave...">
+      </div>
+      <div class="filters">
+        <button class="filter-btn active" data-filter="all" data-type="main">
+          <span class="material-icons">apps</span> Todas
+        </button>
+        <button class="filter-btn" data-filter="práctica" data-type="tipo">
+          <span class="material-icons">work</span> Practicas
+        </button>
+        <button class="filter-btn" data-filter="pasantía" data-type="tipo">
+          <span class="material-icons">school</span> Pasantias
+        </button>
+        <button class="filter-btn" data-filter="interna" data-type="origen">
+          <span class="material-icons">business</span> Internas
+        </button>
+        <button class="filter-btn" data-filter="externa" data-type="origen">
+          <span class="material-icons">public</span> Externas
+        </button>
+      </div>
+    </div>
+
+    <!-- Cards Container -->
+    <div id="cardsContainer">
+      <div class="loading">
+        <div class="spinner"></div>
+        <p>Cargando convocatorias...</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 class="modal-title" id="modalTitle">Detalles</h2>
+        <button class="modal-close" onclick="closeModal()">
+          <span class="material-icons">close</span>
+        </button>
+      </div>
+      <div class="modal-body" id="modalBody">
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Estado global
+    let allConvocatorias = [];
+    let filteredConvocatorias = [];
+    let activeFilters = { tipo: null, origen: null };
+
+    // Inicializar
+    document.addEventListener('DOMContentLoaded', () => {
+      loadConvocatorias();
+      setupEventListeners();
+    });
+
+    // Cargar datos
+    function loadConvocatorias() {
+      google.script.run
+        .withSuccessHandler(handleDataSuccess)
+        .withFailureHandler(handleDataError)
+        .getConvocatorias();
+    }
+
+    function handleDataSuccess(result) {
+      if (!result.success) {
+        showError(result.error || 'Error al cargar datos');
+        return;
+      }
+
+      allConvocatorias = result.data;
+      filteredConvocatorias = [...allConvocatorias];
+
+      updateStats(result.stats);
+      renderCards();
+    }
+
+    function handleDataError(error) {
+      showError('Error de conexion: ' + error.message);
+    }
+
+    function showError(message) {
+      document.getElementById('cardsContainer').innerHTML = `
+        <div class="error-state">
+          <span class="material-icons" style="font-size: 2rem; margin-bottom: 0.5rem;">error_outline</span>
+          <p>${message}</p>
+        </div>
+      `;
+    }
+
+    // Actualizar estadisticas
+    function updateStats(stats) {
+      document.getElementById('statTotal').textContent = stats.total;
+      document.getElementById('statCupos').textContent = stats.totalCupos;
+      document.getElementById('statPracticas').textContent = stats.practicas;
+      document.getElementById('statPasantias').textContent = stats.pasantias;
+    }
+
+    function updateFilteredStats() {
+      const cupos = filteredConvocatorias.reduce((sum, c) => sum + c.cupos, 0);
+      const practicas = filteredConvocatorias.filter(c => c.tipoModalidad.toLowerCase().includes('práctica')).length;
+      const pasantias = filteredConvocatorias.filter(c => c.tipoModalidad.toLowerCase().includes('pasantía')).length;
+
+      document.getElementById('statTotal').textContent = filteredConvocatorias.length;
+      document.getElementById('statCupos').textContent = cupos;
+      document.getElementById('statPracticas').textContent = practicas;
+      document.getElementById('statPasantias').textContent = pasantias;
+    }
+
+    // Renderizar cards
+    function renderCards() {
+      const container = document.getElementById('cardsContainer');
+
+      if (filteredConvocatorias.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <span class="material-icons">search_off</span>
+            <h3>No se encontraron convocatorias</h3>
+            <p>Intenta con otros terminos de busqueda o filtros</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = `
+        <div class="cards-grid">
+          ${filteredConvocatorias.map(conv => createCard(conv)).join('')}
+        </div>
+      `;
+    }
+
+    function createCard(conv) {
+      const tipoClass = conv.tipoModalidad.toLowerCase().includes('práctica') ? 'badge-practica' : 'badge-pasantia';
+      const tipoText = conv.tipoModalidad.toLowerCase().includes('práctica') ? 'Practica' : 'Pasantia';
+
+      const modalidadClass = conv.modalidadTrabajo.toLowerCase().includes('híbrid') || conv.modalidadTrabajo.toLowerCase().includes('hibrid') ? 'badge-hibrida' : 'badge-presencial';
+      const modalidadText = conv.modalidadTrabajo || 'Presencial';
+
+      const origenClass = conv.dependenciaEntidad.toLowerCase() === 'interna' ? 'badge-interna' : 'badge-externa';
+      const origenText = conv.dependenciaEntidad;
+
+      const descripcionCorta = conv.descripcion.length > 200 ? conv.descripcion.substring(0, 200) + '...' : conv.descripcion;
+
+      return `
+        <div class="card">
+          <div class="card-header">
+            <div class="card-badges">
+              <span class="badge ${tipoClass}">${tipoText}</span>
+              <span class="badge ${modalidadClass}">${modalidadText}</span>
+              <span class="badge ${origenClass}">${origenText}</span>
+            </div>
+            <h3 class="card-title">${escapeHtml(conv.titulo)}</h3>
+          </div>
+
+          <div class="card-body">
+            <div class="card-info">
+              <span class="material-icons">business</span>
+              <span>${escapeHtml(conv.nombreDependencia || conv.dependenciaProyecto)}</span>
+            </div>
+
+            <div class="card-info">
+              <span class="material-icons">school</span>
+              <span>${escapeHtml(conv.programasAcademicos)}</span>
+            </div>
+
+            <p class="card-description collapsed" id="desc-${conv.id}">${escapeHtml(descripcionCorta)}</p>
+
+            <button class="btn-ver-mas" onclick="openModal(${conv.id})">
+              <span class="material-icons">visibility</span>
+              Ver mas
+            </button>
+
+            ${conv.competenciasEspecificas ? `
+              <div class="competencias">
+                <div class="competencias-title">Competencias requeridas</div>
+                <div class="competencias-text">${escapeHtml(conv.competenciasEspecificas)}</div>
+              </div>
+            ` : ''}
+          </div>
+
+          <div class="card-footer">
+            <div class="cupos">
+              <span class="material-icons">people</span>
+              <span>${conv.cupos} cupo${conv.cupos !== 1 ? 's' : ''}</span>
+            </div>
+            ${conv.emailContacto ? `
+              <a href="mailto:${conv.emailContacto}?subject=Interes en: ${encodeURIComponent(conv.titulo)}" class="btn-contactar">
+                <span class="material-icons">email</span>
+                Contactar
+              </a>
+            ` : ''}
+          </div>
+        </div>
+      `;
+    }
+
+    // Modal
+    function openModal(id) {
+      const conv = allConvocatorias.find(c => c.id === id);
+      if (!conv) return;
+
+      document.getElementById('modalTitle').textContent = conv.titulo;
+
+      document.getElementById('modalBody').innerHTML = `
+        <div class="modal-section">
+          <div class="modal-section-title">Dependencia</div>
+          <div class="modal-section-content">${escapeHtml(conv.nombreDependencia)}</div>
+        </div>
+
+        <div class="modal-section">
+          <div class="modal-section-title">Descripcion del perfil</div>
+          <div class="modal-section-content">${escapeHtml(conv.descripcion)}</div>
+        </div>
+
+        ${conv.competenciasEspecificas ? `
+          <div class="modal-section">
+            <div class="modal-section-title">Competencias especificas</div>
+            <div class="modal-section-content">${escapeHtml(conv.competenciasEspecificas)}</div>
+          </div>
+        ` : ''}
+
+        ${conv.competenciasActitudes ? `
+          <div class="modal-section">
+            <div class="modal-section-title">Habilidades valoradas</div>
+            <div class="modal-section-content">${escapeHtml(conv.competenciasActitudes)}</div>
+          </div>
+        ` : ''}
+
+        ${conv.observaciones ? `
+          <div class="modal-section">
+            <div class="modal-section-title">Observaciones</div>
+            <div class="modal-section-content">${escapeHtml(conv.observaciones)}</div>
+          </div>
+        ` : ''}
+
+        ${conv.emailContacto ? `
+          <div class="modal-section">
+            <div class="modal-contacto">
+              <div class="modal-contacto-label">Contacto para postulacion</div>
+              <div class="modal-contacto-email">${escapeHtml(conv.emailContacto)}</div>
+              <a href="mailto:${conv.emailContacto}?subject=Interes en: ${encodeURIComponent(conv.titulo)}" class="btn-enviar-email">
+                <span class="material-icons">email</span>
+                Enviar correo
+              </a>
+            </div>
+          </div>
+        ` : ''}
+      `;
+
+      document.getElementById('modalOverlay').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      document.getElementById('modalOverlay').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    // Event Listeners
+    function setupEventListeners() {
+      // Busqueda
+      document.getElementById('searchInput').addEventListener('input', debounce(applyFilters, 300));
+
+      // Filtros
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => handleFilterClick(btn));
+      });
+
+      // Cerrar modal
+      document.getElementById('modalOverlay').addEventListener('click', (e) => {
+        if (e.target === document.getElementById('modalOverlay')) {
+          closeModal();
+        }
+      });
+
+      // ESC para cerrar modal
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeModal();
+      });
+    }
+
+    function handleFilterClick(btn) {
+      const filter = btn.dataset.filter;
+      const type = btn.dataset.type;
+
+      if (type === 'main') {
+        // Reset todos los filtros
+        activeFilters = { tipo: null, origen: null };
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      } else {
+        // Toggle filtro especifico
+        document.querySelector('.filter-btn[data-type="main"]').classList.remove('active');
+
+        if (activeFilters[type] === filter) {
+          activeFilters[type] = null;
+          btn.classList.remove('active');
+        } else {
+          // Desactivar otros del mismo tipo
+          document.querySelectorAll(`.filter-btn[data-type="${type}"]`).forEach(b => b.classList.remove('active'));
+          activeFilters[type] = filter;
+          btn.classList.add('active');
+        }
+
+        // Si no hay filtros activos, activar "Todas"
+        if (!activeFilters.tipo && !activeFilters.origen) {
+          document.querySelector('.filter-btn[data-type="main"]').classList.add('active');
+        }
+      }
+
+      applyFilters();
+    }
+
+    function applyFilters() {
+      const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
+
+      filteredConvocatorias = allConvocatorias.filter(conv => {
+        // Busqueda
+        if (searchTerm) {
+          const searchFields = [
+            conv.titulo,
+            conv.nombreDependencia,
+            conv.programasAcademicos,
+            conv.descripcion,
+            conv.competenciasEspecificas
+          ].join(' ').toLowerCase();
+
+          if (!searchFields.includes(searchTerm)) return false;
+        }
+
+        // Filtro tipo
+        if (activeFilters.tipo) {
+          if (!conv.tipoModalidad.toLowerCase().includes(activeFilters.tipo)) return false;
+        }
+
+        // Filtro origen
+        if (activeFilters.origen) {
+          if (!conv.dependenciaEntidad.toLowerCase().includes(activeFilters.origen)) return false;
+        }
+
+        return true;
+      });
+
+      updateFilteredStats();
+      renderCards();
+    }
+
+    // Utilidades
+    function escapeHtml(text) {
+      if (!text) return '';
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    function debounce(func, wait) {
+      let timeout;
+      return function executedFunction(...args) {
+        const later = () => {
+          clearTimeout(timeout);
+          func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+      };
+    }
+  </script>
+
+</body>
+</html>

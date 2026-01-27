@@ -19,22 +19,22 @@ const SHEET_NAME = 'Hoja1'; // Nombre de la pestaña en la parte inferior del Sh
 const COLUMNAS = {
   DEPENDENCIA_ENTIDAD: 0,      // Interna/Externa
   NOMBRE_VACANTE: 1,           // Título de la convocatoria
-  EMAIL_CONTACTO: 2,           // Email para contactar
-  NOMBRE_DEPENDENCIA: 3,       // Nombre de la dependencia/proyecto
-  EMAIL_DEPENDENCIA: 4,        // Email de la dependencia
-  TIPO_MODALIDAD: 5,           // Práctica/Pasantía
-  DESCRIPCION_PERFIL: 6,       // Descripción del perfil
-  DEPENDENCIA_PROYECTO: 7,     // Donde se desarrollará  !!Esta columna no la encuentro!!
-  CANTIDAD_ESTUDIANTES: 8,     // Número de cupos
-  MODALIDAD_TRABAJO: 9,        // Presencial/Híbrida
-  SELECCIONADO: 10,            // Campo de selección
+  EMAIL_CONTACTO: 2,           // Dirección de correo electrónico
+  NOMBRE_DEPENDENCIA: 3,       // Nombre de la Dirección/Dependencia/Proyecto
+  DEPENDENCIA_PROYECTO: 4,     // Dependencia/Proyecto donde se desarrollará
+  EMAIL_DEPENDENCIA: 5,        // Correo electrónico
+  TIPO_MODALIDAD: 6,           // Tipo de modalidad a vincular (Práctica/Pasantía)
+  DESCRIPCION_PERFIL: 7,       // Descripción general del perfil
+  CANTIDAD_ESTUDIANTES: 8,     // Cantidad de estudiantes requeridos
+  MODALIDAD_TRABAJO: 9,        // Modalidad (Presencial/Híbrida)
+  SELECCIONADO: 10,            // Seleccionado
   PROGRAMAS_ACADEMICOS: 11,    // Programas académicos
-  COMPETENCIAS_ESPECIFICAS: 12, // Competencias técnicas
-  COMPETENCIAS_ACTITUDES: 13,  // Habilidades blandas
-  OFRECE_APOYO: 14,            // Si ofrece apoyo
+  COMPETENCIAS_ESPECIFICAS: 12, // Competencias específicas
+  COMPETENCIAS_ACTITUDES: 13,  // Competencias/habilidades o actitudes
+  OFRECE_APOYO: 14,            // ¿Ofrece apoyo?
   TIPO_APOYO: 15,              // Tipo de apoyo
   OBSERVACIONES: 16,           // Observaciones
-  ESTADO: 17                   // Abierta/Cerrada (agregar esta columna al sheet)
+  ESTADO: 17                   // Estado (Abierto/Cerrado)
 };
 
 /**
@@ -73,15 +73,15 @@ function getConvocatorias() {
         return;
       }
 
-      // Determinar estado (si no existe la columna, asumir "Activa")
-      let estado = 'Activa';
+      // Determinar estado (si no existe la columna, asumir "Abierto")
+      let estado = 'Abierto';
       if (row[COLUMNAS.ESTADO]) {
         estado = row[COLUMNAS.ESTADO].toString().trim();
       }
 
-      // Solo incluir convocatorias activas/abiertas
+      // Solo incluir convocatorias abiertas
       const estadoLower = estado.toLowerCase();
-      if (estadoLower !== 'activa' && estadoLower !== 'abierta') {
+      if (estadoLower !== 'abierto' && estadoLower !== 'abierta') {
         return;
       }
 
@@ -115,7 +115,7 @@ function getConvocatorias() {
       stats: {
         total: convocatorias.length,
         totalCupos: totalCupos,
-        activas: convocatorias.filter(c => c.estado.toLowerCase() === 'activa' || c.estado.toLowerCase() === 'abierta').length,
+        activas: convocatorias.filter(c => c.estado.toLowerCase() === 'abierto' || c.estado.toLowerCase() === 'abierta').length,
         practicas: convocatorias.filter(c => c.tipoModalidad.toLowerCase().includes('práctica')).length,
         pasantias: convocatorias.filter(c => c.tipoModalidad.toLowerCase().includes('pasantía')).length
       }

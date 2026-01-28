@@ -156,3 +156,202 @@ function getProgramasAcademicos() {
     return [];
   }
 }
+
+// ========== POSTULACIONES ==========
+const SPREADSHEET_POSTULACIONES_ID = '1TPD-_1DjYE7hX7GLDQSuOpRiGsNT-GTjzeij-eG4Qts';
+const SHEET_POSTULACIONES = 'Postulaciones_2026_1';
+
+// Mapeo de columnas del Sheet de Postulaciones (según nuevo orden)
+const COL_POST = {
+  FECHA: 0,              // A: Fecha
+  ESTADO: 1,             // B: Estado (Pendiente, Seleccionado, No seleccionado)
+  ID_CONVOCATORIA: 2,    // C: ID Convocatoria
+  TITULO: 3,             // D: Título Convocatoria
+  PRIMER_NOMBRE: 4,      // E: Primer Nombre
+  SEGUNDO_NOMBRE: 5,     // F: Segundo Nombre
+  PRIMER_APELLIDO: 6,    // G: Primer Apellido
+  SEGUNDO_APELLIDO: 7,   // H: Segundo Apellido
+  TIPO_DOCUMENTO: 8,     // I: Tipo Documento
+  NUMERO_DOCUMENTO: 9,   // J: Número Documento
+  TELEFONO: 10,          // K: Teléfono
+  PROGRAMA: 11,          // L: Programa
+  EMAIL: 12,             // M: Email
+  PAPA: 13,              // N: PAPA
+  PBM: 14,               // O: PBM
+  OBSERVACIONES: 15      // P: Observaciones
+};
+
+/**
+ * Guarda una postulación en el Sheet
+ * @param {Object} datos - Datos del formulario de postulación
+ * @returns {Object} Resultado de la operación
+ */
+function guardarPostulacion(datos) {
+  try {
+    const ss = SpreadsheetApp.openById(SPREADSHEET_POSTULACIONES_ID);
+    let sheet = ss.getSheetByName(SHEET_POSTULACIONES);
+    
+    // Verificar que existe la hoja
+    if (!sheet) {
+      throw new Error('No se encontró la hoja: ' + SHEET_POSTULACIONES);
+    }
+    
+    const numeroDocumento = datos.numeroDocumento || '';
+    const idConvocatoria = datos.idConvocatoria || '';
+    
+    // Validar estado del estudiante
+    const validacion = validarEstadoEstudiante(numeroDocumento, idConvocatoria);
+    
+    if (!validacion.puedePostularse) {
+      return {
+        success: false,
+        error: validacion.mensaje,
+        tipo: validacion.tipo,
+        datos: validacion.datos || null
+      };
+    }
+    
+    // Preparar fila de datos (según nuevo orden de columnas)
+    const fila = [
+      new Date(),                              // A: Fecha
+      'Pendiente',                             // B: Estado inicial
+      datos.idConvocatoria || '',              // C: ID Convocatoria
+      datos.tituloConvocatoria || '',          // D: Título Convocatoria
+      datos.primerNombre || '',                // E: Primer Nombre
+      datos.segundoNombre || '',               // F: Segundo Nombre
+      datos.primerApellido || '',              // G: Primer Apellido
+      datos.segundoApellido || '',             // H: Segundo Apellido
+      datos.tipoDocumento || 'CC',             // I: Tipo Documento (CC por defecto)
+      datos.numeroDocumento || '',             // J: Número Documento
+      datos.telefono || '',                    // K: Teléfono
+      datos.programaEstudiante || '',          // L: Programa
+      datos.correoElectronico || '',           // M: Email
+      datos.papa || '',                        // N: PAPA
+      datos.pbm || '',                         // O: PBM
+      ''                                       // P: Observaciones (vacío)
+    ];
+    
+    // Insertar fila
+    sheet.appendRow(fila);
+    
+    // Aplicar validación de datos (dropdown) a la celda de Estado
+    const ultimaFila = sheet.getLastRow();
+    const celdaEstado = sheet.getRange(ultimaFila, COL_POST.ESTADO + 1); // +1 porque getRange es 1-based
+    const reglaEstado = SpreadsheetApp.newDataValidation()
+      .requireValueInList(['Pendiente', 'Seleccionado', 'No seleccionado'], true)
+      .setAllowInvalid(false)
+      .build();
+    celdaEstado.setDataValidation(reglaEstado);
+    
+    return {
+      success: true,
+      message: '¡Postulación enviada correctamente!'
+    };
+    
+  } catch (error) {
+    console.error('Error al guardar postulación:', error);
+    return {
+      success: false,
+      error: 'Error al enviar la postulación: ' + error.message
+    };
+  }
+}
+
+/**
+ * Valida el estado del estudiante para determinar si puede postularse
+ * @param {string} numeroDocumento - Número de documento del estudiante
+ * @param {string} idConvocatoria - ID de la convocatoria a la que quiere postularse
+ * @returns {Object} Resultado de la validación
+ */
+function validarEstadoEstudiante(numeroDocumento, idConvocatoria) {
+  try {
+    const ss = SpreadsheetApp.openById(SPREADSHEET_POSTULACIONES_ID);
+    const sheet = ss.getSheetByName(SHEET_POSTULACIONES);
+    
+    if (!sheet) {
+      return { puedePostularse: true };
+    }
+    
+    const data = sheet.getDataRange().getValues();
+    
+    let postulacionesPendientes = 0;
+    let estaSeleccionado = null;
+    let yaPostuladoAEsta = false;
+    let postulacionNoSeleccionada = null;
+    
+    for (let i = 1; i < data.length; i++) {
+      const row = data[i];
+      const docRow = row[COL_POST.NUMERO_DOCUMENTO];
+      
+      if (docRow == numeroDocumento) {
+        const estado = (row[COL_POST.ESTADO] || '').toString().toLowerCase().trim();
+        const idConv = row[COL_POST.ID_CONVOCATORIA];
+        
+        // Verificar si ya se postuló a esta convocatoria
+        if (idConv == idConvocatoria) {
+          yaPostuladoAEsta = true;
+        }
+        
+        // Verificar estados
+        if (estado === 'seleccionado') {
+          estaSeleccionado = {
+            titulo: row[COL_POST.TITULO] || '',
+            programa: row[COL_POST.PROGRAMA] || '',
+            fecha: row[COL_POST.FECHA] || ''
+          };
+        } else if (estado === 'pendiente') {
+          postulacionesPendientes++;
+        } else if (estado === 'no seleccionado' && idConv == idConvocatoria) {
+          postulacionNoSeleccionada = {
+            titulo: row[COL_POST.TITULO] || '',
+            observaciones: row[COL_POST.OBSERVACIONES] || 'Sin observaciones registradas.'
+          };
+        }
+      }
+    }
+    
+    // Prioridad 1: Si ya está seleccionado en alguna convocatoria
+    if (estaSeleccionado) {
+      return {
+        puedePostularse: false,
+        tipo: 'ESTUDIANTE_SELECCIONADO',
+        mensaje: '¡Felicidades! Ya has sido seleccionado para una convocatoria.',
+        datos: estaSeleccionado
+      };
+    }
+    
+    // Prioridad 2: Si ya se postuló a esta convocatoria específica
+    if (yaPostuladoAEsta) {
+      // Si fue no seleccionado, mostrar el motivo
+      if (postulacionNoSeleccionada) {
+        return {
+          puedePostularse: false,
+          tipo: 'POSTULACION_NO_SELECCIONADA',
+          mensaje: 'Tu postulación anterior a esta convocatoria no fue seleccionada.',
+          datos: postulacionNoSeleccionada
+        };
+      }
+      return {
+        puedePostularse: false,
+        tipo: 'POSTULACION_DUPLICADA',
+        mensaje: 'Ya te has postulado a esta convocatoria anteriormente.'
+      };
+    }
+    
+    // Prioridad 3: Si ya tiene 2 postulaciones pendientes
+    if (postulacionesPendientes >= 2) {
+      return {
+        puedePostularse: false,
+        tipo: 'LIMITE_POSTULACIONES',
+        mensaje: 'Ya tienes 2 postulaciones en estado pendiente. No puedes postularte a más vacantes hasta que sean resueltas.'
+      };
+    }
+    
+    // Puede postularse
+    return { puedePostularse: true };
+    
+  } catch (error) {
+    console.error('Error al validar estado del estudiante:', error);
+    return { puedePostularse: true }; // En caso de error, permitir postulación
+  }
+}

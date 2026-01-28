@@ -514,3 +514,357 @@ function generarCorreoConfirmacion(nombreCompleto, datos) {
 </html>
   `;
 }
+
+// ========== TRIGGER: NOTIFICACIÓN DE CAMBIO DE ESTADO ==========
+
+/**
+ * EJECUTAR ESTA FUNCIÓN UNA SOLA VEZ para instalar el trigger
+ * Después de ejecutarla, el trigger quedará configurado automáticamente
+ */
+function instalarTriggerPostulaciones() {
+  // Eliminar triggers existentes de esta función para evitar duplicados
+  const triggers = ScriptApp.getProjectTriggers();
+  triggers.forEach(trigger => {
+    if (trigger.getHandlerFunction() === 'onEditPostulaciones') {
+      ScriptApp.deleteTrigger(trigger);
+      console.log('Trigger anterior eliminado');
+    }
+  });
+  
+  // Crear nuevo trigger vinculado al spreadsheet de postulaciones
+  ScriptApp.newTrigger('onEditPostulaciones')
+    .forSpreadsheet(SPREADSHEET_POSTULACIONES_ID)
+    .onEdit()
+    .create();
+  
+  console.log('✅ Trigger instalado correctamente para el sheet de Postulaciones');
+  console.log('El trigger se ejecutará automáticamente cuando edites la columna Estado');
+}
+
+/**
+ * Trigger que se ejecuta cuando se edita el sheet de postulaciones
+ * Detecta cambios en la columna Estado y envía notificaciones
+ */
+function onEditPostulaciones(e) {
+  try {
+    // Verificar que el evento existe
+    if (!e || !e.range) {
+      console.log('Evento no válido');
+      return;
+    }
+    
+    const sheet = e.range.getSheet();
+    const sheetName = sheet.getName();
+    
+    // Verificar que es la hoja correcta
+    if (sheetName !== SHEET_POSTULACIONES) {
+      return;
+    }
+    
+    const columnaEditada = e.range.getColumn();
+    const filaEditada = e.range.getRow();
+    
+    // Verificar que se editó la columna Estado (columna B = 2)
+    if (columnaEditada !== COL_POST.ESTADO + 1) {
+      return;
+    }
+    
+    // Ignorar ediciones en la fila de encabezados
+    if (filaEditada === 1) {
+      return;
+    }
+    
+    const nuevoEstado = e.value ? e.value.toString().toLowerCase().trim() : '';
+    const estadoAnterior = e.oldValue ? e.oldValue.toString().toLowerCase().trim() : '';
+    
+    console.log(`Cambio de estado detectado en fila ${filaEditada}: "${estadoAnterior}" → "${nuevoEstado}"`);
+    
+    // Solo procesar si el estado cambió a "seleccionado" o "no seleccionado"
+    if (nuevoEstado !== 'seleccionado' && nuevoEstado !== 'no seleccionado') {
+      return;
+    }
+    
+    // Obtener datos de la fila
+    const fila = sheet.getRange(filaEditada, 1, 1, 17).getValues()[0];
+    
+    const datosEstudiante = {
+      email: fila[COL_POST.EMAIL],
+      primerNombre: fila[COL_POST.PRIMER_NOMBRE],
+      segundoNombre: fila[COL_POST.SEGUNDO_NOMBRE],
+      primerApellido: fila[COL_POST.PRIMER_APELLIDO],
+      segundoApellido: fila[COL_POST.SEGUNDO_APELLIDO],
+      titulo: fila[COL_POST.TITULO],
+      modalidad: fila[COL_POST.MODALIDAD],
+      programa: fila[COL_POST.PROGRAMA],
+      observaciones: fila[COL_POST.OBSERVACIONES] || ''
+    };
+    
+    // Verificar que hay email
+    if (!datosEstudiante.email) {
+      console.log('No se encontró email del estudiante');
+      return;
+    }
+    
+    // Enviar notificación según el nuevo estado
+    if (nuevoEstado === 'seleccionado') {
+      enviarNotificacionSeleccionado(datosEstudiante);
+    } else if (nuevoEstado === 'no seleccionado') {
+      enviarNotificacionNoSeleccionado(datosEstudiante);
+    }
+    
+  } catch (error) {
+    console.error('Error en onEditPostulaciones:', error);
+  }
+}
+
+/**
+ * Envía notificación cuando el estudiante es SELECCIONADO
+ */
+function enviarNotificacionSeleccionado(datos) {
+  try {
+    const nombreCompleto = construirNombreCompleto(datos);
+    
+    const asunto = '🎉 ¡Felicidades! Has sido seleccionado - ' + datos.titulo;
+    
+    const cuerpoHtml = generarCorreoSeleccionado(nombreCompleto, datos);
+    
+    MailApp.sendEmail({
+      to: datos.email,
+      subject: asunto,
+      htmlBody: cuerpoHtml,
+      name: 'Prácticas UNAL Sede de La Paz'
+    });
+    
+    console.log('✅ Notificación de SELECCIÓN enviada a: ' + datos.email);
+    
+  } catch (error) {
+    console.error('Error al enviar notificación de selección:', error);
+  }
+}
+
+/**
+ * Envía notificación cuando el estudiante NO es seleccionado
+ */
+function enviarNotificacionNoSeleccionado(datos) {
+  try {
+    const nombreCompleto = construirNombreCompleto(datos);
+    
+    const asunto = 'Resultado de tu postulación - ' + datos.titulo;
+    
+    const cuerpoHtml = generarCorreoNoSeleccionado(nombreCompleto, datos);
+    
+    MailApp.sendEmail({
+      to: datos.email,
+      subject: asunto,
+      htmlBody: cuerpoHtml,
+      name: 'Prácticas UNAL Sede de La Paz'
+    });
+    
+    console.log('✅ Notificación de NO SELECCIÓN enviada a: ' + datos.email);
+    
+  } catch (error) {
+    console.error('Error al enviar notificación de no selección:', error);
+  }
+}
+
+/**
+ * Construye el nombre completo del estudiante
+ */
+function construirNombreCompleto(datos) {
+  return (
+    (datos.primerNombre || '') + ' ' + 
+    (datos.segundoNombre || '') + ' ' + 
+    (datos.primerApellido || '') + ' ' + 
+    (datos.segundoApellido || '')
+  ).trim().replace(/\s+/g, ' ');
+}
+
+/**
+ * Genera el HTML del correo de SELECCIÓN
+ */
+function generarCorreoSeleccionado(nombreCompleto, datos) {
+  return `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0; }
+    .container { max-width: 600px; margin: 0 auto; }
+    .header { background: linear-gradient(135deg, #059669, #047857); color: white; padding: 40px 30px; text-align: center; }
+    .header h1 { margin: 0 0 10px 0; font-size: 28px; }
+    .header p { margin: 0; opacity: 0.9; font-size: 16px; }
+    .content { background: #ffffff; padding: 30px; }
+    .greeting { font-size: 18px; margin-bottom: 20px; }
+    .success-card { background: linear-gradient(135deg, #d1fae5, #a7f3d0); border: 2px solid #10b981; border-radius: 16px; padding: 25px; margin: 25px 0; text-align: center; }
+    .success-card h2 { margin: 0 0 10px 0; color: #065f46; font-size: 22px; }
+    .success-card p { margin: 0; color: #047857; font-size: 16px; }
+    .info-card { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 12px; padding: 20px; margin: 20px 0; }
+    .info-card h3 { margin: 0 0 15px 0; color: #166534; font-size: 16px; }
+    .info-row { margin-bottom: 12px; }
+    .info-label { font-weight: 600; color: #374151; display: block; margin-bottom: 4px; }
+    .info-value { color: #1f2937; font-size: 15px; }
+    .next-steps { background: #ecfdf5; border-left: 4px solid #10b981; padding: 20px; margin: 25px 0; border-radius: 0 8px 8px 0; }
+    .next-steps h4 { margin: 0 0 15px 0; color: #065f46; }
+    .next-steps ul { margin: 0; padding-left: 20px; color: #047857; }
+    .next-steps li { margin-bottom: 10px; }
+    .footer { background: #f8fafc; padding: 25px 30px; text-align: center; border-top: 1px solid #e2e8f0; }
+    .footer p { margin: 5px 0; color: #64748b; font-size: 13px; }
+    .footer a { color: #059669; text-decoration: none; }
+    .icon { font-size: 64px; margin-bottom: 15px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="icon">🎉</div>
+      <h1>¡Felicidades!</h1>
+      <p>Has sido seleccionado/a para una oportunidad</p>
+    </div>
+    
+    <div class="content">
+      <p class="greeting">Hola <strong>${nombreCompleto}</strong>,</p>
+      
+      <div class="success-card">
+        <h2>🏆 ¡Has sido seleccionado/a!</h2>
+        <p>Tu perfil ha sido elegido para esta convocatoria</p>
+      </div>
+      
+      <div class="info-card">
+        <h3>📌 Detalles de la convocatoria</h3>
+        <div class="info-row">
+          <span class="info-label">Convocatoria:</span>
+          <span class="info-value">${datos.titulo || 'No especificada'}</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Modalidad:</span>
+          <span class="info-value">${datos.modalidad || 'No especificada'}</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Tu programa:</span>
+          <span class="info-value">${datos.programa || 'No especificado'}</span>
+        </div>
+      </div>
+      
+      <div class="next-steps">
+        <h4>📋 Próximos pasos</h4>
+        <ul>
+          <li><strong>Espera nuestro contacto:</strong> El equipo de prácticas se comunicará contigo pronto con más información.</li>
+          <li><strong>Revisa tu correo:</strong> Mantente pendiente de tu bandeja de entrada (y spam).</li>
+          <li><strong>Prepara tu documentación:</strong> Ten a la mano tus documentos personales y académicos.</li>
+          <li><strong>Preguntas:</strong> Si tienes dudas, contáctanos a ${EMAIL_CONTACTO}</li>
+        </ul>
+      </div>
+      
+      <p>¡Felicidades nuevamente por este logro! Estamos emocionados de tenerte como parte de esta experiencia.</p>
+      
+      <p style="margin-top: 30px;">Saludos cordiales,<br>
+      <strong>Equipo de Prácticas y Pasantías</strong><br>
+      Universidad Nacional de Colombia - Sede de La Paz</p>
+    </div>
+    
+    <div class="footer">
+      <p><strong>Universidad Nacional de Colombia - Sede de La Paz</strong></p>
+      <p>📧 <a href="mailto:${EMAIL_CONTACTO}">${EMAIL_CONTACTO}</a></p>
+    </div>
+  </div>
+</body>
+</html>
+  `;
+}
+
+/**
+ * Genera el HTML del correo de NO SELECCIÓN
+ */
+function generarCorreoNoSeleccionado(nombreCompleto, datos) {
+  const tieneObservaciones = datos.observaciones && datos.observaciones.trim() !== '';
+  
+  return `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0; }
+    .container { max-width: 600px; margin: 0 auto; }
+    .header { background: linear-gradient(135deg, #6b7280, #4b5563); color: white; padding: 35px 30px; text-align: center; }
+    .header h1 { margin: 0 0 10px 0; font-size: 24px; }
+    .header p { margin: 0; opacity: 0.9; font-size: 15px; }
+    .content { background: #ffffff; padding: 30px; }
+    .greeting { font-size: 18px; margin-bottom: 20px; }
+    .result-card { background: #f3f4f6; border: 1px solid #d1d5db; border-radius: 12px; padding: 20px; margin: 20px 0; }
+    .result-card h3 { margin: 0 0 10px 0; color: #374151; font-size: 16px; }
+    .result-card p { margin: 0; color: #4b5563; }
+    .info-card { background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 12px; padding: 20px; margin: 20px 0; }
+    .info-row { margin-bottom: 10px; }
+    .info-label { font-weight: 600; color: #374151; }
+    .info-value { color: #1f2937; }
+    .observaciones { background: #fef3c7; border: 1px solid #fcd34d; border-radius: 12px; padding: 20px; margin: 20px 0; }
+    .observaciones h4 { margin: 0 0 10px 0; color: #92400e; font-size: 15px; }
+    .observaciones p { margin: 0; color: #78350f; font-style: italic; }
+    .encouragement { background: #eff6ff; border-left: 4px solid #3b82f6; padding: 20px; margin: 25px 0; border-radius: 0 8px 8px 0; }
+    .encouragement h4 { margin: 0 0 10px 0; color: #1e40af; }
+    .encouragement p { margin: 0; color: #1e3a8a; }
+    .footer { background: #f8fafc; padding: 25px 30px; text-align: center; border-top: 1px solid #e2e8f0; }
+    .footer p { margin: 5px 0; color: #64748b; font-size: 13px; }
+    .footer a { color: #3b82f6; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Resultado de tu postulación</h1>
+      <p>Información sobre el proceso de selección</p>
+    </div>
+    
+    <div class="content">
+      <p class="greeting">Hola <strong>${nombreCompleto}</strong>,</p>
+      
+      <p>Agradecemos tu interés en las oportunidades de prácticas y pasantías de la Universidad Nacional de Colombia - Sede de La Paz.</p>
+      
+      <div class="result-card">
+        <h3>📋 Resultado del proceso</h3>
+        <p>Después de revisar cuidadosamente todas las postulaciones, lamentamos informarte que en esta ocasión <strong>no has sido seleccionado/a</strong> para la siguiente convocatoria:</p>
+      </div>
+      
+      <div class="info-card">
+        <div class="info-row">
+          <span class="info-label">Convocatoria:</span>
+          <span class="info-value">${datos.titulo || 'No especificada'}</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Modalidad:</span>
+          <span class="info-value">${datos.modalidad || 'No especificada'}</span>
+        </div>
+      </div>
+      
+      ${tieneObservaciones ? `
+      <div class="observaciones">
+        <h4>💬 Observaciones del proceso:</h4>
+        <p>"${datos.observaciones}"</p>
+      </div>
+      ` : ''}
+      
+      <div class="encouragement">
+        <h4>💪 ¡No te desanimes!</h4>
+        <p>Esta decisión no define tus capacidades. Te invitamos a seguir postulándote a futuras convocatorias. Constantemente se abren nuevas oportunidades que podrían ser ideales para tu perfil.</p>
+      </div>
+      
+      <p>Si tienes alguna pregunta sobre el proceso o deseas recibir retroalimentación adicional, no dudes en contactarnos.</p>
+      
+      <p>¡Te deseamos mucho éxito en tus futuros proyectos!</p>
+      
+      <p style="margin-top: 30px;">Saludos cordiales,<br>
+      <strong>Equipo de Prácticas y Pasantías</strong><br>
+      Universidad Nacional de Colombia - Sede de La Paz</p>
+    </div>
+    
+    <div class="footer">
+      <p><strong>Universidad Nacional de Colombia - Sede de La Paz</strong></p>
+      <p>📧 <a href="mailto:${EMAIL_CONTACTO}">${EMAIL_CONTACTO}</a></p>
+    </div>
+  </div>
+</body>
+</html>
+  `;
+}

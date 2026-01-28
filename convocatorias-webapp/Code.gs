@@ -17,24 +17,24 @@ const SHEET_NAME = 'Hoja1'; // Nombre de la pestaña en la parte inferior del Sh
 
 // Mapeo de columnas (ajustar según tu sheet, índice base 0)
 const COLUMNAS = {
-  DEPENDENCIA_ENTIDAD: 0,      // Interna/Externa
-  NOMBRE_VACANTE: 1,           // Título de la convocatoria
-  EMAIL_CONTACTO: 2,           // Dirección de correo electrónico
-  NOMBRE_DEPENDENCIA: 3,       // Nombre de la Dirección/Dependencia/Proyecto
-  DEPENDENCIA_PROYECTO: 4,     // Dependencia/Proyecto donde se desarrollará
-  EMAIL_DEPENDENCIA: 5,        // Correo electrónico
-  TIPO_MODALIDAD: 6,           // Tipo de modalidad a vincular (Práctica/Pasantía)
-  DESCRIPCION_PERFIL: 7,       // Descripción general del perfil
-  CANTIDAD_ESTUDIANTES: 8,     // Cantidad de estudiantes requeridos
-  MODALIDAD_TRABAJO: 9,        // Modalidad (Presencial/Híbrida)
-  SELECCIONADO: 10,            // Seleccionado
-  PROGRAMAS_ACADEMICOS: 11,    // Programas académicos
-  COMPETENCIAS_ESPECIFICAS: 12, // Competencias específicas
-  COMPETENCIAS_ACTITUDES: 13,  // Competencias/habilidades o actitudes
-  OFRECE_APOYO: 14,            // ¿Ofrece apoyo?
-  TIPO_APOYO: 15,              // Tipo de apoyo
-  OBSERVACIONES: 16,           // Observaciones
-  ESTADO: 17                   // Estado (Abierto/Cerrado)
+  ESTADO: 0,                   // Estado (Abierto/Cerrado)
+  DEPENDENCIA_ENTIDAD: 1,      // Interna/Externa
+  NOMBRE_VACANTE: 2,           // Título de la convocatoria
+  EMAIL_CONTACTO: 3,           // Dirección de correo electrónico
+  NOMBRE_DEPENDENCIA: 4,       // Nombre de la Dirección/Dependencia/Proyecto
+  DEPENDENCIA_PROYECTO: 5,     // Dependencia/Proyecto donde se desarrollará
+  EMAIL_DEPENDENCIA: 6,        // Correo electrónico
+  TIPO_MODALIDAD: 7,           // Tipo de modalidad a vincular (Práctica/Pasantía)
+  DESCRIPCION_PERFIL: 8,       // Descripción general del perfil
+  CANTIDAD_ESTUDIANTES: 9,     // Cantidad de estudiantes requeridos
+  MODALIDAD_TRABAJO: 10,       // Modalidad (Presencial/Híbrida)
+  SELECCIONADO: 11,            // Seleccionado
+  PROGRAMAS_ACADEMICOS: 12,    // Programas académicos
+  COMPETENCIAS_ESPECIFICAS: 13, // Competencias específicas
+  COMPETENCIAS_ACTITUDES: 14,  // Competencias/habilidades o actitudes
+  OFRECE_APOYO: 15,            // ¿Ofrece apoyo?
+  TIPO_APOYO: 16,              // Tipo de apoyo
+  OBSERVACIONES: 17            // Observaciones
 };
 
 /**

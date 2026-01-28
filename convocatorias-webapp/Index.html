@@ -175,6 +175,7 @@
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
       gap: 1.5rem;
+      align-items: stretch;
     }
 
     /* Card */
@@ -186,6 +187,7 @@
       transition: transform 0.2s, box-shadow 0.2s;
       display: flex;
       flex-direction: column;
+      height: 400px;
     }
 
     .card:hover {
@@ -259,20 +261,34 @@
       color: var(--text-primary);
       margin-bottom: 0.5rem;
       line-height: 1.4;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
 
     .card-body {
       padding: 0 1.25rem;
       flex: 1;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
     }
 
     .card-info {
       display: flex;
       align-items: flex-start;
       gap: 0.5rem;
-      margin-bottom: 0.75rem;
-      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+      font-size: 0.85rem;
       color: var(--text-secondary);
+    }
+
+    .card-info span:not(.material-icons) {
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
 
     .card-info .material-icons {
@@ -283,15 +299,13 @@
     }
 
     .card-description {
-      font-size: 0.875rem;
+      font-size: 0.85rem;
       color: var(--text-secondary);
-      margin-bottom: 1rem;
+      margin-bottom: 0.75rem;
       line-height: 1.5;
-    }
-
-    .card-description.collapsed {
+      flex: 1;
       display: -webkit-box;
-      -webkit-line-clamp: 3;
+      -webkit-line-clamp: 4;
       -webkit-box-orient: vertical;
       overflow: hidden;
     }
@@ -299,6 +313,7 @@
     .btn-ver-mas {
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 0.25rem;
       background: var(--bg-primary);
       border: 1px solid var(--border);
@@ -310,6 +325,7 @@
       border-radius: 6px;
       margin-bottom: 1rem;
       transition: all 0.2s;
+      width: 100%;
     }
 
     .btn-ver-mas:hover {
@@ -323,10 +339,7 @@
     }
 
     .competencias {
-      background: var(--bg-primary);
-      padding: 0.75rem;
-      border-radius: 8px;
-      margin-bottom: 1rem;
+      display: none;
     }
 
     .competencias-title {
@@ -580,29 +593,145 @@
 
     /* Responsive */
     @media (max-width: 768px) {
+      .header {
+        padding: 1.5rem 1rem;
+      }
+
       .header h1 {
-        font-size: 1.5rem;
+        font-size: 1.25rem;
+      }
+
+      .header p {
+        font-size: 0.85rem;
+      }
+
+      .container {
+        padding: 1rem;
       }
 
       .stats-bar {
-        gap: 0.75rem;
+        gap: 0.5rem;
       }
 
       .stat-item {
-        padding: 0.75rem 1rem;
-        min-width: 100px;
+        padding: 0.75rem 0.5rem;
+        min-width: 70px;
+        flex: 1 1 45%;
       }
 
       .stat-number {
-        font-size: 1.5rem;
+        font-size: 1.25rem;
+      }
+
+      .stat-label {
+        font-size: 0.65rem;
+      }
+
+      .controls {
+        padding: 1rem;
+      }
+
+      .search-box input {
+        font-size: 0.9rem;
+        padding: 0.75rem 1rem 0.75rem 2.5rem;
+      }
+
+      .search-box .material-icons {
+        left: 0.75rem;
+        font-size: 1.2rem;
+      }
+
+      .filters {
+        justify-content: flex-start;
+        gap: 0.5rem;
+      }
+
+      .filter-btn {
+        padding: 0.4rem 0.75rem;
+        font-size: 0.75rem;
+      }
+
+      .filter-btn .material-icons {
+        font-size: 1rem;
       }
 
       .cards-grid {
         grid-template-columns: 1fr;
+        gap: 1rem;
       }
 
-      .filters {
-        justify-content: center;
+      .card {
+        height: auto;
+        min-height: 350px;
+      }
+
+      .card-header {
+        padding: 1rem 1rem 0;
+      }
+
+      .card-body {
+        padding: 0 1rem;
+      }
+
+      .card-footer {
+        padding: 0.75rem 1rem;
+      }
+
+      .btn-contactar {
+        padding: 0.5rem 1rem;
+        font-size: 0.8rem;
+      }
+
+      .modal {
+        max-height: 90vh;
+        margin: 0.5rem;
+      }
+
+      .modal-header {
+        padding: 1rem;
+      }
+
+      .modal-body {
+        padding: 1rem;
+      }
+    }
+
+    /* Extra small devices */
+    @media (max-width: 480px) {
+      .header h1 {
+        font-size: 1.1rem;
+      }
+
+      .stat-item {
+        min-width: 60px;
+      }
+
+      .stat-number {
+        font-size: 1.1rem;
+      }
+
+      .filter-btn span:not(.material-icons) {
+        display: none;
+      }
+
+      .filter-btn {
+        padding: 0.5rem;
+      }
+
+      .card-badges {
+        gap: 0.25rem;
+      }
+
+      .badge {
+        padding: 0.2rem 0.5rem;
+        font-size: 0.65rem;
+      }
+    }
+
+    /* Google Sites iframe compatibility */
+    @media (max-width: 600px) {
+      body {
+        font-size: 14px;
       }
     }
   </style>
@@ -804,7 +933,7 @@
               <span>${escapeHtml(conv.programasAcademicos)}</span>
             </div>
 
-            <p class="card-description collapsed" id="desc-${conv.id}">${escapeHtml(descripcionCorta)}</p>
+            <p class="card-description" id="desc-${conv.id}">${escapeHtml(descripcionCorta)}</p>
 
             <button class="btn-ver-mas" onclick="openModal(${conv.id})">
               <span class="material-icons">visibility</span>

@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prácticas y Pasantías - UNAL Sede de La Paz</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+    :root {
+      --unal-green: #4CAF50;
+      --unal-green-dark: #388E3C;
+      --unal-green-light: #C8E6C9;
+      --unal-green-bg: #f0f9f0;
+      --text-primary: #1e293b;
+      --text-secondary: #64748b;
+      --text-muted: #94a3b8;
+      --bg-primary: #f8fafc;
+      --bg-white: #ffffff;
+      --border: #e2e8f0;
+      --shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+      --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+      --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+      --radius: 12px;
+      --radius-lg: 16px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+    }
+
+    /* ========== HERO SECTION ========== */
+    .hero {
+      background: linear-gradient(135deg, var(--unal-green) 0%, var(--unal-green-dark) 100%);
+      color: white;
+      padding: 4rem 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      opacity: 0.5;
+    }
+
+    .hero-content {
+      position: relative;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.2);
+      padding: 0.5rem 1rem;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      margin-bottom: 1.5rem;
+      backdrop-filter: blur(10px);
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      opacity: 0.9;
+      margin-bottom: 2rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.875rem 1.75rem;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-primary {
+      background: white;
+      color: var(--unal-green-dark);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: white;
+      border: 2px solid rgba(255,255,255,0.5);
+    }
+
+    .btn-outline:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: white;
+    }
+
+    .btn .material-icons {
+      font-size: 1.25rem;
+    }
+
+    /* ========== CONTAINER ========== */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* ========== SECTION ========== */
+    .section {
+      padding: 4rem 0;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .section-header h2 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.75rem;
+    }
+
+    .section-header p {
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* ========== STATS SECTION ========== */
+    .stats-section {
+      background: var(--bg-white);
+      margin-top: -2rem;
+      position: relative;
+      z-index: 10;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      padding: 2rem;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+    }
+
+    .stat-card {
+      text-align: center;
+      padding: 1rem;
+    }
+
+    .stat-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--unal-green-bg);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 0.75rem;
+    }
+
+    .stat-icon .material-icons {
+      font-size: 1.5rem;
+      color: var(--unal-green);
+    }
+
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--unal-green);
+      line-height: 1;
+      margin-bottom: 0.25rem;
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* ========== COMPARISON SECTION ========== */
+    .comparison-section {
+      background: var(--bg-white);
+    }
+
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    .comparison-card {
+      background: var(--bg-primary);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      border: 2px solid transparent;
+      transition: all 0.3s ease;
+    }
+
+    .comparison-card:hover {
+      border-color: var(--unal-green-light);
+      transform: translateY(-4px);
+    }
+
+    .comparison-card.practica {
+      border-top: 4px solid #2563eb;
+    }
+
+    .comparison-card.pasantia {
+      border-top: 4px solid #f59e0b;
+    }
+
+    .comparison-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .comparison-card.practica .comparison-icon {
+      background: #dbeafe;
+    }
+
+    .comparison-card.practica .comparison-icon .material-icons {
+      color: #2563eb;
+      font-size: 2rem;
+    }
+
+    .comparison-card.pasantia .comparison-icon {
+      background: #fef3c7;
+    }
+
+    .comparison-card.pasantia .comparison-icon .material-icons {
+      color: #f59e0b;
+      font-size: 2rem;
+    }
+
+    .comparison-card h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--text-primary);
+    }
+
+    .comparison-card p {
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+      line-height: 1.7;
+    }
+
+    .comparison-features {
+      list-style: none;
+    }
+
+    .comparison-features li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 0.5rem 0;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+    }
+
+    .comparison-features li .material-icons {
+      color: var(--unal-green);
+      font-size: 1.25rem;
+      flex-shrink: 0;
+    }
+
+    /* ========== REQUIREMENTS SECTION ========== */
+    .requirements-section {
+      background: var(--bg-primary);
+    }
+
+    .requirements-intro {
+      background: var(--unal-green-bg);
+      border-left: 4px solid var(--unal-green);
+      padding: 1.5rem;
+      border-radius: 0 var(--radius) var(--radius) 0;
+      margin-bottom: 2rem;
+    }
+
+    .requirements-intro p {
+      color: var(--text-primary);
+      margin: 0;
+    }
+
+    .accordion {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .accordion-item {
+      background: var(--bg-white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .accordion-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 1.5rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .accordion-header:hover {
+      background: var(--bg-primary);
+    }
+
+    .accordion-title {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .accordion-title .material-icons {
+      color: var(--unal-green);
+    }
+
+    .accordion-header .expand-icon {
+      color: var(--text-secondary);
+      transition: transform 0.3s;
+    }
+
+    .accordion-item.active .expand-icon {
+      transform: rotate(180deg);
+    }
+
+    .accordion-content {
+      display: none;
+      padding: 0 1.5rem 1.5rem;
+      color: var(--text-secondary);
+    }
+
+    .accordion-item.active .accordion-content {
+      display: block;
+    }
+
+    .accordion-content ul {
+      margin: 0;
+      padding-left: 1.5rem;
+    }
+
+    .accordion-content li {
+      margin-bottom: 0.5rem;
+    }
+
+    .accordion-content a {
+      color: var(--unal-green);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .accordion-content a:hover {
+      text-decoration: underline;
+    }
+
+    /* ========== CONVOCATORIAS SECTION ========== */
+    .convocatorias-section {
+      background: var(--bg-white);
+    }
+
+    .webapp-frame {
+      background: var(--bg-primary);
+      border-radius: var(--radius-lg);
+      padding: 1rem;
+      min-height: 600px;
+    }
+
+    .webapp-frame iframe {
+      width: 100%;
+      height: 800px;
+      border: none;
+      border-radius: var(--radius);
+    }
+
+    .webapp-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 400px;
+      color: var(--text-secondary);
+      text-align: center;
+    }
+
+    .webapp-placeholder .material-icons {
+      font-size: 4rem;
+      color: var(--unal-green-light);
+      margin-bottom: 1rem;
+    }
+
+    /* ========== DOCUMENTS SECTION ========== */
+    .documents-section {
+      background: var(--bg-primary);
+    }
+
+    .documents-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .document-card {
+      background: var(--bg-white);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+    }
+
+    .document-card:hover {
+      border-color: var(--unal-green-light);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .document-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--unal-green-bg);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .document-icon .material-icons {
+      font-size: 1.5rem;
+      color: var(--unal-green);
+    }
+
+    .document-info h4 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.25rem;
+    }
+
+    .document-info p {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin: 0;
+    }
+
+    .document-card .download-icon {
+      margin-left: auto;
+      color: var(--text-muted);
+      transition: color 0.2s;
+    }
+
+    .document-card:hover .download-icon {
+      color: var(--unal-green);
+    }
+
+    /* ========== PROCESS SECTION ========== */
+    .process-section {
+      background: var(--bg-white);
+    }
+
+    .process-timeline {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      position: relative;
+    }
+
+    .process-timeline::before {
+      content: '';
+      position: absolute;
+      top: 40px;
+      left: 10%;
+      right: 10%;
+      height: 2px;
+      background: var(--unal-green-light);
+    }
+
+    .process-step {
+      text-align: center;
+      position: relative;
+    }
+
+    .process-number {
+      width: 80px;
+      height: 80px;
+      background: var(--unal-green);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin: 0 auto 1.5rem;
+      position: relative;
+      z-index: 1;
+      box-shadow: 0 4px 14px rgba(76, 175, 80, 0.4);
+    }
+
+    .process-step h4 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .process-step p {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* ========== CONTACT SECTION ========== */
+    .contact-section {
+      background: linear-gradient(135deg, var(--unal-green) 0%, var(--unal-green-dark) 100%);
+      color: white;
+      text-align: center;
+    }
+
+    .contact-section h2 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .contact-section p {
+      opacity: 0.9;
+      margin-bottom: 2rem;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .contact-info {
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      flex-wrap: wrap;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .contact-item .material-icons {
+      font-size: 1.5rem;
+      opacity: 0.9;
+    }
+
+    .contact-item span {
+      font-size: 1rem;
+    }
+
+    /* ========== FOOTER ========== */
+    .footer {
+      background: #1e293b;
+      color: white;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .footer p {
+      opacity: 0.7;
+      font-size: 0.9rem;
+    }
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 992px) {
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .comparison-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .documents-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .process-timeline {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .process-timeline::before {
+        display: none;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hero {
+        padding: 3rem 1.5rem;
+      }
+
+      .hero h1 {
+        font-size: 1.75rem;
+      }
+
+      .hero p {
+        font-size: 1rem;
+      }
+
+      .section {
+        padding: 3rem 0;
+      }
+
+      .section-header h2 {
+        font-size: 1.5rem;
+      }
+
+      .stats-section {
+        margin-top: -1.5rem;
+        padding: 1.5rem;
+      }
+
+      .stat-number {
+        font-size: 1.5rem;
+      }
+
+      .documents-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .process-timeline {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
+      .process-number {
+        width: 60px;
+        height: 60px;
+        font-size: 1.25rem;
+      }
+
+      .contact-info {
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .btn {
+        width: 100%;
+        max-width: 280px;
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero h1 {
+        font-size: 1.5rem;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+      }
+
+      .stat-card {
+        padding: 0.5rem;
+      }
+
+      .stat-number {
+        font-size: 1.25rem;
+      }
+
+      .stat-label {
+        font-size: 0.7rem;
+      }
+
+      .comparison-card {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========== HERO ========== -->
+  <section class="hero">
+    <div class="hero-content">
+      <span class="hero-badge">
+        <span class="material-icons" style="font-size: 1rem; vertical-align: middle; margin-right: 0.25rem;">school</span>
+        Escuela de Pregrados
+      </span>
+      <h1>Prácticas y Pasantías</h1>
+      <p>Conectamos el talento universitario con oportunidades reales. Encuentra tu espacio para crecer profesionalmente.</p>
+      <div class="hero-buttons">
+        <a href="#convocatorias" class="btn btn-primary">
+          <span class="material-icons">search</span>
+          Ver Convocatorias
+        </a>
+        <a href="#proceso" class="btn btn-outline">
+          <span class="material-icons">info</span>
+          ¿Cómo funciona?
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== STATS ========== -->
+  <div class="container">
+    <div class="stats-section">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon">
+            <span class="material-icons">description</span>
+          </div>
+          <div class="stat-number">15</div>
+          <div class="stat-label">Convocatorias Activas</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">
+            <span class="material-icons">people</span>
+          </div>
+          <div class="stat-number">45</div>
+          <div class="stat-label">Cupos Disponibles</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">
+            <span class="material-icons">business</span>
+          </div>
+          <div class="stat-number">20+</div>
+          <div class="stat-label">Empresas Aliadas</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">
+            <span class="material-icons">verified</span>
+          </div>
+          <div class="stat-number">6</div>
+          <div class="stat-label">Programas Académicos</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== COMPARISON ========== -->
+  <section class="section comparison-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>¿Práctica o Pasantía?</h2>
+        <p>Conoce las diferencias y elige la modalidad que mejor se adapte a tu perfil y objetivos profesionales.</p>
+      </div>
+
+      <div class="comparison-grid">
+        <div class="comparison-card practica">
+          <div class="comparison-icon">
+            <span class="material-icons">work</span>
+          </div>
+          <h3>Práctica Profesional</h3>
+          <p>Primera vinculación al contexto laboral enfocado a tu área académica, para conocer técnicas, procesos y métodos propios de la empresa.</p>
+          <ul class="comparison-features">
+            <li>
+              <span class="material-icons">check_circle</span>
+              <span>Aplicación de conocimientos adquiridos</span>
+            </li>
+            <li>
+              <span class="material-icons">check_circle</span>
+              <span>Desarrollo de habilidades técnicas</span>
+            </li>
+            <li>
+              <span class="material-icons">check_circle</span>
+              <span>Experiencia laboral real</span>
+            </li>
+            <li>
+              <span class="material-icons">check_circle</span>
+              <span>Requisito curricular obligatorio</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="comparison-card pasantia">
+          <div class="comparison-icon">
+            <span class="material-icons">science</span>
+          </div>
+          <h3>Pasantía (Trabajo de Grado)</h3>
+          <p>Aplicación de métodos de investigación, evaluación y análisis frente a situaciones específicas con propuestas de mejora.</p>
+          <ul class="comparison-features">
+            <li>
+              <span class="material-icons">check_circle</span>
+              <span>Modalidad de trabajo de grado</span>
+            </li>
+            <li>
+              <span class="material-icons">check_circle</span>
+              <span>Enfoque investigativo</span>
+            </li>
+            <li>
+              <span class="material-icons">check_circle</span>
+              <span>Diagnóstico y propuestas de solución</span>
+            </li>
+            <li>
+              <span class="material-icons">check_circle</span>
+              <span>Desarrollo de proyecto específico</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== REQUIREMENTS ========== -->
+  <section class="section requirements-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Requisitos por Programa</h2>
+        <p>Cada programa académico tiene requisitos específicos. Consulta los detalles según tu carrera.</p>
+      </div>
+
+      <div class="requirements-intro">
+        <p><strong>Requisito general:</strong> El estudiante debe cumplir con el número de créditos o el porcentaje establecido en el Plan de Estudios de su programa curricular.</p>
+      </div>
+
+      <div class="accordion">
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div class="accordion-title">
+              <span class="material-icons">precision_manufacturing</span>
+              Ingeniería Mecatrónica
+            </div>
+            <span class="material-icons expand-icon">expand_more</span>
+          </div>
+          <div class="accordion-content">
+            <p>Consulta los requisitos específicos en el <a href="http://www.legal.unal.edu.co/rlunal/home/doc.jsp?d_i=93959" target="_blank">Acuerdo 009 de 2019</a></p>
+            <ul>
+              <li>Haber aprobado mínimo el 70% de los créditos del plan de estudios</li>
+              <li>No tener sanciones disciplinarias vigentes</li>
+              <li>Estar matriculado en el período académico correspondiente</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div class="accordion-title">
+              <span class="material-icons">biotech</span>
+              Ingeniería Biológica
+            </div>
+            <span class="material-icons expand-icon">expand_more</span>
+          </div>
+          <div class="accordion-content">
+            <p>Consulta los requisitos específicos en el <a href="http://www.legal.unal.edu.co/rlunal/home/doc.jsp?d_i=93962" target="_blank">Acuerdo 013 de 2019</a></p>
+            <ul>
+              <li>Haber aprobado mínimo el 70% de los créditos del plan de estudios</li>
+              <li>Cumplir con las asignaturas prerrequisito establecidas</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div class="accordion-title">
+              <span class="material-icons">eco</span>
+              Biología
+            </div>
+            <span class="material-icons expand-icon">expand_more</span>
+          </div>
+          <div class="accordion-content">
+            <p>Consulta los requisitos específicos en el <a href="http://www.legal.unal.edu.co/rlunal/home/doc.jsp?d_i=93961" target="_blank">Acuerdo 011 de 2019</a></p>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div class="accordion-title">
+              <span class="material-icons">palette</span>
+              Gestión Cultural y Comunicativa
+            </div>
+            <span class="material-icons expand-icon">expand_more</span>
+          </div>
+          <div class="accordion-content">
+            <p>Consulta los requisitos específicos en el <a href="http://www.legal.unal.edu.co/rlunal/home/doc.jsp?d_i=93960" target="_blank">Acuerdo 010 de 2019</a></p>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div class="accordion-title">
+              <span class="material-icons">public</span>
+              Geografía
+            </div>
+            <span class="material-icons expand-icon">expand_more</span>
+          </div>
+          <div class="accordion-content">
+            <p>Consulta los requisitos específicos en el <a href="http://www.legal.unal.edu.co/rlunal/home/doc.jsp?d_i=93978" target="_blank">Acuerdo 014 de 2019</a></p>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div class="accordion-title">
+              <span class="material-icons">bar_chart</span>
+              Estadística
+            </div>
+            <span class="material-icons expand-icon">expand_more</span>
+          </div>
+          <div class="accordion-content">
+            <p>Consulta los requisitos específicos en el <a href="http://www.legal.unal.edu.co/rlunal/home/doc.jsp?d_i=93958" target="_blank">Acuerdo 012 de 2019</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CONVOCATORIAS ========== -->
+  <section class="section convocatorias-section" id="convocatorias">
+    <div class="container">
+      <div class="section-header">
+        <h2>Convocatorias Activas</h2>
+        <p>Explora las oportunidades disponibles y encuentra la que mejor se adapte a tu perfil.</p>
+      </div>
+
+      <div class="webapp-frame">
+        <!-- Aquí se embebe la WebApp de convocatorias -->
+        <div class="webapp-placeholder">
+          <span class="material-icons">widgets</span>
+          <h3>WebApp de Convocatorias</h3>
+          <p>Aquí se mostrará el buscador interactivo de convocatorias.<br>
+          <small>(Embeber iframe con la URL de la Web App)</small></p>
+        </div>
+        <!-- 
+        <iframe src="TU_URL_DE_WEBAPP_AQUI" 
+                title="Convocatorias de Prácticas y Pasantías"
+                loading="lazy">
+        </iframe>
+        -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== DOCUMENTS ========== -->
+  <section class="section documents-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Documentos y Formatos</h2>
+        <p>Descarga los formatos necesarios para formalizar tu práctica o pasantía.</p>
+      </div>
+
+      <div class="documents-grid">
+        <a href="https://docs.google.com/document/d/1hlpMUaCBm6L1ggzZB-0OY5SJ_cq5NubqFRp7ZBnOOe4/edit" class="document-card" target="_blank">
+          <div class="document-icon">
+            <span class="material-icons">assignment</span>
+          </div>
+          <div class="document-info">
+            <h4>Formato de Preinscripción</h4>
+            <p>Primer paso para registrar tu interés</p>
+          </div>
+          <span class="material-icons download-icon">download</span>
+        </a>
+
+        <a href="https://docs.google.com/document/d/19KQmA7TguBsgjs8zAjDC27BL4whyKhBy/edit" class="document-card" target="_blank">
+          <div class="document-icon">
+            <span class="material-icons">handshake</span>
+          </div>
+          <div class="document-info">
+            <h4>Acta de Compromiso</h4>
+            <p>Formalización del acuerdo</p>
+          </div>
+          <span class="material-icons download-icon">download</span>
+        </a>
+
+        <a href="https://docs.google.com/document/d/1Ai_qkbEi5ZdIJGrvx_DhFzyG20c93Zbk3jiHeZ2oJJ4/edit" class="document-card" target="_blank">
+          <div class="document-icon">
+            <span class="material-icons">fact_check</span>
+          </div>
+          <div class="document-info">
+            <h4>Plan de Trabajo</h4>
+            <p>Objetivos y actividades a desarrollar</p>
+          </div>
+          <span class="material-icons download-icon">download</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PROCESS ========== -->
+  <section class="section process-section" id="proceso">
+    <div class="container">
+      <div class="section-header">
+        <h2>¿Cómo Inscribir tu Práctica?</h2>
+        <p>Sigue estos pasos para formalizar tu práctica o pasantía correctamente.</p>
+      </div>
+
+      <div class="process-timeline">
+        <div class="process-step">
+          <div class="process-number">1</div>
+          <h4>Revisa Requisitos</h4>
+          <p>Verifica que cumples con los créditos y requisitos de tu programa académico.</p>
+        </div>
+
+        <div class="process-step">
+          <div class="process-number">2</div>
+          <h4>Busca Convocatoria</h4>
+          <p>Explora las oportunidades disponibles y selecciona la que se ajuste a tu perfil.</p>
+        </div>
+
+        <div class="process-step">
+          <div class="process-number">3</div>
+          <h4>Descarga Formatos</h4>
+          <p>Completa el formato de preinscripción, acta de compromiso y plan de trabajo.</p>
+        </div>
+
+        <div class="process-step">
+          <div class="process-number">4</div>
+          <h4>Formaliza Inscripción</h4>
+          <p>Entrega la documentación y espera la aprobación para iniciar tu práctica.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CONTACT ========== -->
+  <section class="section contact-section">
+    <div class="container">
+      <h2>¿Tienes Preguntas?</h2>
+      <p>Estamos aquí para orientarte en tu proceso de práctica o pasantía.</p>
+      
+      <div class="contact-info">
+        <div class="contact-item">
+          <span class="material-icons">email</span>
+          <span>practicas_lapaz@unal.edu.co</span>
+        </div>
+        <div class="contact-item">
+          <span class="material-icons">location_on</span>
+          <span>Km 9 Vía Valledupar - La Paz, Cesar</span>
+        </div>
+        <div class="contact-item">
+          <span class="material-icons">schedule</span>
+          <span>Lunes a Viernes: 8:00 - 17:00</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer">
+    <p>Universidad Nacional de Colombia - Sede de La Paz © 2026</p>
+  </footer>
+
+  <script>
+    // Accordion functionality
+    function toggleAccordion(header) {
+      const item = header.parentElement;
+      const isActive = item.classList.contains('active');
+      
+      // Close all accordion items
+      document.querySelectorAll('.accordion-item').forEach(i => {
+        i.classList.remove('active');
+      });
+      
+      // Open clicked item if it wasn't active
+      if (!isActive) {
+        item.classList.add('active');
+      }
+    }
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>

@@ -178,7 +178,8 @@ const COL_POST = {
   EMAIL: 12,             // M: Email
   PAPA: 13,              // N: PAPA
   PBM: 14,               // O: PBM
-  OBSERVACIONES: 15      // P: Observaciones
+  MODALIDAD: 15,         // P: Modalidad (heredado de la convocatoria)
+  OBSERVACIONES: 16      // Q: Observaciones
 };
 
 /**
@@ -228,7 +229,8 @@ function guardarPostulacion(datos) {
       datos.correoElectronico || '',           // M: Email
       datos.papa || '',                        // N: PAPA
       datos.pbm || '',                         // O: PBM
-      ''                                       // P: Observaciones (vacío)
+      datos.modalidad || '',                   // P: Modalidad (heredado de convocatoria)
+      ''                                       // Q: Observaciones (vacío)
     ];
     
     // Insertar fila
@@ -242,6 +244,9 @@ function guardarPostulacion(datos) {
       .setAllowInvalid(false)
       .build();
     celdaEstado.setDataValidation(reglaEstado);
+    
+    // Enviar correo de confirmación al estudiante
+    enviarCorreoConfirmacionPostulacion(datos);
     
     return {
       success: true,
@@ -354,4 +359,158 @@ function validarEstadoEstudiante(numeroDocumento, idConvocatoria) {
     console.error('Error al validar estado del estudiante:', error);
     return { puedePostularse: true }; // En caso de error, permitir postulación
   }
+}
+
+// ========== CORREO DE CONFIRMACIÓN DE POSTULACIÓN ==========
+
+const EMAIL_CONTACTO = 'practicas_paz@unal.edu.co';
+
+/**
+ * Envía un correo de confirmación al estudiante después de postularse
+ * @param {Object} datos - Datos de la postulación
+ */
+function enviarCorreoConfirmacionPostulacion(datos) {
+  try {
+    console.log('=== INICIO ENVIO CORREO CONFIRMACION ===');
+    
+    const email = datos.correoElectronico;
+    if (!email) {
+      console.log('ERROR: No se encontró email para enviar confirmación');
+      return;
+    }
+    
+    console.log('Email destino:', email);
+    
+    const nombreCompleto = (datos.primerNombre + ' ' + (datos.segundoNombre || '') + ' ' + datos.primerApellido + ' ' + (datos.segundoApellido || '')).trim().replace(/\s+/g, ' ');
+    console.log('Nombre completo:', nombreCompleto);
+    
+    const asunto = '✅ Postulación Recibida - ' + datos.tituloConvocatoria;
+    console.log('Asunto:', asunto);
+    
+    const cuerpoHtml = generarCorreoConfirmacion(nombreCompleto, datos);
+    
+    MailApp.sendEmail({
+      to: email,
+      subject: asunto,
+      htmlBody: cuerpoHtml,
+      name: 'Prácticas UNAL Sede de La Paz'
+    });
+    
+    console.log('✅ Correo de confirmación enviado exitosamente a: ' + email);
+    
+  } catch (error) {
+    console.error('❌ ERROR al enviar correo de confirmación:', error.message);
+    // No lanzar error para no afectar el registro de la postulación
+  }
+}
+
+/**
+ * Genera el HTML del correo de confirmación
+ */
+function generarCorreoConfirmacion(nombreCompleto, datos) {
+  const fechaPostulacion = new Date().toLocaleDateString('es-CO', {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  });
+  
+  return `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0; }
+    .container { max-width: 600px; margin: 0 auto; }
+    .header { background: linear-gradient(135deg, #4CAF50, #388E3C); color: white; padding: 30px; text-align: center; }
+    .header h1 { margin: 0 0 10px 0; font-size: 24px; }
+    .header p { margin: 0; opacity: 0.9; }
+    .content { background: #ffffff; padding: 30px; }
+    .greeting { font-size: 18px; margin-bottom: 20px; }
+    .info-card { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 12px; padding: 20px; margin: 20px 0; }
+    .info-card h3 { margin: 0 0 15px 0; color: #166534; font-size: 16px; }
+    .info-row { display: flex; margin-bottom: 10px; }
+    .info-label { font-weight: 600; color: #374151; min-width: 140px; }
+    .info-value { color: #1f2937; }
+    .status-badge { display: inline-block; background: #fef3c7; color: #92400e; padding: 6px 16px; border-radius: 20px; font-weight: 600; font-size: 14px; }
+    .next-steps { background: #eff6ff; border-left: 4px solid #3b82f6; padding: 15px 20px; margin: 20px 0; }
+    .next-steps h4 { margin: 0 0 10px 0; color: #1e40af; }
+    .next-steps ul { margin: 0; padding-left: 20px; color: #1e3a8a; }
+    .next-steps li { margin-bottom: 8px; }
+    .footer { background: #f8fafc; padding: 20px 30px; text-align: center; border-top: 1px solid #e2e8f0; }
+    .footer p { margin: 5px 0; color: #64748b; font-size: 13px; }
+    .footer a { color: #4CAF50; text-decoration: none; }
+    .icon { font-size: 48px; margin-bottom: 10px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="icon">📋</div>
+      <h1>¡Postulación Recibida!</h1>
+      <p>Tu postulación ha sido registrada exitosamente</p>
+    </div>
+    
+    <div class="content">
+      <p class="greeting">Hola <strong>${nombreCompleto}</strong>,</p>
+      
+      <p>Hemos recibido tu postulación para la siguiente convocatoria:</p>
+      
+      <div class="info-card">
+        <h3>📌 Detalles de tu postulación</h3>
+        <div class="info-row">
+          <span class="info-label">Convocatoria:</span>
+          <span class="info-value">${datos.tituloConvocatoria || 'No especificada'}</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Modalidad:</span>
+          <span class="info-value">${datos.modalidad || 'No especificada'}</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Tu programa:</span>
+          <span class="info-value">${datos.programaEstudiante || 'No especificado'}</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Fecha de registro:</span>
+          <span class="info-value">${fechaPostulacion}</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Estado actual:</span>
+          <span class="status-badge">⏳ Pendiente de revisión</span>
+        </div>
+      </div>
+      
+      <div class="next-steps">
+        <h4>📋 ¿Qué sigue ahora?</h4>
+        <ul>
+          <li>Tu postulación será revisada por el equipo encargado.</li>
+          <li>Recibirás un correo cuando haya una actualización sobre tu estado.</li>
+          <li>El proceso de selección puede tomar algunos días.</li>
+          <li>Revisa tu correo frecuentemente (incluyendo la carpeta de spam).</li>
+        </ul>
+      </div>
+      
+      <p>Si tienes alguna pregunta sobre tu postulación, no dudes en contactarnos.</p>
+      
+      <p>¡Gracias por tu interés en las oportunidades de prácticas y pasantías!</p>
+      
+      <p style="margin-top: 30px;">Saludos cordiales,<br>
+      <strong>Equipo de Prácticas y Pasantías</strong><br>
+      Universidad Nacional de Colombia - Sede de La Paz</p>
+    </div>
+    
+    <div class="footer">
+      <p><strong>Universidad Nacional de Colombia - Sede de La Paz</strong></p>
+      <p>📧 <a href="mailto:${EMAIL_CONTACTO}">${EMAIL_CONTACTO}</a></p>
+      <p style="margin-top: 15px; font-size: 12px; color: #94a3b8;">
+        Este es un correo automático de confirmación. Por favor no respondas directamente a este mensaje.
+      </p>
+    </div>
+  </div>
+</body>
+</html>
+  `;
 }

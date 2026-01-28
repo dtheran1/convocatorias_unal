@@ -1054,6 +1054,7 @@
           <input type="hidden" id="postIdConvocatoria" value="">
           <input type="hidden" id="postTituloConvocatoria" value="">
           <input type="hidden" id="postProgramaConvocatoria" value="">
+          <input type="hidden" id="postModalidad" value="">
 
           <!-- Nombres -->
           <div class="form-row">
@@ -1063,8 +1064,8 @@
               <div class="form-error" id="errorPrimerNombre">Este campo es requerido</div>
             </div>
             <div class="form-group">
-              <label class="form-label">Segundo Nombre <span class="required">*</span></label>
-              <input type="text" class="form-input" id="segundoNombre" required placeholder="Ej: Carlos">
+              <label class="form-label">Segundo Nombre</label>
+              <input type="text" class="form-input" id="segundoNombre" placeholder="Ej: Carlos">
               <div class="form-error" id="errorSegundoNombre">Este campo es requerido</div>
             </div>
           </div>
@@ -1505,6 +1506,7 @@
       document.getElementById('postIdConvocatoria').value = conv.id;
       document.getElementById('postTituloConvocatoria').value = conv.titulo;
       document.getElementById('postProgramaConvocatoria').value = conv.programasAcademicos;
+      document.getElementById('postModalidad').value = conv.tipoModalidad || '';
 
       // Limpiar formulario
       document.getElementById('postulacionForm').reset();
@@ -1545,7 +1547,6 @@
       // Validar campos requeridos
       const requiredFields = [
         { field: 'primerNombre', error: 'errorPrimerNombre' },
-        { field: 'segundoNombre', error: 'errorSegundoNombre' },
         { field: 'primerApellido', error: 'errorPrimerApellido' },
         { field: 'segundoApellido', error: 'errorSegundoApellido' },
         { field: 'numeroDocumento', error: 'errorNumeroDocumento' },
@@ -1631,6 +1632,7 @@
       const datos = {
         idConvocatoria: document.getElementById('postIdConvocatoria').value,
         tituloConvocatoria: document.getElementById('postTituloConvocatoria').value,
+        modalidad: document.getElementById('postModalidad').value,
         primerNombre: document.getElementById('primerNombre').value.trim(),
         segundoNombre: document.getElementById('segundoNombre').value.trim(),
         primerApellido: document.getElementById('primerApellido').value.trim(),

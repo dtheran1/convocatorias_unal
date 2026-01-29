@@ -320,7 +320,7 @@ function validarEstadoEstudiante(numeroDocumento, idConvocatoria) {
       return {
         puedePostularse: false,
         tipo: 'ESTUDIANTE_SELECCIONADO',
-        mensaje: 'Felicitaciones. Ya ha sido seleccionado para una convocatoria.',
+        mensaje: 'Felicitaciones. Ya ha sido seleccionado para una vacante.',
         datos: estaSeleccionado
       };
     }
@@ -332,14 +332,14 @@ function validarEstadoEstudiante(numeroDocumento, idConvocatoria) {
         return {
           puedePostularse: false,
           tipo: 'POSTULACION_NO_SELECCIONADA',
-          mensaje: 'Su postulación anterior a esta convocatoria no fue seleccionada.',
+          mensaje: 'Su postulación anterior a esta vacante no fue seleccionada.',
           datos: postulacionNoSeleccionada
         };
       }
       return {
         puedePostularse: false,
         tipo: 'POSTULACION_DUPLICADA',
-        mensaje: 'Ya se ha postulado a esta convocatoria anteriormente.'
+        mensaje: 'Ya se ha postulado a esta vacante anteriormente.'
       };
     }
 
@@ -723,13 +723,13 @@ function generarCorreoSeleccionado(nombreCompleto, datos) {
 
       <div class="success-card">
         <h2>🏆 Ha sido seleccionado/a</h2>
-        <p>Su perfil ha sido elegido para esta convocatoria</p>
+        <p>Su perfil ha sido elegido para esta vacante</p>
       </div>
       
       <div class="info-card">
-        <h3>📌 Detalles de la convocatoria</h3>
+        <h3>📌 Detalles de la vacante</h3>
         <div class="info-row">
-          <span class="info-label">Convocatoria:</span>
+          <span class="info-label">Vacante:</span>
           <span class="info-value">${datos.titulo || 'No especificada'}</span>
         </div>
         <div class="info-row">
@@ -843,11 +843,11 @@ function generarCorreoNoSeleccionado(nombreCompleto, datos) {
       
       <div class="encouragement">
         <h4>💪 No se desanime</h4>
-        <p>Esta decisión no define sus capacidades. Le invitamos a seguir postulándose a futuras convocatorias. Constantemente se abren nuevas oportunidades que podrían ser ideales para su perfil.</p>
+        <p>Esta decisión no define sus capacidades. Le invitamos a seguir postulándose a futuras vacantes. Constantemente se abren nuevas oportunidades que podrían ser ideales para su perfil.</p>
       </div>
       
       <div class="info-card" style="background: #f0f9ff; border: 1px solid #bae6fd;">
-        <p><strong>📌 Nota:</strong> Las siguientes vacantes son ofrecidas por la Oficina de Prácticas y Pasantías. No obstante, tiene la libertad de gestionar sus prácticas o pasantías en la entidad de su interés.</p>
+        <p><strong>📌 Nota:</strong> Las vacantes son ofrecidas por la Oficina de Prácticas y Pasantías. No obstante, tiene la libertad de gestionar sus prácticas o pasantías en la entidad de su interés.</p>
         <p style="margin-top: 10px;">Actualmente contamos con Convenios P&P vigentes con 20+ entidades, por lo que le invitamos a revisar la matriz de Convenios P&P disponible.</p>
         <p style="margin-top: 10px;">En caso de que la entidad de su interés no cuente con Convenio P&P con la Universidad Nacional de Colombia, por favor infórmenos para iniciar el proceso de gestión correspondiente.</p>
       </div>

@@ -1416,7 +1416,7 @@
         document.body.classList.add('in-iframe');
 
         // Función para enviar altura al padre
-        function sendHeightToParent() {
+        window.sendHeightToParent = function(minHeight = 800) {
           try {
             const height = Math.max(
               document.body.scrollHeight,
@@ -1429,7 +1429,7 @@
             // Enviar mensaje al padre (Google Sites)
             window.parent.postMessage({
               type: 'setHeight',
-              height: Math.max(height, 800) // Mínimo 800px
+              height: Math.max(height, minHeight)
             }, '*');
           } catch (e) {
             console.log('No se pudo comunicar con el iframe padre');
@@ -1437,18 +1437,18 @@
         }
 
         // Enviar altura inicial
-        sendHeightToParent();
+        window.sendHeightToParent();
 
         // Enviar altura cuando cambie el contenido
         const resizeObserver = new ResizeObserver(() => {
-          sendHeightToParent();
+          window.sendHeightToParent();
         });
 
         resizeObserver.observe(document.body);
 
         // También enviar cuando se abran/cierren modales
         const observer = new MutationObserver(() => {
-          sendHeightToParent();
+          window.sendHeightToParent();
         });
 
         observer.observe(document.body, {
@@ -1531,6 +1531,11 @@
             <p>Por favor, intente con otros términos de búsqueda o filtros</p>
           </div>
         `;
+
+        // Ajustar altura del iframe cuando no hay convocatorias
+        if (window.sendHeightToParent) {
+          setTimeout(() => window.sendHeightToParent(600), 100);
+        }
         return;
       }
 
@@ -1539,6 +1544,11 @@
           ${filteredConvocatorias.map(conv => createCard(conv)).join('')}
         </div>
       `;
+
+      // Restaurar altura normal del iframe cuando hay convocatorias
+      if (window.sendHeightToParent) {
+        setTimeout(() => window.sendHeightToParent(800), 100);
+      }
     }
 
     function createCard(conv) {

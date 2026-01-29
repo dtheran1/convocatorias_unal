@@ -320,11 +320,11 @@ function validarEstadoEstudiante(numeroDocumento, idConvocatoria) {
       return {
         puedePostularse: false,
         tipo: 'ESTUDIANTE_SELECCIONADO',
-        mensaje: '¡Felicidades! Ya has sido seleccionado para una convocatoria.',
+        mensaje: 'Felicitaciones. Ya ha sido seleccionado para una convocatoria.',
         datos: estaSeleccionado
       };
     }
-    
+
     // Prioridad 2: Si ya se postuló a esta convocatoria específica
     if (yaPostuladoAEsta) {
       // Si fue no seleccionado, mostrar el motivo
@@ -332,23 +332,23 @@ function validarEstadoEstudiante(numeroDocumento, idConvocatoria) {
         return {
           puedePostularse: false,
           tipo: 'POSTULACION_NO_SELECCIONADA',
-          mensaje: 'Tu postulación anterior a esta convocatoria no fue seleccionada.',
+          mensaje: 'Su postulación anterior a esta convocatoria no fue seleccionada.',
           datos: postulacionNoSeleccionada
         };
       }
       return {
         puedePostularse: false,
         tipo: 'POSTULACION_DUPLICADA',
-        mensaje: 'Ya te has postulado a esta convocatoria anteriormente.'
+        mensaje: 'Ya se ha postulado a esta convocatoria anteriormente.'
       };
     }
-    
+
     // Prioridad 3: Si ya tiene 2 postulaciones pendientes
     if (postulacionesPendientes >= 2) {
       return {
         puedePostularse: false,
         tipo: 'LIMITE_POSTULACIONES',
-        mensaje: 'Ya tienes 2 postulaciones en estado pendiente. No puedes postularte a más vacantes hasta que sean resueltas.'
+        mensaje: 'Ya tiene 2 postulaciones en estado pendiente. No puede postularse a más vacantes hasta que sean resueltas.'
       };
     }
     
@@ -450,17 +450,16 @@ function generarCorreoConfirmacion(nombreCompleto, datos) {
   <div class="container">
     <div class="header">
       <div class="icon">📋</div>
-      <h1>¡Postulación Recibida!</h1>
-      <p>Tu postulación ha sido registrada exitosamente</p>
+      <h1>Confirmación de solicitud</h1>
+      <p>Su solicitud ha sido registrada exitosamente.</p>
     </div>
     
     <div class="content">
-      <p class="greeting">Hola <strong>${nombreCompleto}</strong>,</p>
-      
-      <p>Hemos recibido tu postulación para la siguiente vacante:</p>
+      <p class="greeting">Estimado(a) <strong>${nombreCompleto}</strong>,</p>
+      <p>Hemos recibido su solicitud para la siguiente vacante:</p>
       
       <div class="info-card">
-        <h3>📌 Detalles de tu postulación</h3>
+        <h3>📌 Detalles de la solicitud</h3>
         <div class="info-row">
           <span class="info-label">Vacante:</span>
           <span class="info-value">${datos.tituloConvocatoria || 'No especificada'}</span>
@@ -470,7 +469,7 @@ function generarCorreoConfirmacion(nombreCompleto, datos) {
           <span class="info-value">${datos.modalidad || 'No especificada'}</span>
         </div>
         <div class="info-row">
-          <span class="info-label">Tu programa:</span>
+          <span class="info-label">Programa académico:</span>
           <span class="info-value">${datos.programaEstudiante || 'No especificado'}</span>
         </div>
         <div class="info-row">
@@ -484,21 +483,18 @@ function generarCorreoConfirmacion(nombreCompleto, datos) {
       </div>
       
       <div class="next-steps">
-        <h4>📋 ¿Qué sigue ahora?</h4>
+        <h4>📋 Próximos pasos</h4>
         <ul>
-          <li>Tu postulación será revisada por el equipo encargado.</li>
-          <li>Recibirás un correo cuando haya una actualización sobre tu estado.</li>
+          <li>Su solicitud será revisada por el equipo encargado.</li>
+          <li>Recibirá una notificación por correo electrónico cuando haya una actualización sobre su estado.</li>
           <li>El proceso de selección puede tomar algunos días.</li>
-          <li>Revisa tu correo frecuentemente (incluyendo la carpeta de spam).</li>
+          <li>Por favor, revise su correo frecuentemente (incluyendo la carpeta de spam).</li>
         </ul>
       </div>
-      
-      <p>Si tienes alguna pregunta sobre tu postulación, no dudes en contactarnos.</p>
-      
-      <p>¡Gracias por tu interés en las oportunidades de prácticas y pasantías!</p>
-      
-      <p style="margin-top: 30px;">Saludos cordiales,<br>
-      <strong>Equipo de Prácticas y Pasantías</strong><br>
+      <p>Si tiene alguna pregunta sobre su solicitud, no dude en contactarnos.</p>
+      <p>Agradecemos su interés en las oportunidades de prácticas y pasantías ofrecidas por la Universidad Nacional de Colombia - Sede de La Paz.</p>
+      <p style="margin-top: 30px;">Atentamente,<br>
+      <strong>Oficina de Prácticas y Pasantías</strong><br>
       Universidad Nacional de Colombia - Sede de La Paz</p>
     </div>
     
@@ -506,7 +502,7 @@ function generarCorreoConfirmacion(nombreCompleto, datos) {
       <p><strong>Universidad Nacional de Colombia - Sede de La Paz</strong></p>
       <p>📧 <a href="mailto:${EMAIL_CONTACTO}">${EMAIL_CONTACTO}</a></p>
       <p style="margin-top: 15px; font-size: 12px; color: #94a3b8;">
-        Este es un correo automático de confirmación. Por favor no respondas directamente a este mensaje.
+        Este es un correo automático de confirmación. Por favor no responda directamente a este mensaje.
       </p>
     </div>
   </div>
@@ -624,7 +620,7 @@ function enviarNotificacionSeleccionado(datos) {
   try {
     const nombreCompleto = construirNombreCompleto(datos);
     
-    const asunto = '🎉 ¡Felicidades! Has sido seleccionado - ' + datos.titulo;
+    const asunto = '🎉 Felicitaciones - Ha sido seleccionado - ' + datos.titulo;
     
     const cuerpoHtml = generarCorreoSeleccionado(nombreCompleto, datos);
     
@@ -649,7 +645,7 @@ function enviarNotificacionNoSeleccionado(datos) {
   try {
     const nombreCompleto = construirNombreCompleto(datos);
     
-    const asunto = 'Resultado de tu postulación - ' + datos.titulo;
+    const asunto = 'Resultado de su postulación - ' + datos.titulo;
     
     const cuerpoHtml = generarCorreoNoSeleccionado(nombreCompleto, datos);
     
@@ -718,16 +714,16 @@ function generarCorreoSeleccionado(nombreCompleto, datos) {
   <div class="container">
     <div class="header">
       <div class="icon">🎉</div>
-      <h1>¡Felicidades!</h1>
-      <p>Has sido seleccionado/a para una oportunidad</p>
+      <h1>Felicitaciones</h1>
+      <p>Ha sido seleccionado/a para una oportunidad</p>
     </div>
-    
+
     <div class="content">
-      <p class="greeting">Hola <strong>${nombreCompleto}</strong>,</p>
-      
+      <p class="greeting">Estimado(a) <strong>${nombreCompleto}</strong>,</p>
+
       <div class="success-card">
-        <h2>🏆 ¡Has sido seleccionado/a!</h2>
-        <p>Tu perfil ha sido elegido para esta convocatoria</p>
+        <h2>🏆 Ha sido seleccionado/a</h2>
+        <p>Su perfil ha sido elegido para esta convocatoria</p>
       </div>
       
       <div class="info-card">
@@ -741,22 +737,22 @@ function generarCorreoSeleccionado(nombreCompleto, datos) {
           <span class="info-value">${datos.modalidad || 'No especificada'}</span>
         </div>
         <div class="info-row">
-          <span class="info-label">Tu programa:</span>
+          <span class="info-label">Su programa:</span>
           <span class="info-value">${datos.programa || 'No especificado'}</span>
         </div>
       </div>
-      
+
       <div class="next-steps">
         <h4>📋 Próximos pasos</h4>
         <ul>
-          <li><strong>Espera nuestro contacto:</strong> El equipo de prácticas se comunicará contigo pronto con más información.</li>
-          <li><strong>Revisa tu correo:</strong> Mantente pendiente de tu bandeja de entrada (y spam).</li>
-          <li><strong>Prepara tu documentación:</strong> Ten a la mano tus documentos personales y académicos.</li>
-          <li><strong>Preguntas:</strong> Si tienes dudas, contáctanos a ${EMAIL_CONTACTO}</li>
+          <li><strong>Espere nuestro contacto:</strong> El equipo de prácticas se comunicará con usted próximamente con mayor información.</li>
+          <li><strong>Revise su correo:</strong> Manténgase pendiente de su bandeja de entrada (incluyendo spam).</li>
+          <li><strong>Prepare su documentación:</strong> Tenga a la mano sus documentos personales y académicos.</li>
+          <li><strong>Preguntas:</strong> Si tiene dudas, contáctenos a ${EMAIL_CONTACTO}</li>
         </ul>
       </div>
-      
-      <p>¡Felicidades nuevamente por este logro! Estamos emocionados de tenerte como parte de esta experiencia.</p>
+
+      <p>Felicitaciones nuevamente por este logro. Estamos emocionados de tenerle como parte de esta experiencia.</p>
       
       <p style="margin-top: 30px;">Saludos cordiales,<br>
       <strong>Equipo de Prácticas y Pasantías</strong><br>
@@ -818,13 +814,13 @@ function generarCorreoNoSeleccionado(nombreCompleto, datos) {
     </div>
     
     <div class="content">
-      <p class="greeting">Hola <strong>${nombreCompleto}</strong>,</p>
-      
-      <p>Agradecemos tu interés en las oportunidades de prácticas y pasantías de la Universidad Nacional de Colombia - Sede de La Paz.</p>
-      
+      <p class="greeting">Estimado(a) <strong>${nombreCompleto}</strong>,</p>
+
+      <p>Agradecemos su interés en las oportunidades de prácticas y pasantías de la Universidad Nacional de Colombia - Sede de La Paz.</p>
+
       <div class="result-card">
         <h3>📋 Resultado del proceso</h3>
-        <p>Después de revisar cuidadosamente todas las postulaciones, lamentamos informarte que en esta ocasión <strong>no has sido seleccionado/a</strong> para la siguiente vacante:</p>
+        <p>Después de revisar cuidadosamente todas las postulaciones, lamentamos informarle que en esta ocasión <strong>no ha sido seleccionado/a</strong> para la siguiente vacante:</p>
       </div>
       
       <div class="info-card">
@@ -846,19 +842,19 @@ function generarCorreoNoSeleccionado(nombreCompleto, datos) {
       ` : ''}
       
       <div class="encouragement">
-        <h4>💪 ¡No te desanimes!</h4>
-        <p>Esta decisión no define tus capacidades. Te invitamos a seguir postulándote a futuras convocatorias. Constantemente se abren nuevas oportunidades que podrían ser ideales para tu perfil.</p>
+        <h4>💪 No se desanime</h4>
+        <p>Esta decisión no define sus capacidades. Le invitamos a seguir postulándose a futuras convocatorias. Constantemente se abren nuevas oportunidades que podrían ser ideales para su perfil.</p>
       </div>
       
       <div class="info-card" style="background: #f0f9ff; border: 1px solid #bae6fd;">
-        <p><strong>📌 Nota:</strong> Las vacantes son ofrecidas por la Oficina de Prácticas y Pasantías. No obstante, tienes la libertad de gestionar tus prácticas o pasantías en la entidad de tu interés.</p>
-        <p style="margin-top: 10px;">Actualmente contamos con convenios vigentes con más de 20 empresas, por lo que te invitamos a revisar la matriz de convenios disponible.</p>
-        <p style="margin-top: 10px;">En caso de que la entidad de tu interés no cuente con convenio con nosotros, por favor infórmanos para iniciar el proceso de gestión correspondiente.</p>
+        <p><strong>📌 Nota:</strong> Las siguientes vacantes son ofrecidas por la Oficina de Prácticas y Pasantías. No obstante, tiene la libertad de gestionar sus prácticas o pasantías en la entidad de su interés.</p>
+        <p style="margin-top: 10px;">Actualmente contamos con Convenios P&P vigentes con 20+ entidades, por lo que le invitamos a revisar la matriz de Convenios P&P disponible.</p>
+        <p style="margin-top: 10px;">En caso de que la entidad de su interés no cuente con Convenio P&P con la Universidad Nacional de Colombia, por favor infórmenos para iniciar el proceso de gestión correspondiente.</p>
       </div>
       
-      <p>Si tienes alguna pregunta sobre el proceso o deseas recibir retroalimentación adicional, no dudes en contactarnos.</p>
-      
-      <p>¡Te deseamos mucho éxito en tus futuros proyectos!</p>
+      <p>Si tiene alguna pregunta sobre el proceso o desea recibir retroalimentación adicional, no dude en contactarnos.</p>
+
+      <p>Le deseamos mucho éxito en sus futuros proyectos.</p>
       
       <p style="margin-top: 30px;">Saludos cordiales,<br>
       <strong>Equipo de Prácticas y Pasantías</strong><br>

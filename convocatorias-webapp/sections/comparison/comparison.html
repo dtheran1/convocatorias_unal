@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Práctica vs Pasantía - UNAL</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+    :root {
+      --unal-green: #4CAF50;
+      --unal-green-light: #C8E6C9;
+      --text-primary: #1e293b;
+      --text-secondary: #64748b;
+      --bg-primary: #f8fafc;
+      --bg-white: #ffffff;
+      --radius-lg: 16px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      min-height: 600px;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-white);
+      padding: 3rem 1.5rem;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .section-header h2 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.75rem;
+    }
+
+    .section-header p {
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .comparison-card {
+      background: var(--bg-primary);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      border: 2px solid transparent;
+      transition: all 0.3s ease;
+    }
+
+    @media (hover: hover) {
+      .comparison-card:hover {
+        border-color: var(--unal-green-light);
+        transform: translateY(-4px);
+      }
+    }
+
+    .comparison-card.practica {
+      border-top: 4px solid #2563eb;
+    }
+
+    .comparison-card.pasantia {
+      border-top: 4px solid #f59e0b;
+    }
+
+    .comparison-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .comparison-card.practica .comparison-icon {
+      background: #dbeafe;
+    }
+
+    .comparison-card.practica .comparison-icon .material-icons {
+      color: #2563eb;
+      font-size: 2rem;
+    }
+
+    .comparison-card.pasantia .comparison-icon {
+      background: #fef3c7;
+    }
+
+    .comparison-card.pasantia .comparison-icon .material-icons {
+      color: #f59e0b;
+      font-size: 2rem;
+    }
+
+    .comparison-card h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--text-primary);
+    }
+
+    .comparison-card p {
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+      line-height: 1.7;
+    }
+
+    .comparison-features {
+      list-style: none;
+    }
+
+    .comparison-features li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 0.5rem 0;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+    }
+
+    .comparison-features li .material-icons {
+      color: var(--unal-green);
+      font-size: 1.25rem;
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 2rem 1rem;
+      }
+
+      .section-header h2 {
+        font-size: 1.5rem;
+      }
+
+      .comparison-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
+      .comparison-card {
+        padding: 1.5rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .comparison-card h3 {
+        font-size: 1.25rem;
+      }
+
+      .comparison-icon {
+        width: 56px;
+        height: 56px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      body {
+        min-height: 900px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="section-header">
+    <h2>¿Práctica o Pasantía?</h2>
+    <p>Conozca las diferencias entre ambas modalidades y seleccione la que mejor se adapte a su perfil y objetivos profesionales.</p>
+  </div>
+
+  <div class="comparison-grid">
+    <div class="comparison-card practica">
+      <div class="comparison-icon">
+        <span class="material-icons">work</span>
+      </div>
+      <h3>Práctica Profesional</h3>
+      <p>Primera vinculación al contexto laboral enfocada en el área académica del estudiante, para conocer técnicas, procesos y métodos propios de la entidad receptora.</p>
+      <ul class="comparison-features">
+        <li>
+          <span class="material-icons">check_circle</span>
+          <span>Aplicación de conocimientos adquiridos</span>
+        </li>
+        <li>
+          <span class="material-icons">check_circle</span>
+          <span>Desarrollo de habilidades técnicas</span>
+        </li>
+        <li>
+          <span class="material-icons">check_circle</span>
+          <span>Experiencia laboral real</span>
+        </li>
+        <li>
+          <span class="material-icons">check_circle</span>
+          <span>Requisito curricular obligatorio</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="comparison-card pasantia">
+      <div class="comparison-icon">
+        <span class="material-icons">science</span>
+      </div>
+      <h3>Pasantía (Trabajo de Grado)</h3>
+      <p>Aplicación de métodos de investigación, evaluación y análisis frente a situaciones específicas con propuestas de mejora.</p>
+      <ul class="comparison-features">
+        <li>
+          <span class="material-icons">check_circle</span>
+          <span>Modalidad de trabajo de grado</span>
+        </li>
+        <li>
+          <span class="material-icons">check_circle</span>
+          <span>Enfoque investigativo</span>
+        </li>
+        <li>
+          <span class="material-icons">check_circle</span>
+          <span>Diagnóstico y propuestas de solución</span>
+        </li>
+        <li>
+          <span class="material-icons">check_circle</span>
+          <span>Desarrollo de proyecto específico</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    function setupIframeHeight() {
+      const inIframe = window.self !== window.top;
+
+      if (inIframe) {
+        function sendHeightToParent() {
+          try {
+            const height = Math.max(
+              document.body.scrollHeight,
+              document.body.offsetHeight,
+              document.documentElement.scrollHeight,
+              600
+            );
+
+            window.parent.postMessage({
+              type: 'setHeight',
+              height: height
+            }, '*');
+          } catch (e) {
+            console.log('No se pudo comunicar con el iframe padre');
+          }
+        }
+
+        sendHeightToParent();
+        window.addEventListener('resize', sendHeightToParent);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', setupIframeHeight);
+  </script>
+</body>
+</html>

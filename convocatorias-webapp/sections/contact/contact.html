@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contacto - Prácticas y Pasantías UNAL</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+    :root {
+      --unal-green: #4CAF50;
+      --unal-green-dark: #388E3C;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      min-height: 350px;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.6;
+    }
+
+    .contact-section {
+      background: linear-gradient(135deg, var(--unal-green) 0%, var(--unal-green-dark) 100%);
+      color: white;
+      text-align: center;
+      padding: 3rem 2rem;
+      min-height: 350px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .contact-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .contact-section h2 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .contact-section > p {
+      opacity: 0.9;
+      margin-bottom: 2rem;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .contact-info {
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      flex-wrap: wrap;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .contact-item .material-icons {
+      font-size: 1.5rem;
+      opacity: 0.9;
+    }
+
+    .contact-item span {
+      font-size: 1rem;
+    }
+
+    @media (max-width: 768px) {
+      .contact-section {
+        padding: 2.5rem 1.5rem;
+      }
+
+      .contact-section h2 {
+        font-size: 1.5rem;
+      }
+
+      .contact-info {
+        flex-direction: column;
+        gap: 1.5rem;
+        align-items: center;
+      }
+
+      .contact-item {
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .contact-section {
+        padding: 2rem 1rem;
+      }
+
+      .contact-section h2 {
+        font-size: 1.25rem;
+      }
+
+      .contact-item span {
+        font-size: 0.9rem;
+      }
+    }
+
+    @media (max-width: 600px) {
+      body {
+        min-height: 450px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <section class="contact-section">
+    <div class="contact-container">
+      <h2>¿Tiene Preguntas?</h2>
+      <p>Estamos a su disposición para orientarle en su proceso de práctica o pasantía.</p>
+
+      <div class="contact-info">
+        <div class="contact-item">
+          <span class="material-icons">email</span>
+          <span>practicas_lapaz@unal.edu.co</span>
+        </div>
+        <div class="contact-item">
+          <span class="material-icons">location_on</span>
+          <span>Km 9 Vía Valledupar - La Paz, Cesar</span>
+        </div>
+        <div class="contact-item">
+          <span class="material-icons">schedule</span>
+          <span>Lunes a Viernes: 8:00 - 17:00</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    function setupIframeHeight() {
+      const inIframe = window.self !== window.top;
+
+      if (inIframe) {
+        function sendHeightToParent() {
+          try {
+            const height = Math.max(
+              document.body.scrollHeight,
+              document.body.offsetHeight,
+              document.documentElement.scrollHeight,
+              350
+            );
+
+            window.parent.postMessage({
+              type: 'setHeight',
+              height: height
+            }, '*');
+          } catch (e) {
+            console.log('No se pudo comunicar con el iframe padre');
+          }
+        }
+
+        sendHeightToParent();
+        window.addEventListener('resize', sendHeightToParent);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', setupIframeHeight);
+  </script>
+</body>
+</html>

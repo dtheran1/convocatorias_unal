@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Índice de Secciones - Prácticas y Pasantías UNAL</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+    :root {
+      --unal-green: #4CAF50;
+      --unal-green-dark: #388E3C;
+      --unal-green-light: #C8E6C9;
+      --text-primary: #1e293b;
+      --text-secondary: #64748b;
+      --bg-primary: #f8fafc;
+      --bg-white: #ffffff;
+      --border: #e2e8f0;
+      --shadow: 0 1px 3px rgba(0,0,0,0.1);
+      --radius: 12px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      padding: 2rem 1rem;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--unal-green), var(--unal-green-dark));
+      color: white;
+      padding: 3rem 2rem;
+      text-align: center;
+      border-radius: var(--radius);
+      margin-bottom: 3rem;
+    }
+
+    header h1 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    header p {
+      opacity: 0.9;
+      font-size: 1.1rem;
+    }
+
+    .intro {
+      background: var(--bg-white);
+      padding: 2rem;
+      border-radius: var(--radius);
+      margin-bottom: 2rem;
+      box-shadow: var(--shadow);
+    }
+
+    .intro h2 {
+      color: var(--unal-green-dark);
+      margin-bottom: 1rem;
+    }
+
+    .intro ul {
+      padding-left: 1.5rem;
+      color: var(--text-secondary);
+    }
+
+    .intro li {
+      margin-bottom: 0.5rem;
+    }
+
+    .sections-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .section-card {
+      background: var(--bg-white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1.5rem;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+    }
+
+    .section-card:hover {
+      border-color: var(--unal-green-light);
+      transform: translateY(-4px);
+    }
+
+    .section-card h3 {
+      color: var(--unal-green-dark);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .section-card .material-icons {
+      color: var(--unal-green);
+    }
+
+    .section-card .description {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    .section-card .meta {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+
+    .section-card .meta span {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .section-card .meta .material-icons {
+      font-size: 1rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.25rem;
+      background: var(--unal-green);
+      color: white;
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: 500;
+      transition: all 0.2s;
+      font-size: 0.9rem;
+    }
+
+    .btn:hover {
+      background: var(--unal-green-dark);
+      transform: translateY(-2px);
+    }
+
+    .btn .material-icons {
+      font-size: 1.1rem;
+    }
+
+    .footer {
+      background: var(--bg-white);
+      padding: 2rem;
+      border-radius: var(--radius);
+      text-align: center;
+      margin-top: 3rem;
+      box-shadow: var(--shadow);
+    }
+
+    .footer p {
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: var(--unal-green);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .footer-links a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+      header {
+        padding: 2rem 1rem;
+      }
+
+      header h1 {
+        font-size: 1.5rem;
+      }
+
+      .sections-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🎓 Índice de Secciones Embebibles</h1>
+      <p>Prácticas y Pasantías - UNAL Sede de La Paz</p>
+    </header>
+
+    <div class="intro">
+      <h2>📖 Sobre este índice</h2>
+      <p>Este archivo te permite visualizar y probar todas las secciones disponibles para embeber en Google Sites.</p>
+      <p style="margin-top: 1rem;"><strong>Características:</strong></p>
+      <ul>
+        <li>Cada sección es completamente independiente</li>
+        <li>Diseño responsive optimizado para mobile</li>
+        <li>Comunicación automática de altura con iframe padre</li>
+        <li>Listas para desplegar en Google Apps Script</li>
+      </ul>
+    </div>
+
+    <div class="sections-grid">
+      <div class="section-card">
+        <h3>
+          <span class="material-icons">rocket_launch</span>
+          Hero Section
+        </h3>
+        <p class="description">Sección principal con título, descripción y botones de llamado a la acción.</p>
+        <div class="meta">
+          <span><span class="material-icons">height</span> 400-550px</span>
+          <span><span class="material-icons">devices</span> Responsive</span>
+        </div>
+        <a href="hero/hero.html" class="btn" target="_blank">
+          <span class="material-icons">open_in_new</span>
+          Ver sección
+        </a>
+      </div>
+
+      <div class="section-card">
+        <h3>
+          <span class="material-icons">analytics</span>
+          Stats Section
+        </h3>
+        <p class="description">Tarjetas con estadísticas clave: convocatorias, cupos, empresas y programas.</p>
+        <div class="meta">
+          <span><span class="material-icons">height</span> 300-400px</span>
+          <span><span class="material-icons">grid_view</span> 4 cols</span>
+        </div>
+        <a href="stats/stats.html" class="btn" target="_blank">
+          <span class="material-icons">open_in_new</span>
+          Ver sección
+        </a>
+      </div>
+
+      <div class="section-card">
+        <h3>
+          <span class="material-icons">compare</span>
+          Comparison Section
+        </h3>
+        <p class="description">Comparación detallada entre Práctica Profesional y Pasantía (Trabajo de Grado).</p>
+        <div class="meta">
+          <span><span class="material-icons">height</span> 600-1000px</span>
+          <span><span class="material-icons">grid_view</span> 2 cols</span>
+        </div>
+        <a href="comparison/comparison.html" class="btn" target="_blank">
+          <span class="material-icons">open_in_new</span>
+          Ver sección
+        </a>
+      </div>
+
+      <div class="section-card">
+        <h3>
+          <span class="material-icons">rule</span>
+          Requirements Section
+        </h3>
+        <p class="description">Acordeón interactivo con requisitos específicos de cada programa académico.</p>
+        <div class="meta">
+          <span><span class="material-icons">height</span> 800-1100px</span>
+          <span><span class="material-icons">touch_app</span> Interactivo</span>
+        </div>
+        <a href="requirements/requirements.html" class="btn" target="_blank">
+          <span class="material-icons">open_in_new</span>
+          Ver sección
+        </a>
+      </div>
+
+      <div class="section-card">
+        <h3>
+          <span class="material-icons">folder_open</span>
+          Documents Section
+        </h3>
+        <p class="description">Tarjetas con enlaces a documentos descargables: preinscripción, acta y plan de trabajo.</p>
+        <div class="meta">
+          <span><span class="material-icons">height</span> 500-700px</span>
+          <span><span class="material-icons">grid_view</span> 3 cols</span>
+        </div>
+        <a href="documents/documents.html" class="btn" target="_blank">
+          <span class="material-icons">open_in_new</span>
+          Ver sección
+        </a>
+      </div>
+
+      <div class="section-card">
+        <h3>
+          <span class="material-icons">timeline</span>
+          Process Section
+        </h3>
+        <p class="description">Timeline visual de 4 pasos del proceso de inscripción de práctica o pasantía.</p>
+        <div class="meta">
+          <span><span class="material-icons">height</span> 600-850px</span>
+          <span><span class="material-icons">looks_4</span> 4 pasos</span>
+        </div>
+        <a href="process/process.html" class="btn" target="_blank">
+          <span class="material-icons">open_in_new</span>
+          Ver sección
+        </a>
+      </div>
+
+      <div class="section-card">
+        <h3>
+          <span class="material-icons">contact_mail</span>
+          Contact Section
+        </h3>
+        <p class="description">Información de contacto: email, ubicación y horario de atención.</p>
+        <div class="meta">
+          <span><span class="material-icons">height</span> 350-500px</span>
+          <span><span class="material-icons">info</span> Informativa</span>
+        </div>
+        <a href="contact/contact.html" class="btn" target="_blank">
+          <span class="material-icons">open_in_new</span>
+          Ver sección
+        </a>
+      </div>
+    </div>
+
+    <div class="footer">
+      <p><strong>📚 Documentación completa disponible en:</strong></p>
+      <div class="footer-links">
+        <a href="README.md" target="_blank">README.md</a>
+        <a href="../Index.html" target="_blank">Aplicación Principal</a>
+        <a href="../propuesta-pagina.html" target="_blank">Página Completa</a>
+      </div>
+      <p style="margin-top: 2rem; font-size: 0.9rem;">
+        Universidad Nacional de Colombia - Sede de La Paz © 2026
+      </p>
+    </div>
+  </div>
+</body>
+</html>

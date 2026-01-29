@@ -163,18 +163,28 @@
       const inIframe = window.self !== window.top;
 
       if (inIframe) {
+        function getMinHeight() {
+          const width = window.innerWidth;
+          if (width <= 480) return 600;  // Mobile
+          if (width <= 768) return 500;  // Tablet
+          return 400;                     // Desktop
+        }
+
         function sendHeightToParent() {
           try {
+            const minHeight = getMinHeight();
+            const extraPadding = window.innerWidth <= 480 ? 100 : 50;
+
             const height = Math.max(
               document.body.scrollHeight,
               document.body.offsetHeight,
               document.documentElement.scrollHeight,
-              350
+              minHeight
             );
 
             window.parent.postMessage({
               type: 'setHeight',
-              height: height
+              height: height + extraPadding
             }, '*');
           } catch (e) {
             console.log('No se pudo comunicar con el iframe padre');
@@ -182,7 +192,16 @@
         }
 
         sendHeightToParent();
-        window.addEventListener('resize', sendHeightToParent);
+
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+          clearTimeout(resizeTimeout);
+          resizeTimeout = setTimeout(sendHeightToParent, 250);
+        });
+
+        window.addEventListener('orientationchange', () => {
+          setTimeout(sendHeightToParent, 300);
+        });
       }
     }
 

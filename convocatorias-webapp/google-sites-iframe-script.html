@@ -1,0 +1,96 @@
+<!--
+  SCRIPT PARA GOOGLE SITES
+
+  Instrucciones:
+  1. En Google Sites, ve a la página donde tienes el iframe
+  2. Clic en "Insertar" → "Insertar código"
+  3. Pega este código COMPLETO
+  4. Guarda y publica
+
+  Nota: Este script debe estar en la MISMA página que el iframe,
+  preferiblemente ANTES del iframe.
+-->
+
+<script>
+(function() {
+  'use strict';
+
+  // Función para ajustar altura de iframes
+  function setupIframeHeightListener() {
+    // Escuchar mensajes de los iframes
+    window.addEventListener('message', function(event) {
+      // Validar que el mensaje tiene el formato correcto
+      if (!event.data || typeof event.data !== 'object') {
+        return;
+      }
+
+      // Verificar que el mensaje es de tipo 'setHeight'
+      if (event.data.type === 'setHeight' && event.data.height) {
+        // Buscar el iframe que envió el mensaje
+        const iframes = document.querySelectorAll('iframe');
+
+        iframes.forEach(function(iframe) {
+          try {
+            // Verificar si este iframe es el que envió el mensaje
+            if (iframe.contentWindow === event.source) {
+              const newHeight = Math.max(event.data.height, 400); // Mínimo 400px
+
+              // Aplicar la nueva altura con transición suave
+              iframe.style.transition = 'height 0.3s ease';
+              iframe.style.height = newHeight + 'px';
+
+              console.log('Altura del iframe ajustada a:', newHeight + 'px');
+            }
+          } catch (e) {
+            // Ignorar errores de cross-origin
+          }
+        });
+      }
+    }, false);
+
+    console.log('✅ Listener de altura de iframe configurado');
+  }
+
+  // Ejecutar cuando el DOM esté listo
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupIframeHeightListener);
+  } else {
+    setupIframeHeightListener();
+  }
+
+  // Ajustar alturas iniciales después de un breve delay
+  setTimeout(function() {
+    const iframes = document.querySelectorAll('iframe');
+    iframes.forEach(function(iframe) {
+      // Establecer atributos para mejor rendimiento
+      iframe.setAttribute('scrolling', 'no');
+      iframe.style.width = '100%';
+      iframe.style.border = 'none';
+      iframe.style.overflow = 'hidden';
+    });
+  }, 500);
+})();
+</script>
+
+<style>
+/* Estilos adicionales para iframes en Google Sites */
+iframe {
+  width: 100% !important;
+  border: none !important;
+  overflow: hidden !important;
+  display: block !important;
+}
+
+/* Asegurar que los iframes tengan altura mínima en mobile */
+@media (max-width: 480px) {
+  iframe {
+    min-height: 600px !important;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+  iframe {
+    min-height: 500px !important;
+  }
+}
+</style>

@@ -457,12 +457,12 @@ function generarCorreoConfirmacion(nombreCompleto, datos) {
     <div class="content">
       <p class="greeting">Hola <strong>${nombreCompleto}</strong>,</p>
       
-      <p>Hemos recibido tu postulación para la siguiente convocatoria:</p>
+      <p>Hemos recibido tu postulación para la siguiente vacante:</p>
       
       <div class="info-card">
         <h3>📌 Detalles de tu postulación</h3>
         <div class="info-row">
-          <span class="info-label">Convocatoria:</span>
+          <span class="info-label">Vacante:</span>
           <span class="info-value">${datos.tituloConvocatoria || 'No especificada'}</span>
         </div>
         <div class="info-row">
@@ -824,12 +824,12 @@ function generarCorreoNoSeleccionado(nombreCompleto, datos) {
       
       <div class="result-card">
         <h3>📋 Resultado del proceso</h3>
-        <p>Después de revisar cuidadosamente todas las postulaciones, lamentamos informarte que en esta ocasión <strong>no has sido seleccionado/a</strong> para la siguiente convocatoria:</p>
+        <p>Después de revisar cuidadosamente todas las postulaciones, lamentamos informarte que en esta ocasión <strong>no has sido seleccionado/a</strong> para la siguiente vacante:</p>
       </div>
       
       <div class="info-card">
         <div class="info-row">
-          <span class="info-label">Convocatoria:</span>
+          <span class="info-label">Vacante:</span>
           <span class="info-value">${datos.titulo || 'No especificada'}</span>
         </div>
         <div class="info-row">
@@ -848,6 +848,12 @@ function generarCorreoNoSeleccionado(nombreCompleto, datos) {
       <div class="encouragement">
         <h4>💪 ¡No te desanimes!</h4>
         <p>Esta decisión no define tus capacidades. Te invitamos a seguir postulándote a futuras convocatorias. Constantemente se abren nuevas oportunidades que podrían ser ideales para tu perfil.</p>
+      </div>
+      
+      <div class="info-card" style="background: #f0f9ff; border: 1px solid #bae6fd;">
+        <p><strong>📌 Nota:</strong> Las vacantes son ofrecidas por la Oficina de Prácticas y Pasantías. No obstante, tienes la libertad de gestionar tus prácticas o pasantías en la entidad de tu interés.</p>
+        <p style="margin-top: 10px;">Actualmente contamos con convenios vigentes con más de 20 empresas, por lo que te invitamos a revisar la matriz de convenios disponible.</p>
+        <p style="margin-top: 10px;">En caso de que la entidad de tu interés no cuente con convenio con nosotros, por favor infórmanos para iniciar el proceso de gestión correspondiente.</p>
       </div>
       
       <p>Si tienes alguna pregunta sobre el proceso o deseas recibir retroalimentación adicional, no dudes en contactarnos.</p>

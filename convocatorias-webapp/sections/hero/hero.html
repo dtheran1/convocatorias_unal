@@ -29,6 +29,20 @@
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* Forzar altura mínima en mobile */
+    @media (max-width: 600px) {
+      body {
+        min-height: 550px !important;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        min-height: 600px !important;
+      }
     }
 
     .hero {

@@ -36,6 +36,20 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      min-height: 100vh;
+    }
+
+    /* Forzar altura mínima en mobile */
+    @media (max-width: 600px) {
+      body {
+        min-height: 400px !important;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        min-height: 450px !important;
+      }
     }
 
     .stats-section {

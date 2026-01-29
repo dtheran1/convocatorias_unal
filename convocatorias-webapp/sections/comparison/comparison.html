@@ -32,6 +32,20 @@
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       background: var(--bg-white);
       padding: 3rem 1.5rem;
+      min-height: 100vh;
+    }
+
+    /* Forzar altura mínima en mobile */
+    @media (max-width: 600px) {
+      body {
+        min-height: 1000px !important;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        min-height: 1100px !important;
+      }
     }
 
     .section-header {

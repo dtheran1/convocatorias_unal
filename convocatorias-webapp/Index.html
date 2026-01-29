@@ -38,6 +38,13 @@
       background: var(--bg-primary);
       color: var(--text-primary);
       line-height: 1.6;
+      min-height: 100vh;
+      min-height: 800px; /* Altura mínima para iframes */
+    }
+
+    /* Forzar altura mínima en iframes */
+    html, body {
+      height: 100%;
     }
 
     /* Header */
@@ -1155,9 +1162,20 @@
     }
 
     /* Google Sites iframe compatibility */
+    body.in-iframe {
+      min-height: 100vh;
+    }
+
     @media (max-width: 600px) {
       body {
         font-size: 14px;
+        min-height: 1200px; /* Altura mínima mayor en mobile */
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        min-height: 1400px; /* Aún mayor en móviles pequeños */
       }
     }
 
@@ -1389,8 +1407,61 @@
     let filteredConvocatorias = [];
     let activeFilters = { tipo: null, origen: null };
 
+    // Detectar si está en iframe y comunicar altura
+    function setupIframeHeight() {
+      // Detectar si estamos en un iframe
+      const inIframe = window.self !== window.top;
+
+      if (inIframe) {
+        document.body.classList.add('in-iframe');
+
+        // Función para enviar altura al padre
+        function sendHeightToParent() {
+          try {
+            const height = Math.max(
+              document.body.scrollHeight,
+              document.body.offsetHeight,
+              document.documentElement.clientHeight,
+              document.documentElement.scrollHeight,
+              document.documentElement.offsetHeight
+            );
+
+            // Enviar mensaje al padre (Google Sites)
+            window.parent.postMessage({
+              type: 'setHeight',
+              height: Math.max(height, 800) // Mínimo 800px
+            }, '*');
+          } catch (e) {
+            console.log('No se pudo comunicar con el iframe padre');
+          }
+        }
+
+        // Enviar altura inicial
+        sendHeightToParent();
+
+        // Enviar altura cuando cambie el contenido
+        const resizeObserver = new ResizeObserver(() => {
+          sendHeightToParent();
+        });
+
+        resizeObserver.observe(document.body);
+
+        // También enviar cuando se abran/cierren modales
+        const observer = new MutationObserver(() => {
+          sendHeightToParent();
+        });
+
+        observer.observe(document.body, {
+          attributes: true,
+          attributeFilter: ['class', 'style'],
+          subtree: true
+        });
+      }
+    }
+
     // Inicializar
     document.addEventListener('DOMContentLoaded', () => {
+      setupIframeHeight();
       loadConvocatorias();
       setupEventListeners();
     });

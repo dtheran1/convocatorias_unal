@@ -26,7 +26,7 @@
 
     html, body {
       height: 100%;
-      min-height: 300px;
+      min-height: 500px;
     }
 
     body {
@@ -42,13 +42,13 @@
     /* Forzar altura mínima en mobile */
     @media (max-width: 600px) {
       body {
-        min-height: 400px !important;
+        min-height: 800px !important;
       }
     }
 
     @media (max-width: 480px) {
       body {
-        min-height: 450px !important;
+        min-height: 900px !important;
       }
     }
 
@@ -190,9 +190,9 @@
       if (inIframe) {
         function getMinHeight() {
           const width = window.innerWidth;
-          if (width <= 480) return 700;  // Mobile
-          if (width <= 768) return 550;  // Tablet
-          return 350;                     // Desktop
+          if (width <= 480) return 900;  // Mobile
+          if (width <= 600) return 800;  // Tablet
+          return 500;                     // Desktop
         }
 
         function sendHeightToParent() {

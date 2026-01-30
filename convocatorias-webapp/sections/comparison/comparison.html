@@ -25,7 +25,7 @@
 
     html, body {
       height: 100%;
-      min-height: 600px;
+      min-height: 900px;
     }
 
     body {
@@ -38,13 +38,13 @@
     /* Forzar altura mínima en mobile */
     @media (max-width: 600px) {
       body {
-        min-height: 1000px !important;
+        min-height: 1300px !important;
       }
     }
 
     @media (max-width: 480px) {
       body {
-        min-height: 1100px !important;
+        min-height: 1400px !important;
       }
     }
 
@@ -97,6 +97,13 @@
       border-top: 4px solid #f59e0b;
     }
 
+    .comparison-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
     .comparison-icon {
       width: 64px;
       height: 64px;
@@ -104,7 +111,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 1.5rem;
+      flex-shrink: 0;
     }
 
     .comparison-card.practica .comparison-icon {
@@ -128,7 +135,7 @@
     .comparison-card h3 {
       font-size: 1.5rem;
       font-weight: 700;
-      margin-bottom: 1rem;
+      margin: 0;
       color: var(--text-primary);
     }
 
@@ -177,6 +184,10 @@
     }
 
     @media (max-width: 480px) {
+      .comparison-header {
+        gap: 0.75rem;
+      }
+
       .comparison-card h3 {
         font-size: 1.25rem;
       }
@@ -184,6 +195,10 @@
       .comparison-icon {
         width: 56px;
         height: 56px;
+      }
+
+      .comparison-icon .material-icons {
+        font-size: 1.75rem;
       }
     }
 
@@ -202,10 +217,12 @@
 
   <div class="comparison-grid">
     <div class="comparison-card practica">
-      <div class="comparison-icon">
-        <span class="material-icons">work</span>
+      <div class="comparison-header">
+        <div class="comparison-icon">
+          <span class="material-icons">work</span>
+        </div>
+        <h3>Práctica Profesional</h3>
       </div>
-      <h3>Práctica Profesional</h3>
       <p>Primera vinculación al contexto laboral enfocada en el área académica del estudiante, para conocer técnicas, procesos y métodos propios de la entidad receptora.</p>
       <ul class="comparison-features">
         <li>
@@ -228,10 +245,12 @@
     </div>
 
     <div class="comparison-card pasantia">
-      <div class="comparison-icon">
-        <span class="material-icons">science</span>
+      <div class="comparison-header">
+        <div class="comparison-icon">
+          <span class="material-icons">science</span>
+        </div>
+        <h3>Pasantía (Trabajo de Grado)</h3>
       </div>
-      <h3>Pasantía (Trabajo de Grado)</h3>
       <p>Aplicación de métodos de investigación, evaluación y análisis frente a situaciones específicas con propuestas de mejora.</p>
       <ul class="comparison-features">
         <li>
@@ -261,9 +280,9 @@
       if (inIframe) {
         function getMinHeight() {
           const width = window.innerWidth;
-          if (width <= 480) return 1200; // Mobile
-          if (width <= 768) return 1000; // Tablet
-          return 700;                     // Desktop
+          if (width <= 480) return 1400; // Mobile
+          if (width <= 600) return 1300; // Tablet
+          return 900;                     // Desktop
         }
 
         function sendHeightToParent() {

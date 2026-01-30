@@ -24,7 +24,7 @@
 
     html, body {
       height: 100%;
-      min-height: 600px;
+      min-height: 800px;
     }
 
     body {
@@ -37,34 +37,34 @@
     /* Forzar altura mínima en mobile */
     @media (max-width: 600px) {
       body {
-        min-height: 850px !important;
+        min-height: 1600px !important;
       }
     }
 
     @media (max-width: 480px) {
       body {
-        min-height: 950px !important;
+        min-height: 1800px !important;
       }
     }
 
-    .container {
+    .process-container {
       max-width: 1200px;
       margin: 0 auto;
     }
 
-    .section-header {
+    .process-section-header {
       text-align: center;
       margin-bottom: 3rem;
     }
 
-    .section-header h2 {
+    .process-section-header h2 {
       font-size: 1.75rem;
       font-weight: 700;
       color: var(--text-primary);
       margin-bottom: 0.75rem;
     }
 
-    .section-header p {
+    .process-section-header p {
       color: var(--text-secondary);
       max-width: 600px;
       margin: 0 auto;
@@ -122,28 +122,22 @@
       line-height: 1.5;
     }
 
-    @media (max-width: 992px) {
-      .process-timeline {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .process-timeline::before {
-        display: none;
-      }
-    }
-
     @media (max-width: 768px) {
       body {
         padding: 2rem 1rem;
       }
 
-      .section-header h2 {
+      .process-section-header h2 {
         font-size: 1.5rem;
       }
 
       .process-timeline {
         grid-template-columns: 1fr;
         gap: 1.5rem;
+      }
+
+      .process-timeline::before {
+        display: none;
       }
 
       .process-number {
@@ -171,8 +165,8 @@
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="section-header">
+  <div class="process-container">
+    <div class="process-section-header">
       <h2>¿Cómo Inscribir su Práctica?</h2>
       <p>Siga estos pasos para formalizar su práctica o pasantía correctamente.</p>
     </div>
@@ -211,9 +205,9 @@
       if (inIframe) {
         function getMinHeight() {
           const width = window.innerWidth;
-          if (width <= 480) return 1000; // Mobile
-          if (width <= 768) return 850;  // Tablet
-          return 650;                     // Desktop
+          if (width <= 480) return 1800; // Mobile
+          if (width <= 600) return 1600; // Tablet
+          return 800;                     // Desktop
         }
 
         function sendHeightToParent() {

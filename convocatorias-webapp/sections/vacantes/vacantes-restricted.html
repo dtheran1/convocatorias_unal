@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vacantes - Prácticas y Pasantías UNAL</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+    :root {
+      --unal-green: #4CAF50;
+      --unal-green-dark: #388E3C;
+      --unal-green-light: #C8E6C9;
+      --text-primary: #1e293b;
+      --text-secondary: #64748b;
+      --blue: #2563eb;
+      --blue-light: #dbeafe;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      min-height: 650px;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.6;
+      background: #f8fafc;
+      padding: 3rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    /* Forzar altura mínima en mobile */
+    @media (max-width: 600px) {
+      body {
+        min-height: 700px !important;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 2rem 1rem;
+        min-height: 750px !important;
+      }
+    }
+
+    .restricted-container {
+      max-width: 600px;
+      width: 100%;
+      background: white;
+      border-radius: 24px;
+      padding: 3rem;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+                  0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      text-align: center;
+    }
+
+    .icon-container {
+      width: 80px;
+      height: 80px;
+      background: var(--blue-light);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 2rem;
+    }
+
+    .icon-container .material-icons {
+      font-size: 2.5rem;
+      color: var(--blue);
+    }
+
+    h1 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 1rem;
+    }
+
+    .subtitle {
+      font-size: 1.125rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      line-height: 1.7;
+    }
+
+    .info-box {
+      background: var(--unal-green-light);
+      border-left: 4px solid var(--unal-green);
+      padding: 1.25rem;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+      text-align: left;
+    }
+
+    .info-box h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--unal-green-dark);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .info-box p {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    .steps {
+      background: #f8fafc;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      text-align: left;
+    }
+
+    .steps h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 1rem;
+    }
+
+    .step {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .step:last-child {
+      margin-bottom: 0;
+    }
+
+    .step-number {
+      width: 28px;
+      height: 28px;
+      background: var(--unal-green);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 0.875rem;
+      flex-shrink: 0;
+    }
+
+    .step-content {
+      flex: 1;
+      padding-top: 2px;
+    }
+
+    .step-content p {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      margin: 0;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.875rem 1.75rem;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .btn-primary {
+      background: var(--unal-green);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--unal-green-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 15px -3px rgba(76, 175, 80, 0.3);
+    }
+
+    .help-text {
+      margin-top: 1.5rem;
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+    }
+
+    .help-text a {
+      color: var(--unal-green);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .help-text a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 480px) {
+      .restricted-container {
+        padding: 2rem 1.5rem;
+      }
+
+      h1 {
+        font-size: 1.5rem;
+      }
+
+      .subtitle {
+        font-size: 1rem;
+      }
+
+      .icon-container {
+        width: 70px;
+        height: 70px;
+      }
+
+      .icon-container .material-icons {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="restricted-container">
+    <div class="icon-container">
+      <span class="material-icons">lock</span>
+    </div>
+
+    <h1>Vacantes Disponibles</h1>
+    <p class="subtitle">
+      El listado de vacantes activas está disponible solo para estudiantes de la Universidad Nacional de Colombia.
+    </p>
+
+    <div class="info-box">
+      <h3>
+        <span class="material-icons" style="font-size: 1.25rem;">info</span>
+        Acceso Restringido
+      </h3>
+      <p>
+        Para ver las vacantes disponibles, necesitas acceder con tu correo institucional (@unal.edu.co).
+      </p>
+    </div>
+
+    <div class="steps">
+      <h3>¿Cómo acceder?</h3>
+      <div class="step">
+        <div class="step-number">1</div>
+        <div class="step-content">
+          <p>Haz clic en el botón "Acceder a Vacantes"</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-number">2</div>
+        <div class="step-content">
+          <p>Inicia sesión con tu correo institucional @unal.edu.co</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-number">3</div>
+        <div class="step-content">
+          <p>Explora las vacantes disponibles y postúlate</p>
+        </div>
+      </div>
+    </div>
+
+    <a href="URL_DE_TU_WEB_APP_AQUI" class="btn btn-primary" target="_blank">
+      <span class="material-icons">login</span>
+      Acceder a Vacantes
+    </a>
+
+    <p class="help-text">
+      ¿Problemas para acceder? Contacta a
+      <a href="mailto:practicas_lapaz@unal.edu.co">practicas_lapaz@unal.edu.co</a>
+    </p>
+  </div>
+
+  <script>
+    function setupIframeHeight() {
+      const inIframe = window.self !== window.top;
+
+      if (inIframe) {
+        function getMinHeight() {
+          const width = window.innerWidth;
+          if (width <= 480) return 750; // Mobile
+          if (width <= 600) return 700; // Tablet
+          return 650;                     // Desktop
+        }
+
+        function sendHeightToParent() {
+          try {
+            const minHeight = getMinHeight();
+            const extraPadding = window.innerWidth <= 480 ? 100 : 50;
+
+            const height = Math.max(
+              document.body.scrollHeight,
+              document.body.offsetHeight,
+              document.documentElement.scrollHeight,
+              minHeight
+            );
+
+            window.parent.postMessage({
+              type: 'setHeight',
+              height: height + extraPadding
+            }, '*');
+          } catch (e) {
+            console.log('No se pudo comunicar con el iframe padre');
+          }
+        }
+
+        sendHeightToParent();
+
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+          clearTimeout(resizeTimeout);
+          resizeTimeout = setTimeout(sendHeightToParent, 250);
+        });
+
+        window.addEventListener('orientationchange', () => {
+          setTimeout(sendHeightToParent, 300);
+        });
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', setupIframeHeight);
+  </script>
+</body>
+</html>

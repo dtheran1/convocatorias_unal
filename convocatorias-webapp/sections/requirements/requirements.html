@@ -9,6 +9,7 @@
   <style>
     :root {
       --unal-green: #4CAF50;
+      --unal-green-dark: #388E3C;
       --unal-green-bg: #f0f9f0;
       --text-primary: #1e293b;
       --text-secondary: #64748b;
@@ -27,7 +28,7 @@
 
     html, body {
       height: 100%;
-      min-height: 800px;
+      min-height: 1500px;
     }
 
     body {
@@ -40,34 +41,34 @@
     /* Forzar altura mínima en mobile */
     @media (max-width: 600px) {
       body {
-        min-height: 1100px !important;
+        min-height: 3500px !important;
       }
     }
 
     @media (max-width: 480px) {
       body {
-        min-height: 1200px !important;
+        min-height: 3800px !important;
       }
     }
 
-    .container {
+    .requirements-container {
       max-width: 1200px;
       margin: 0 auto;
     }
 
-    .section-header {
+    .requirements-section-header {
       text-align: center;
       margin-bottom: 3rem;
     }
 
-    .section-header h2 {
+    .requirements-section-header h2 {
       font-size: 1.75rem;
       font-weight: 700;
       color: var(--text-primary);
       margin-bottom: 0.75rem;
     }
 
-    .section-header p {
+    .requirements-section-header p {
       color: var(--text-secondary);
       max-width: 600px;
       margin: 0 auto;
@@ -197,7 +198,7 @@
         padding: 2rem 1rem;
       }
 
-      .section-header h2 {
+      .requirements-section-header h2 {
         font-size: 1.5rem;
       }
 
@@ -234,8 +235,8 @@
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="section-header">
+  <div class="requirements-container">
+    <div class="requirements-section-header">
       <h2>Requisitos por Programa</h2>
       <p>Cada programa académico tiene requisitos específicos. Consulte los detalles correspondientes a su programa curricular.</p>
     </div>
@@ -403,9 +404,9 @@
       if (inIframe) {
         function getMinHeight() {
           const width = window.innerWidth;
-          if (width <= 480) return 1100; // Mobile
-          if (width <= 768) return 950;  // Tablet
-          return 800;                     // Desktop
+          if (width <= 480) return 3800; // Mobile
+          if (width <= 600) return 3500; // Tablet
+          return 1500;                    // Desktop
         }
 
         function sendHeightToParent() {

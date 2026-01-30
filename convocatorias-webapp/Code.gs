@@ -53,6 +53,31 @@ function doGet() {
  */
 function getConvocatorias() {
   try {
+    // ========== VALIDACIÓN DE PERMISOS ==========
+    const userEmail = Session.getActiveUser().getEmail();
+
+    // Verificar si el usuario tiene correo institucional
+    if (!userEmail || !userEmail.toLowerCase().endsWith('@unal.edu.co')) {
+      Logger.log('Acceso denegado para: ' + (userEmail || 'Usuario no autenticado'));
+      return {
+        success: false,
+        error: 'PERMISSION_DENIED',
+        message: 'Acceso restringido. Debe acceder con su correo institucional @unal.edu.co',
+        userEmail: userEmail || 'No autenticado',
+        data: [],
+        stats: {
+          total: 0,
+          totalCupos: 0,
+          activas: 0,
+          practicas: 0,
+          pasantias: 0
+        }
+      };
+    }
+
+    Logger.log('Usuario autorizado: ' + userEmail);
+
+    // ========== USUARIO AUTORIZADO - CONTINUAR ==========
     const ss = SpreadsheetApp.openById(SPREADSHEET_ID);
     const sheet = ss.getSheetByName(SHEET_NAME);
 
@@ -189,9 +214,24 @@ const COL_POST = {
  */
 function guardarPostulacion(datos) {
   try {
+    // ========== VALIDACIÓN DE PERMISOS ==========
+    const userEmail = Session.getActiveUser().getEmail();
+
+    if (!userEmail || !userEmail.toLowerCase().endsWith('@unal.edu.co')) {
+      Logger.log('Intento de postulación denegado para: ' + (userEmail || 'Usuario no autenticado'));
+      return {
+        success: false,
+        error: 'PERMISSION_DENIED',
+        message: 'Debe acceder con su correo institucional @unal.edu.co para postularse'
+      };
+    }
+
+    Logger.log('Postulación autorizada para: ' + userEmail);
+
+    // ========== CONTINUAR CON LA POSTULACIÓN ==========
     const ss = SpreadsheetApp.openById(SPREADSHEET_POSTULACIONES_ID);
     let sheet = ss.getSheetByName(SHEET_POSTULACIONES);
-    
+
     // Verificar que existe la hoja
     if (!sheet) {
       throw new Error('No se encontró la hoja: ' + SHEET_POSTULACIONES);

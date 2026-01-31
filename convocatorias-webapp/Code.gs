@@ -6,14 +6,55 @@
  * 1. Crea un nuevo proyecto en Google Apps Script (script.google.com)
  * 2. Copia este código en el archivo Code.gs
  * 3. Crea un archivo HTML llamado "Index" y pega el contenido de Index.html
- * 4. Cambia SPREADSHEET_ID por el ID de tu Google Sheet
+ * 4. Ejecuta setupConfiguration() UNA VEZ para configurar IDs en Script Properties
  * 5. Implementa como Web App (Implementar > Nueva implementación > App web)
  */
 
 // ========== CONFIGURACIÓN ==========
-// Reemplaza con el ID de tu Google Sheet (está en la URL del sheet)
-const SPREADSHEET_ID = '1iNF7VwBPS_Txxk7c14JSefGKFD_D-0eZPc6s8geBGkk';
-const SHEET_NAME = 'Hoja1'; // Nombre de la pestaña en la parte inferior del Sheet
+
+// Nombres de las propiedades de configuración
+const CONFIG_KEYS = {
+  SPREADSHEET_ID: 'SPREADSHEET_ID',
+  SHEET_NAME: 'SHEET_NAME',
+  SPREADSHEET_POSTULACIONES_ID: 'SPREADSHEET_POSTULACIONES_ID',
+  SHEET_POSTULACIONES: 'SHEET_POSTULACIONES',
+  EMAIL_CONTACTO: 'EMAIL_CONTACTO'
+};
+
+/**
+ * Obtiene un valor de configuración desde Script Properties
+ * Con fallback a valores hardcoded para backwards compatibility
+ */
+function getConfig(key) {
+  const scriptProperties = PropertiesService.getScriptProperties();
+  const value = scriptProperties.getProperty(key);
+
+  // Fallbacks para backwards compatibility
+  if (!value) {
+    const fallbacks = {
+      'SPREADSHEET_ID': '1iNF7VwBPS_Txxk7c14JSefGKFD_D-0eZPc6s8geBGkk',
+      'SHEET_NAME': 'Hoja1',
+      'SPREADSHEET_POSTULACIONES_ID': '1TPD-_1DjYE7hX7GLDQSuOpRiGsNT-GTjzeij-eG4Qts',
+      'SHEET_POSTULACIONES': 'Postulaciones_2026_1',
+      'EMAIL_CONTACTO': 'practicas_paz@unal.edu.co'
+    };
+    return fallbacks[key];
+  }
+
+  return value;
+}
+
+/**
+ * Establece un valor de configuración en Script Properties
+ */
+function setConfig(key, value) {
+  const scriptProperties = PropertiesService.getScriptProperties();
+  scriptProperties.setProperty(key, value);
+}
+
+// Constantes usando getConfig() con fallbacks
+const SPREADSHEET_ID = getConfig(CONFIG_KEYS.SPREADSHEET_ID);
+const SHEET_NAME = getConfig(CONFIG_KEYS.SHEET_NAME);
 
 // Mapeo de columnas (ajustar según tu sheet, índice base 0)
 const COLUMNAS = {
@@ -183,8 +224,8 @@ function getProgramasAcademicos() {
 }
 
 // ========== POSTULACIONES ==========
-const SPREADSHEET_POSTULACIONES_ID = '1TPD-_1DjYE7hX7GLDQSuOpRiGsNT-GTjzeij-eG4Qts';
-const SHEET_POSTULACIONES = 'Postulaciones_2026_1';
+const SPREADSHEET_POSTULACIONES_ID = getConfig(CONFIG_KEYS.SPREADSHEET_POSTULACIONES_ID);
+const SHEET_POSTULACIONES = getConfig(CONFIG_KEYS.SHEET_POSTULACIONES);
 
 // Mapeo de columnas del Sheet de Postulaciones (según nuevo orden)
 const COL_POST = {
@@ -207,6 +248,231 @@ const COL_POST = {
   OBSERVACIONES: 16      // Q: Observaciones
 };
 
+// ========== RATE LIMITING ==========
+
+const RATE_LIMIT_CONFIG = {
+  MAX_ATTEMPTS: 3,
+  WINDOW_MINUTES: 10,
+  CLEANUP_INTERVAL: 60 // minutos
+};
+
+/**
+ * Verifica si el usuario puede realizar una postulación (rate limiting)
+ * @param {string} numeroDocumento - Número de documento del usuario
+ * @param {string} email - Email del usuario
+ * @returns {Object} { allowed: boolean, remainingAttempts: number, resetTime: Date, message: string }
+ */
+function checkRateLimit(numeroDocumento, email) {
+  const scriptProperties = PropertiesService.getScriptProperties();
+  const key = `ratelimit_${numeroDocumento}_${email}`;
+  const now = new Date().getTime();
+  const windowMs = RATE_LIMIT_CONFIG.WINDOW_MINUTES * 60 * 1000;
+
+  // Obtener intentos previos
+  const attemptsData = scriptProperties.getProperty(key);
+  let attempts = attemptsData ? JSON.parse(attemptsData) : [];
+
+  // Filtrar solo los intentos dentro de la ventana de tiempo
+  attempts = attempts.filter(timestamp => (now - timestamp) < windowMs);
+
+  // Verificar si excede el límite
+  if (attempts.length >= RATE_LIMIT_CONFIG.MAX_ATTEMPTS) {
+    const oldestAttempt = Math.min(...attempts);
+    const resetTime = new Date(oldestAttempt + windowMs);
+
+    return {
+      allowed: false,
+      remainingAttempts: 0,
+      resetTime: resetTime,
+      message: `Ha excedido el límite de ${RATE_LIMIT_CONFIG.MAX_ATTEMPTS} intentos en ${RATE_LIMIT_CONFIG.WINDOW_MINUTES} minutos. Por favor, intente nuevamente después de las ${resetTime.toLocaleTimeString('es-CO')}.`
+    };
+  }
+
+  return {
+    allowed: true,
+    remainingAttempts: RATE_LIMIT_CONFIG.MAX_ATTEMPTS - attempts.length - 1,
+    resetTime: null,
+    message: 'OK'
+  };
+}
+
+/**
+ * Registra un intento de postulación
+ * @param {string} numeroDocumento - Número de documento del usuario
+ * @param {string} email - Email del usuario
+ */
+function recordAttempt(numeroDocumento, email) {
+  const scriptProperties = PropertiesService.getScriptProperties();
+  const key = `ratelimit_${numeroDocumento}_${email}`;
+  const now = new Date().getTime();
+  const windowMs = RATE_LIMIT_CONFIG.WINDOW_MINUTES * 60 * 1000;
+
+  // Obtener intentos previos
+  const attemptsData = scriptProperties.getProperty(key);
+  let attempts = attemptsData ? JSON.parse(attemptsData) : [];
+
+  // Filtrar solo los intentos dentro de la ventana de tiempo
+  attempts = attempts.filter(timestamp => (now - timestamp) < windowMs);
+
+  // Agregar nuevo intento
+  attempts.push(now);
+
+  // Guardar
+  scriptProperties.setProperty(key, JSON.stringify(attempts));
+}
+
+/**
+ * Limpia datos antiguos de rate limiting
+ * Ejecutar esta función diariamente (opcional: crear trigger)
+ */
+function cleanupRateLimitData() {
+  console.log('=== INICIANDO LIMPIEZA DE RATE LIMIT ===');
+  const scriptProperties = PropertiesService.getScriptProperties();
+  const allProperties = scriptProperties.getProperties();
+  const now = new Date().getTime();
+  const cleanupWindowMs = RATE_LIMIT_CONFIG.CLEANUP_INTERVAL * 60 * 1000;
+  let cleaned = 0;
+
+  Object.keys(allProperties).forEach(key => {
+    if (key.startsWith('ratelimit_')) {
+      try {
+        const attempts = JSON.parse(allProperties[key]);
+        const hasRecentAttempts = attempts.some(timestamp => (now - timestamp) < cleanupWindowMs);
+
+        if (!hasRecentAttempts) {
+          scriptProperties.deleteProperty(key);
+          cleaned++;
+        }
+      } catch (e) {
+        // Si hay error parseando, eliminar la propiedad corrupta
+        scriptProperties.deleteProperty(key);
+        cleaned++;
+      }
+    }
+  });
+
+  console.log(`✓ ${cleaned} registros de rate limit eliminados`);
+  console.log('=== LIMPIEZA COMPLETADA ===');
+}
+
+// ========== VALIDACIÓN Y SANITIZACIÓN ==========
+
+/**
+ * Valida los datos de una postulación
+ * @param {Object} datos - Datos a validar
+ * @returns {Object} { isValid: boolean, errors: Array }
+ */
+function validarDatosPostulacion(datos) {
+  const errors = [];
+
+  // Campos requeridos
+  const camposRequeridos = [
+    'primerNombre', 'primerApellido', 'numeroDocumento', 'telefono',
+    'programaEstudiante', 'correoElectronico', 'papa', 'pbm',
+    'idConvocatoria', 'tituloConvocatoria', 'modalidad'
+  ];
+
+  camposRequeridos.forEach(campo => {
+    if (!datos[campo] || datos[campo].toString().trim() === '') {
+      errors.push(`Campo requerido faltante: ${campo}`);
+    }
+  });
+
+  // Validar email institucional
+  const email = (datos.correoElectronico || '').toString().toLowerCase().trim();
+  if (email && !email.endsWith('@unal.edu.co')) {
+    errors.push('El correo electrónico debe ser institucional (@unal.edu.co)');
+  }
+
+  // Validar formato de email
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (email && !emailRegex.test(email)) {
+    errors.push('El correo electrónico no tiene un formato válido');
+  }
+
+  // Validar PAPA (0-5, máximo 2 decimales)
+  const papa = parseFloat(datos.papa);
+  if (isNaN(papa) || papa < 0 || papa > 5) {
+    errors.push('PAPA debe estar entre 0 y 5');
+  }
+  if (datos.papa && datos.papa.toString().includes('.')) {
+    const decimales = datos.papa.toString().split('.')[1];
+    if (decimales && decimales.length > 2) {
+      errors.push('PAPA debe tener máximo 2 decimales');
+    }
+  }
+
+  // Validar PBM (0-100, entero)
+  const pbm = parseInt(datos.pbm);
+  if (isNaN(pbm) || pbm < 0 || pbm > 100) {
+    errors.push('PBM debe estar entre 0 y 100');
+  }
+  if (datos.pbm && datos.pbm.toString().includes('.')) {
+    errors.push('PBM debe ser un número entero');
+  }
+
+  // Validar número de documento (6-12 dígitos)
+  const documento = datos.numeroDocumento.toString().trim();
+  if (!/^\d{6,12}$/.test(documento)) {
+    errors.push('Número de documento debe tener entre 6 y 12 dígitos');
+  }
+
+  // Validar teléfono (celular colombiano: 10 dígitos, inicia con 3)
+  const telefono = datos.telefono.toString().trim();
+  if (!/^3\d{9}$/.test(telefono)) {
+    errors.push('Teléfono debe ser un celular colombiano válido (10 dígitos, inicia con 3)');
+  }
+
+  // Validar nombres (solo letras, tildes, ñ, espacios)
+  const nombreRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{1,50}$/;
+  if (datos.primerNombre && !nombreRegex.test(datos.primerNombre.trim())) {
+    errors.push('Primer nombre debe contener solo letras (máximo 50 caracteres)');
+  }
+  if (datos.segundoNombre && datos.segundoNombre.trim() !== '' && !nombreRegex.test(datos.segundoNombre.trim())) {
+    errors.push('Segundo nombre debe contener solo letras (máximo 50 caracteres)');
+  }
+  if (datos.primerApellido && !nombreRegex.test(datos.primerApellido.trim())) {
+    errors.push('Primer apellido debe contener solo letras (máximo 50 caracteres)');
+  }
+  if (datos.segundoApellido && datos.segundoApellido.trim() !== '' && !nombreRegex.test(datos.segundoApellido.trim())) {
+    errors.push('Segundo apellido debe contener solo letras (máximo 50 caracteres)');
+  }
+
+  return {
+    isValid: errors.length === 0,
+    errors: errors
+  };
+}
+
+/**
+ * Sanitiza los datos de una postulación
+ * @param {Object} datos - Datos a sanitizar
+ * @returns {Object} Datos sanitizados
+ */
+function sanitizarDatos(datos) {
+  return {
+    ...datos,
+    // Trim strings
+    primerNombre: (datos.primerNombre || '').toString().trim(),
+    segundoNombre: (datos.segundoNombre || '').toString().trim(),
+    primerApellido: (datos.primerApellido || '').toString().trim(),
+    segundoApellido: (datos.segundoApellido || '').toString().trim(),
+    numeroDocumento: (datos.numeroDocumento || '').toString().trim(),
+    telefono: (datos.telefono || '').toString().trim(),
+    programaEstudiante: (datos.programaEstudiante || '').toString().trim(),
+    // Email a minúsculas
+    correoElectronico: (datos.correoElectronico || '').toString().toLowerCase().trim(),
+    // Normalizar números
+    papa: parseFloat(datos.papa).toFixed(2),
+    pbm: parseInt(datos.pbm),
+    // Otros campos
+    tipoDocumento: datos.tipoDocumento || 'CC',
+    idConvocatoria: (datos.idConvocatoria || '').toString().trim(),
+    tituloConvocatoria: (datos.tituloConvocatoria || '').toString().trim(),
+    modalidad: (datos.modalidad || '').toString().trim()
+  };
+}
+
 /**
  * Guarda una postulación en el Sheet
  * @param {Object} datos - Datos del formulario de postulación
@@ -228,6 +494,35 @@ function guardarPostulacion(datos) {
 
     Logger.log('Postulación autorizada para: ' + userEmail);
 
+    // ========== SANITIZAR Y VALIDAR DATOS ==========
+
+    // 1. Sanitizar datos
+    datos = sanitizarDatos(datos);
+
+    // 2. Validar datos
+    const validacionDatos = validarDatosPostulacion(datos);
+    if (!validacionDatos.isValid) {
+      return {
+        success: false,
+        error: 'Datos inválidos: ' + validacionDatos.errors.join('; '),
+        tipo: 'VALIDATION_ERROR'
+      };
+    }
+
+    // 3. Verificar rate limit
+    const rateLimit = checkRateLimit(datos.numeroDocumento, datos.correoElectronico);
+    if (!rateLimit.allowed) {
+      return {
+        success: false,
+        error: rateLimit.message,
+        tipo: 'RATE_LIMIT_EXCEEDED',
+        resetTime: rateLimit.resetTime
+      };
+    }
+
+    // 4. Registrar intento
+    recordAttempt(datos.numeroDocumento, datos.correoElectronico);
+
     // ========== CONTINUAR CON LA POSTULACIÓN ==========
     const ss = SpreadsheetApp.openById(SPREADSHEET_POSTULACIONES_ID);
     let sheet = ss.getSheetByName(SHEET_POSTULACIONES);
@@ -236,10 +531,10 @@ function guardarPostulacion(datos) {
     if (!sheet) {
       throw new Error('No se encontró la hoja: ' + SHEET_POSTULACIONES);
     }
-    
+
     const numeroDocumento = datos.numeroDocumento || '';
     const idConvocatoria = datos.idConvocatoria || '';
-    
+
     // Validar estado del estudiante
     const validacion = validarEstadoEstudiante(numeroDocumento, idConvocatoria);
     
@@ -403,7 +698,7 @@ function validarEstadoEstudiante(numeroDocumento, idConvocatoria) {
 
 // ========== CORREO DE CONFIRMACIÓN DE POSTULACIÓN ==========
 
-const EMAIL_CONTACTO = 'practicas_paz@unal.edu.co';
+const EMAIL_CONTACTO = getConfig(CONFIG_KEYS.EMAIL_CONTACTO);
 
 /**
  * Envía un correo de confirmación al estudiante después de postularse
@@ -895,12 +1190,12 @@ function generarCorreoNoSeleccionado(nombreCompleto, datos) {
       <p>Si tiene alguna pregunta sobre el proceso o desea recibir retroalimentación adicional, no dude en contactarnos.</p>
 
       <p>Le deseamos mucho éxito en sus futuros proyectos.</p>
-      
+
       <p style="margin-top: 30px;">Saludos cordiales,<br>
       <strong>Equipo de Prácticas y Pasantías</strong><br>
       Universidad Nacional de Colombia - Sede de La Paz</p>
     </div>
-    
+
     <div class="footer">
       <p><strong>Universidad Nacional de Colombia - Sede de La Paz</strong></p>
       <p>📧 <a href="mailto:${EMAIL_CONTACTO}">${EMAIL_CONTACTO}</a></p>
@@ -909,4 +1204,62 @@ function generarCorreoNoSeleccionado(nombreCompleto, datos) {
 </body>
 </html>
   `;
+}
+
+// ========== FUNCIONES DE CONFIGURACIÓN ==========
+
+/**
+ * EJECUTAR ESTA FUNCIÓN UNA SOLA VEZ para configurar Script Properties
+ * Migra los IDs desde el código a Properties Service
+ */
+function setupConfiguration() {
+  console.log('=== CONFIGURANDO SCRIPT PROPERTIES ===');
+
+  const config = {
+    'SPREADSHEET_ID': '1iNF7VwBPS_Txxk7c14JSefGKFD_D-0eZPc6s8geBGkk',
+    'SHEET_NAME': 'Hoja1',
+    'SPREADSHEET_POSTULACIONES_ID': '1TPD-_1DjYE7hX7GLDQSuOpRiGsNT-GTjzeij-eG4Qts',
+    'SHEET_POSTULACIONES': 'Postulaciones_2026_1',
+    'EMAIL_CONTACTO': 'practicas_paz@unal.edu.co'
+  };
+
+  const scriptProperties = PropertiesService.getScriptProperties();
+
+  Object.keys(config).forEach(key => {
+    scriptProperties.setProperty(key, config[key]);
+    console.log(`✓ ${key} configurado`);
+  });
+
+  console.log('=== CONFIGURACIÓN COMPLETADA ===');
+  console.log('Ejecuta verifyConfiguration() para verificar');
+}
+
+/**
+ * Verifica que todas las propiedades estén configuradas correctamente
+ */
+function verifyConfiguration() {
+  console.log('=== VERIFICANDO CONFIGURACIÓN ===');
+
+  const requiredKeys = Object.values(CONFIG_KEYS);
+  const scriptProperties = PropertiesService.getScriptProperties();
+  let allConfigured = true;
+
+  requiredKeys.forEach(key => {
+    const value = scriptProperties.getProperty(key);
+    if (value) {
+      console.log(`✓ ${key}: ${value.substring(0, 20)}...`);
+    } else {
+      console.log(`✗ ${key}: NO CONFIGURADO (usando fallback)`);
+      allConfigured = false;
+    }
+  });
+
+  if (allConfigured) {
+    console.log('\n=== ✓ CONFIGURACIÓN COMPLETA ===');
+  } else {
+    console.log('\n=== ⚠ CONFIGURACIÓN INCOMPLETA ===');
+    console.log('Ejecuta setupConfiguration() para configurar las propiedades faltantes');
+  }
+
+  return allConfigured;
 }

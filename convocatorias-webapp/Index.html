@@ -959,6 +959,229 @@
       to { transform: rotate(360deg); }
     }
 
+    /* ========== SKELETON LOADING ========== */
+    .skeleton {
+      background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+      background-size: 200% 100%;
+      animation: skeleton-loading 1.5s ease-in-out infinite;
+      border-radius: 4px;
+    }
+
+    @keyframes skeleton-loading {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    .skeleton-card {
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      height: 400px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .skeleton-header {
+      padding: 1.25rem 1.25rem 0;
+    }
+
+    .skeleton-badges {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .skeleton-badge {
+      width: 80px;
+      height: 24px;
+    }
+
+    .skeleton-title {
+      width: 85%;
+      height: 28px;
+      margin-bottom: 0.5rem;
+    }
+
+    .skeleton-body {
+      padding: 0 1.25rem;
+      flex: 1;
+    }
+
+    .skeleton-info {
+      width: 70%;
+      height: 18px;
+      margin-bottom: 0.5rem;
+    }
+
+    .skeleton-description {
+      width: 100%;
+      height: 60px;
+      margin-bottom: 0.75rem;
+    }
+
+    .skeleton-footer {
+      padding: 1rem 1.25rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .skeleton-cupos {
+      width: 80px;
+      height: 24px;
+    }
+
+    .skeleton-button {
+      width: 100px;
+      height: 36px;
+      border-radius: 50px;
+    }
+
+    /* ========== FILTER CONTROLS ========== */
+    .filter-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-top: 0.75rem;
+    }
+
+    .active-filters-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: var(--unal-green-bg);
+      border: 1px solid var(--unal-green-light);
+      border-radius: 50px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--unal-green-dark);
+      animation: fadeIn 0.3s ease;
+    }
+
+    .active-filters-badge .material-icons {
+      font-size: 1.1rem;
+    }
+
+    .btn-clear-filters {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: var(--bg-card);
+      border: 2px solid var(--danger);
+      border-radius: 50px;
+      color: var(--danger);
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .btn-clear-filters:hover {
+      background: var(--danger);
+      color: white;
+    }
+
+    .btn-clear-filters .material-icons {
+      font-size: 1.1rem;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ========== REAL-TIME VALIDATION ========== */
+    .form-input.valid,
+    .form-select.valid {
+      border-color: var(--success);
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2322c55e'%3E%3Cpath d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.75rem center;
+      background-size: 1.25rem;
+      padding-right: 2.75rem;
+    }
+
+    .form-error.show {
+      display: block;
+      animation: slideDown 0.3s ease;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-5px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ========== BACK TO TOP BUTTON ========== */
+    .back-to-top {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 56px;
+      height: 56px;
+      background: var(--unal-green);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      z-index: 1000;
+      opacity: 0;
+      transform: scale(0.8);
+    }
+
+    .back-to-top.visible {
+      display: flex;
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .back-to-top:hover {
+      background: var(--unal-green-dark);
+      transform: scale(1.1);
+    }
+
+    .back-to-top:active {
+      transform: scale(0.95);
+    }
+
+    .back-to-top .material-icons {
+      font-size: 1.5rem;
+    }
+
+    @media (max-width: 768px) {
+      .back-to-top {
+        bottom: 1.5rem;
+        right: 1.5rem;
+        width: 48px;
+        height: 48px;
+      }
+
+      .back-to-top .material-icons {
+        font-size: 1.25rem;
+      }
+    }
+
     /* Error */
     .error-state {
       background: #fef2f2;
@@ -1918,6 +2141,15 @@
           <span class="material-icons">public</span> Externas
         </button>
       </div>
+
+      <!-- Filter Controls -->
+      <div class="filter-controls">
+        <div id="activeFiltersBadge" style="display: none;"></div>
+        <button id="btnClearFilters" class="btn-clear-filters" style="display: none;" onclick="clearAllFilters()">
+          <span class="material-icons">close</span>
+          Limpiar filtros
+        </button>
+      </div>
     </div>
 
     <!-- Cards Container -->
@@ -2199,6 +2431,8 @@
 
     // Cargar datos
     function loadConvocatorias() {
+      showSkeletonCards();
+
       // Verificar si google.script.run está disponible
       if (typeof google !== 'undefined' && google.script && google.script.run) {
         // Usar Google Apps Script
@@ -2228,6 +2462,38 @@
             handleDataError(error);
           });
       }
+    }
+
+    // ========== SKELETON LOADING ==========
+    function showSkeletonCards() {
+      const container = document.getElementById('cardsContainer');
+      let html = '<div class="cards-grid">';
+
+      for (let i = 0; i < 6; i++) {
+        html += `
+          <div class="skeleton-card">
+            <div class="skeleton-header">
+              <div class="skeleton-badges">
+                <div class="skeleton skeleton-badge"></div>
+                <div class="skeleton skeleton-badge"></div>
+              </div>
+              <div class="skeleton skeleton-title"></div>
+            </div>
+            <div class="skeleton-body">
+              <div class="skeleton skeleton-info"></div>
+              <div class="skeleton skeleton-info"></div>
+              <div class="skeleton skeleton-description"></div>
+            </div>
+            <div class="skeleton-footer">
+              <div class="skeleton skeleton-cupos"></div>
+              <div class="skeleton skeleton-button"></div>
+            </div>
+          </div>
+        `;
+      }
+
+      html += '</div>';
+      container.innerHTML = html;
     }
 
     function handleDataSuccess(result) {
@@ -2594,6 +2860,56 @@
 
       updateFilteredStats();
       renderCards();
+      updateActiveFiltersBadge();
+    }
+
+    // ========== FILTER BADGE & CLEAR ==========
+    function updateActiveFiltersBadge() {
+      const badge = document.getElementById('activeFiltersBadge');
+      const btnClear = document.getElementById('btnClearFilters');
+      const searchTerm = document.getElementById('searchInput').value.trim();
+
+      let activeCount = 0;
+
+      // Contar filtros activos
+      if (activeFilters.tipo) activeCount++;
+      if (activeFilters.origen) activeCount++;
+      if (searchTerm) activeCount++;
+
+      if (activeCount > 0) {
+        badge.innerHTML = `
+          <span class="material-icons">filter_list</span>
+          ${activeCount} filtro${activeCount > 1 ? 's' : ''} activo${activeCount > 1 ? 's' : ''}
+        `;
+        badge.className = 'active-filters-badge';
+        badge.style.display = 'inline-flex';
+        btnClear.style.display = 'inline-flex';
+      } else {
+        badge.style.display = 'none';
+        btnClear.style.display = 'none';
+      }
+    }
+
+    function clearAllFilters() {
+      // Limpiar búsqueda
+      document.getElementById('searchInput').value = '';
+
+      // Limpiar filtros activos
+      activeFilters = {
+        tipo: null,
+        origen: null
+      };
+
+      // Resetear botones
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.dataset.filter === 'all') {
+          btn.classList.add('active');
+        }
+      });
+
+      // Aplicar filtros
+      applyFilters();
     }
 
     // Utilidades
@@ -2615,6 +2931,178 @@
         timeout = setTimeout(later, wait);
       };
     }
+
+    // ========== REAL-TIME VALIDATION ==========
+    function validateField(fieldId) {
+      const field = document.getElementById(fieldId);
+      if (!field) return true;
+
+      const value = field.value.trim();
+      const errorDiv = field.parentElement.querySelector('.form-error');
+      let isValid = true;
+      let errorMessage = '';
+
+      // Validaciones según el campo
+      switch(fieldId) {
+        case 'primerNombre':
+        case 'primerApellido':
+          if (!value) {
+            isValid = false;
+            errorMessage = 'Este campo es requerido';
+          } else if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{1,50}$/.test(value)) {
+            isValid = false;
+            errorMessage = 'Solo letras, tildes y ñ (máximo 50 caracteres)';
+          }
+          break;
+
+        case 'segundoNombre':
+        case 'segundoApellido':
+          if (value && !/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{1,50}$/.test(value)) {
+            isValid = false;
+            errorMessage = 'Solo letras, tildes y ñ (máximo 50 caracteres)';
+          }
+          break;
+
+        case 'numeroDocumento':
+          if (!value) {
+            isValid = false;
+            errorMessage = 'Este campo es requerido';
+          } else if (!/^\d{6,12}$/.test(value)) {
+            isValid = false;
+            errorMessage = 'Debe tener entre 6 y 12 dígitos';
+          }
+          break;
+
+        case 'telefono':
+          if (!value) {
+            isValid = false;
+            errorMessage = 'Este campo es requerido';
+          } else if (!/^3\d{9}$/.test(value)) {
+            isValid = false;
+            errorMessage = 'Debe ser un celular colombiano válido (10 dígitos, inicia con 3)';
+          }
+          break;
+
+        case 'correoElectronico':
+          if (!value) {
+            isValid = false;
+            errorMessage = 'Este campo es requerido';
+          } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+            isValid = false;
+            errorMessage = 'Formato de correo inválido';
+          } else if (!value.toLowerCase().endsWith('@unal.edu.co')) {
+            isValid = false;
+            errorMessage = 'Debe ser un correo institucional (@unal.edu.co)';
+          }
+          break;
+
+        case 'papa':
+          if (!value) {
+            isValid = false;
+            errorMessage = 'Este campo es requerido';
+          } else {
+            const papa = parseFloat(value);
+            if (isNaN(papa) || papa < 0 || papa > 5) {
+              isValid = false;
+              errorMessage = 'Debe estar entre 0 y 5';
+            } else if (value.includes('.') && value.split('.')[1].length > 2) {
+              isValid = false;
+              errorMessage = 'Máximo 2 decimales';
+            }
+          }
+          break;
+
+        case 'pbm':
+          if (!value) {
+            isValid = false;
+            errorMessage = 'Este campo es requerido';
+          } else {
+            const pbm = parseInt(value);
+            if (isNaN(pbm) || pbm < 0 || pbm > 100) {
+              isValid = false;
+              errorMessage = 'Debe estar entre 0 y 100';
+            } else if (value.includes('.')) {
+              isValid = false;
+              errorMessage = 'Debe ser un número entero';
+            }
+          }
+          break;
+
+        case 'programaEstudiante':
+          if (!value) {
+            isValid = false;
+            errorMessage = 'Debe seleccionar un programa';
+          }
+          break;
+      }
+
+      // Actualizar UI
+      if (isValid && value) {
+        field.classList.remove('error');
+        field.classList.add('valid');
+        if (errorDiv) {
+          errorDiv.classList.remove('show');
+          errorDiv.textContent = '';
+        }
+      } else if (!isValid) {
+        field.classList.remove('valid');
+        field.classList.add('error');
+        if (errorDiv) {
+          errorDiv.textContent = errorMessage;
+          errorDiv.classList.add('show');
+        }
+      } else {
+        field.classList.remove('error', 'valid');
+        if (errorDiv) {
+          errorDiv.classList.remove('show');
+          errorDiv.textContent = '';
+        }
+      }
+
+      return isValid;
+    }
+
+    function setupRealtimeValidation() {
+      const fieldsToValidate = [
+        'primerNombre', 'segundoNombre', 'primerApellido', 'segundoApellido',
+        'numeroDocumento', 'telefono', 'correoElectronico', 'papa', 'pbm', 'programaEstudiante'
+      ];
+
+      fieldsToValidate.forEach(fieldId => {
+        const field = document.getElementById(fieldId);
+        if (field) {
+          // Validar al perder el foco
+          field.addEventListener('blur', () => validateField(fieldId));
+
+          // Validar mientras escribe (con debounce)
+          field.addEventListener('input', debounce(() => {
+            if (field.value.trim()) {
+              validateField(fieldId);
+            }
+          }, 500));
+        }
+      });
+    }
+
+    // ========== BACK TO TOP BUTTON ==========
+    function handleBackToTopVisibility() {
+      const backToTopBtn = document.getElementById('backToTop');
+      if (window.pageYOffset > 400) {
+        backToTopBtn.classList.add('visible');
+      } else {
+        backToTopBtn.classList.remove('visible');
+      }
+    }
+
+    function scrollToTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
+
+    // Event listener para back to top
+    window.addEventListener('scroll', debounce(handleBackToTopVisibility, 100));
 
     // ========== POSTULACIÓN ==========
     let currentConvocatoriaId = null;
@@ -2654,6 +3142,11 @@
       // Abrir modal
       document.getElementById('postulacionOverlay').classList.add('active');
       document.body.style.overflow = 'hidden';
+
+      // Configurar validación en tiempo real
+      setTimeout(() => {
+        setupRealtimeValidation();
+      }, 100);
     }
 
     function closePostulacionModal() {
@@ -2664,10 +3157,11 @@
 
     function clearFormErrors() {
       document.querySelectorAll('.form-input, .form-select').forEach(el => {
-        el.classList.remove('error');
+        el.classList.remove('error', 'valid');
       });
       document.querySelectorAll('.form-error').forEach(el => {
         el.classList.remove('show');
+        el.textContent = '';
       });
     }
 
@@ -2790,6 +3284,9 @@
     }
 
     function handlePostulacionSuccess(result) {
+      // Siempre restaurar botón primero
+      setSubmitButtonLoading(false);
+
       if (result.success) {
         showSuccessMessage();
       } else {
@@ -2807,10 +3304,51 @@
           case 'POSTULACION_DUPLICADA':
             showErrorMessage('Postulación Duplicada', result.error, 'warning');
             break;
+          case 'RATE_LIMIT_EXCEEDED':
+            showRateLimitMessage(result);
+            break;
+          case 'VALIDATION_ERROR':
+            showErrorMessage('Datos Inválidos', result.error, 'error_outline');
+            break;
           default:
             showErrorMessage('Error', result.error || 'No se pudo enviar la postulación', 'error_outline');
         }
       }
+    }
+
+    function showRateLimitMessage(result) {
+      const resetTimeStr = result.resetTime ? new Date(result.resetTime).toLocaleTimeString('es-CO', {
+        hour: '2-digit',
+        minute: '2-digit'
+      }) : 'unos minutos';
+
+      document.getElementById('postulacionBody').innerHTML = `
+        <div class="success-message">
+          <div class="success-icon" style="background: #fef3c7;">
+            <span class="material-icons" style="color: #f59e0b;">schedule</span>
+          </div>
+          <h3 style="color: #f59e0b;">Límite de Intentos Alcanzado</h3>
+          <p>Por seguridad, limitamos el número de intentos de postulación para prevenir abusos.</p>
+          <div style="background: #fffbeb; border: 1px solid #fcd34d; border-radius: 12px; padding: 16px; margin: 16px 0; text-align: left;">
+            <p style="margin: 0 0 8px 0; font-weight: 600; color: #92400e;">
+              <span class="material-icons" style="font-size: 18px; vertical-align: middle; margin-right: 4px;">info</span>
+              ¿Por qué limitamos los intentos?
+            </p>
+            <ul style="margin: 8px 0 0 0; padding-left: 20px; color: #78350f;">
+              <li>Prevenir spam y uso indebido del sistema</li>
+              <li>Garantizar la integridad de los datos</li>
+              <li>Proteger la información de todos los usuarios</li>
+            </ul>
+          </div>
+          <p style="font-size: 0.9em; color: #64748b;">
+            Puede intentar nuevamente después de las <strong>${resetTimeStr}</strong>
+          </p>
+          <button class="btn-postular" onclick="closePostulacionModal()" style="background: #f59e0b;">
+            <span class="material-icons">check</span>
+            Entendido
+          </button>
+        </div>
+      `;
     }
 
     function showSeleccionadoMessage(datos) {
@@ -2878,6 +3416,7 @@
     }
 
     function handlePostulacionError(error) {
+      setSubmitButtonLoading(false);
       showErrorMessage('Error de Conexión', error.message, 'wifi_off');
     }
 
@@ -2888,6 +3427,11 @@
       }
     });
   </script>
+
+  <!-- Back to Top Button -->
+  <button id="backToTop" class="back-to-top" onclick="scrollToTop()">
+    <span class="material-icons">arrow_upward</span>
+  </button>
 
 </body>
 </html>

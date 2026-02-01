@@ -1,0 +1,1853 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trabajos de Grado - UNAL Sede La Paz</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+    :root {
+      --unal-green: #4CAF50;
+      --unal-green-dark: #388E3C;
+      --unal-green-light: #C8E6C9;
+      --unal-green-bg: #f0f9f0;
+      --text-primary: #1e293b;
+      --text-secondary: #64748b;
+      --bg-primary: #f8fafc;
+      --bg-white: #ffffff;
+      --border: #e2e8f0;
+      --warning: #FFF9C4;
+      --warning-text: #F57C00;
+      --shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+      --radius: 12px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-white);
+      color: var(--text-primary);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem;
+    }
+
+    /* Header */
+    .page-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .page-header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.75rem;
+    }
+
+    .page-header p {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    /* Section */
+    .section {
+      margin-bottom: 4rem;
+    }
+
+    .section-header {
+      margin-bottom: 2rem;
+    }
+
+    .section-header h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .section-header h2 .material-icons {
+      color: var(--unal-green);
+    }
+
+    .section-header p {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+    }
+
+    /* Quick Start */
+    .quick-start-box {
+      background: var(--unal-green-bg);
+      border-left: 4px solid var(--unal-green);
+      padding: 2rem;
+      border-radius: 0 var(--radius) var(--radius) 0;
+      margin-bottom: 2rem;
+    }
+
+    .quick-start-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .quick-step {
+      background: var(--bg-white);
+      padding: 1.5rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .quick-step-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      background: var(--unal-green);
+      color: white;
+      border-radius: 50%;
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .quick-step h4 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .quick-step p {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* Comparison Table */
+    .comparison-table-wrapper {
+      overflow-x: auto;
+      margin-top: 1.5rem;
+    }
+
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--bg-white);
+      box-shadow: var(--shadow);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .comparison-table thead {
+      background: var(--unal-green);
+      color: white;
+    }
+
+    .comparison-table th,
+    .comparison-table td {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .comparison-table th {
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .comparison-table td {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+
+    .comparison-table tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    .comparison-table tbody tr:hover {
+      background: var(--bg-primary);
+    }
+
+    .comparison-recommendations {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .recommendation-box {
+      background: var(--bg-white);
+      border: 2px solid var(--unal-green-light);
+      padding: 1.5rem;
+      border-radius: var(--radius);
+    }
+
+    .recommendation-box h4 {
+      color: var(--unal-green-dark);
+      font-size: 1rem;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .recommendation-box ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .recommendation-box li {
+      padding: 0.5rem 0;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+
+    .recommendation-box li::before {
+      content: '✓';
+      color: var(--unal-green);
+      font-weight: bold;
+      flex-shrink: 0;
+    }
+
+    /* Timeline */
+    .timeline {
+      position: relative;
+      padding: 2rem 0;
+    }
+
+    .timeline-item {
+      display: flex;
+      gap: 2rem;
+      margin-bottom: 2.5rem;
+      position: relative;
+    }
+
+    .timeline-marker {
+      flex-shrink: 0;
+      width: 60px;
+      height: 60px;
+      background: var(--unal-green);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+      position: relative;
+      z-index: 2;
+    }
+
+    .timeline-item:not(:last-child) .timeline-marker::after {
+      content: '';
+      position: absolute;
+      top: 60px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 2px;
+      height: 80px;
+      background: var(--unal-green-light);
+    }
+
+    .timeline-content {
+      flex: 1;
+      background: var(--bg-white);
+      padding: 1.5rem;
+      border-radius: var(--radius);
+      border-left: 3px solid var(--unal-green);
+      box-shadow: var(--shadow);
+    }
+
+    .timeline-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .timeline-duration {
+      display: inline-block;
+      background: var(--warning);
+      color: var(--warning-text);
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+    }
+
+    .timeline-content p {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    .timeline-content ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 0.75rem;
+    }
+
+    .timeline-content li {
+      padding: 0.35rem 0;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+
+    .timeline-content li::before {
+      content: '•';
+      color: var(--unal-green);
+      font-weight: bold;
+      flex-shrink: 0;
+    }
+
+    /* Accordion (FAQ y Normativa) */
+    .accordion {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+    }
+
+    .accordion-item {
+      background: var(--bg-white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .accordion-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 1.5rem;
+      cursor: pointer;
+      transition: background 0.2s;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    .accordion-header:hover {
+      background: var(--bg-primary);
+    }
+
+    .accordion-title {
+      font-weight: 600;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .accordion-title .material-icons {
+      color: var(--unal-green);
+      font-size: 1.25rem;
+    }
+
+    .accordion-header .expand-icon {
+      color: var(--text-secondary);
+      transition: transform 0.3s;
+    }
+
+    .accordion-item.active .expand-icon {
+      transform: rotate(180deg);
+    }
+
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .accordion-item.active .accordion-content {
+      max-height: 1000px;
+    }
+
+    .accordion-body {
+      padding: 0 1.5rem 1.5rem;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+
+    .accordion-body p {
+      margin-bottom: 0.75rem;
+      line-height: 1.6;
+    }
+
+    .accordion-body ul {
+      list-style: none;
+      padding-left: 0;
+      margin-bottom: 0.75rem;
+    }
+
+    .accordion-body li {
+      padding: 0.35rem 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+
+    .accordion-body li::before {
+      content: '✓';
+      color: var(--unal-green);
+      font-weight: bold;
+      flex-shrink: 0;
+    }
+
+    .accordion-body a {
+      color: var(--unal-green);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .accordion-body a:hover {
+      text-decoration: underline;
+    }
+
+    .official-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: linear-gradient(135deg, #e8f5e9, #f1f8f4);
+      border: 1px solid var(--unal-green);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      margin-top: 1rem;
+      transition: all 0.3s ease;
+      font-size: 0.9rem;
+      text-decoration: none;
+    }
+
+    .official-link:hover {
+      background: linear-gradient(135deg, #c8e6c9, #e8f5e9);
+      transform: translateX(4px);
+      box-shadow: 0 2px 8px rgba(76, 175, 80, 0.2);
+    }
+
+    .official-link .material-icons {
+      font-size: 1.1rem;
+      color: var(--unal-green);
+    }
+
+    .official-link strong {
+      color: var(--unal-green-dark);
+    }
+
+    /* Contact Box */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .contact-card {
+      background: var(--bg-white);
+      border: 2px solid var(--border);
+      padding: 1.5rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+
+    .contact-card .material-icons {
+      font-size: 2.5rem;
+      color: var(--unal-green);
+      margin-bottom: 1rem;
+    }
+
+    .contact-card h4 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.75rem;
+    }
+
+    .contact-card p {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.5rem;
+    }
+
+    .contact-card a {
+      color: var(--unal-green);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .contact-card a:hover {
+      text-decoration: underline;
+    }
+
+    /* Info Box */
+    .info-box {
+      background: var(--warning);
+      border-left: 4px solid var(--warning-text);
+      padding: 1rem 1.5rem;
+      border-radius: 0 var(--radius) var(--radius) 0;
+      margin: 1.5rem 0;
+    }
+
+    .info-box p {
+      margin: 0;
+      color: var(--text-primary);
+      font-size: 0.9rem;
+    }
+
+    .info-box strong {
+      color: var(--warning-text);
+    }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.6);
+      animation: fadeIn 0.3s ease;
+    }
+
+    .modal.active {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .modal-content {
+      background: var(--bg-white);
+      border-radius: var(--radius);
+      max-width: 900px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      animation: slideUp 0.3s ease;
+      position: relative;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .modal-header {
+      background: var(--unal-green);
+      color: white;
+      padding: 2rem;
+      border-radius: var(--radius) var(--radius) 0 0;
+      position: relative;
+    }
+
+    .modal-header h3 {
+      margin: 0;
+      font-size: 1.75rem;
+      font-weight: 700;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+
+    .modal-close:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    .modal-body {
+      padding: 2rem;
+    }
+
+    .modal-section {
+      margin-bottom: 2rem;
+    }
+
+    .modal-section:last-child {
+      margin-bottom: 0;
+    }
+
+    .modal-section h4 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .modal-section h4 .material-icons {
+      color: var(--unal-green);
+    }
+
+    .modal-section p {
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 1rem;
+    }
+
+    .modal-section ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .modal-section li {
+      padding: 0.5rem 0;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+
+    .modal-section li::before {
+      content: '✓';
+      color: var(--unal-green);
+      font-weight: bold;
+      flex-shrink: 0;
+    }
+
+    .modal-requirements {
+      background: var(--unal-green-bg);
+      padding: 1.5rem;
+      border-radius: var(--radius);
+      border-left: 4px solid var(--unal-green);
+    }
+
+    .modal-requirements h5 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--unal-green-dark);
+      margin-bottom: 0.75rem;
+    }
+
+    .modal-requirements ul {
+      margin: 0;
+    }
+
+    .clickable-card {
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .clickable-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(76, 175, 80, 0.2);
+    }
+
+    .clickable-card .quick-step-number {
+      transition: all 0.3s ease;
+    }
+
+    .clickable-card:hover .quick-step-number {
+      transform: scale(1.1);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .container {
+        padding: 2rem 1rem;
+      }
+
+      .page-header h1 {
+        font-size: 1.5rem;
+      }
+
+      .section-header h2 {
+        font-size: 1.25rem;
+      }
+
+      .timeline-item {
+        gap: 1rem;
+      }
+
+      .timeline-marker {
+        width: 50px;
+        height: 50px;
+        font-size: 1.25rem;
+      }
+
+      .timeline-item:not(:last-child) .timeline-marker::after {
+        top: 50px;
+        height: 70px;
+      }
+
+      .quick-start-steps {
+        grid-template-columns: 1fr;
+      }
+
+      .comparison-table th,
+      .comparison-table td {
+        padding: 0.75rem;
+        font-size: 0.85rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .section {
+        margin-bottom: 3rem;
+      }
+
+      .accordion-header {
+        padding: 1rem;
+      }
+
+      .accordion-title {
+        font-size: 0.9rem;
+      }
+
+      .accordion-body {
+        padding: 0 1rem 1rem;
+        font-size: 0.85rem;
+      }
+
+      .modal-content {
+        margin: 0;
+        border-radius: 0;
+        max-height: 100vh;
+      }
+
+      .modal-header {
+        padding: 1.5rem 1rem;
+      }
+
+      .modal-header h3 {
+        font-size: 1.25rem;
+        padding-right: 2rem;
+      }
+
+      .modal-body {
+        padding: 1.5rem 1rem;
+      }
+
+      .modal-section h4 {
+        font-size: 1.1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="page-header">
+      <h1>Trabajos de Grado</h1>
+      <p>Información completa sobre el proceso de Trabajos de Grado (TDG) en la UNAL Sede de La Paz</p>
+    </div>
+
+    <!-- Sección 1: ¿Qué es el TDG? -->
+    <section class="section">
+      <div class="section-header">
+        <h2>
+          <span class="material-icons">info</span>
+          ¿Qué es el Trabajo de Grado?
+        </h2>
+      </div>
+
+      <div class="quick-start-box">
+        <p>La asignatura Trabajo de Grado es aquella en la cual el estudiante concreta y consolida el proceso investigativo, creativo o de innovación, en el tratamiento de un problema específico, como fruto de la aplicación de los conocimientos y métodos adquiridos durante su proceso de formación universitaria. Podrá ser el punto final de una serie de asignaturas previas tales como seminarios, prácticas académicas, investigativas o creativas.</p>
+      </div>
+
+      <div class="section-header" style="margin-top: 3rem;">
+        <h2>
+          <span class="material-icons">category</span>
+          Modalidades de Trabajo de Grado
+        </h2>
+        <p>Existen cuatro modalidades para desarrollar su Trabajo de Grado. Seleccione la que mejor se adapte a sus objetivos académicos.</p>
+      </div>
+
+      <div class="quick-start-steps">
+        <div class="quick-step clickable-card" onclick="openModal('modal-monografia')">
+          <div class="quick-step-number">1</div>
+          <h4>Monografía</h4>
+          <p>Documento expositivo o explicativo en el que se aborda un tema específico desde una perspectiva nueva o se muestran los resultados y conclusiones de una investigación.</p>
+          <p style="color: var(--unal-green); font-weight: 600; font-size: 0.85rem; margin-top: 0.75rem;">
+            <span class="material-icons" style="font-size: 1rem; vertical-align: middle;">touch_app</span>
+            Click para ver más información
+          </p>
+        </div>
+
+        <div class="quick-step clickable-card" onclick="openModal('modal-proyecto')">
+          <div class="quick-step-number">2</div>
+          <h4>Participación en Proyecto de Investigación</h4>
+          <p>El estudiante se vincula a un proyecto de investigación ya existente, aportando con actividades, análisis o productos específicos.</p>
+          <p style="color: var(--unal-green); font-weight: 600; font-size: 0.85rem; margin-top: 0.75rem;">
+            <span class="material-icons" style="font-size: 1rem; vertical-align: middle;">touch_app</span>
+            Click para ver más información
+          </p>
+        </div>
+
+        <div class="quick-step clickable-card" onclick="openModal('modal-pasantia')">
+          <div class="quick-step-number">3</div>
+          <h4>Pasantía</h4>
+          <p>El estudiante aplicará los métodos de investigación, de evaluación y análisis frente a situaciones específicas en la Entidad/Dependencia UNAL.</p>
+          <p style="color: var(--unal-green); font-weight: 600; font-size: 0.85rem; margin-top: 0.75rem;">
+            <span class="material-icons" style="font-size: 1rem; vertical-align: middle;">touch_app</span>
+            Click para ver más información
+          </p>
+        </div>
+
+        <div class="quick-step clickable-card" onclick="openModal('modal-postgrado')">
+          <div class="quick-step-number">4</div>
+          <h4>Asignaturas de Postgrado</h4>
+          <p>Opción que permite a estudiantes de pregrado cursar asignaturas en un programa de posgrado para cumplir con los créditos del Trabajo de Grado.</p>
+          <p style="color: var(--unal-green); font-weight: 600; font-size: 0.85rem; margin-top: 0.75rem;">
+            <span class="material-icons" style="font-size: 1rem; vertical-align: middle;">touch_app</span>
+            Click para ver más información
+          </p>
+        </div>
+      </div>
+
+      <div class="info-box" style="margin-top: 2rem;">
+        <p><strong>Importante:</strong> Los requisitos para iniciar su Trabajo de Grado varían según el programa académico. Consulte la sección "Normativa por Programa" para conocer los requisitos específicos de su carrera.</p>
+      </div>
+    </section>
+
+    <!-- Sección 2: Inicio Rápido -->
+    <section class="section">
+      <div class="section-header">
+        <h2>
+          <span class="material-icons">rocket_launch</span>
+          Inicio Rápido
+        </h2>
+        <p>Complete su Trabajo de Grado siguiendo estos 4 pasos esenciales</p>
+      </div>
+
+      <div class="quick-start-box">
+        <p><strong>Guía paso a paso para completar exitosamente su Trabajo de Grado</strong></p>
+      </div>
+
+      <div class="quick-start-steps">
+        <div class="quick-step">
+          <div class="quick-step-number">1</div>
+          <h4>Seleccione su Modalidad</h4>
+          <p>Revise las 4 modalidades de Trabajo de Grado disponibles y verifique los requisitos específicos de su programa académico.</p>
+        </div>
+
+        <div class="quick-step">
+          <div class="quick-step-number">2</div>
+          <h4>Descargue los Formatos</h4>
+          <p>Obtenga el formato de preinscripción y el plan general de Trabajo de Grado.</p>
+        </div>
+
+        <div class="quick-step">
+          <div class="quick-step-number">3</div>
+          <h4>Consulte la Normativa</h4>
+          <p>Revise el Acuerdo 026 de 2012 (General) y la normativa específica de su programa curricular.</p>
+        </div>
+
+        <div class="quick-step">
+          <div class="quick-step-number">4</div>
+          <h4>Inicie el Proceso</h4>
+          <p>Complete el formato de preinscripción, envíelo a coordinación y espere la aprobación del Comité (aproximadamente 2 semanas).</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección 3: Timeline del Proceso -->
+    <section class="section">
+      <div class="section-header">
+        <h2>
+          <span class="material-icons">timeline</span>
+          Proceso Completo - Timeline Paso a Paso
+        </h2>
+        <p>Conozca cada etapa del proceso de su Trabajo de Grado</p>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-marker">📝</div>
+          <div class="timeline-content">
+            <div class="timeline-title">Fase 1: Preinscripción</div>
+            <span class="timeline-duration">⏱️ 1-2 semanas</span>
+            <p>Complete el formato de preinscripción, elija su director/supervisor y defina el título tentativo de su proyecto.</p>
+            <strong style="font-size: 0.9rem;">Acciones a realizar:</strong>
+            <ul>
+              <li>Descargar y completar formato de preinscripción</li>
+              <li>Contactar y confirmar director/supervisor</li>
+              <li>Definir título y resumen del proyecto</li>
+              <li>Enviar documentos a coordinación académica</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker">✅</div>
+          <div class="timeline-content">
+            <div class="timeline-title">Fase 2: Aprobación del Comité</div>
+            <span class="timeline-duration">⏱️ 2-4 semanas</span>
+            <p>El Comité de Trabajos de Grado revisará su propuesta y evaluará su viabilidad académica y pertinencia.</p>
+            <strong style="font-size: 0.9rem;">Qué esperar:</strong>
+            <ul>
+              <li>Revisión por el comité académico</li>
+              <li>Evaluación de viabilidad y pertinencia</li>
+              <li>Aprobación o solicitud de ajustes</li>
+              <li>Notificación por correo electrónico</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker">🔬</div>
+          <div class="timeline-content">
+            <div class="timeline-title">Fase 3: Desarrollo del Proyecto</div>
+            <span class="timeline-duration">⏱️ 1-2 semestres</span>
+            <p>Desarrolle su investigación o práctica académica especial con seguimiento periódico de su director/supervisor.</p>
+            <strong style="font-size: 0.9rem;">Actividades principales:</strong>
+            <ul>
+              <li>Desarrollar el anteproyecto</li>
+              <li>Reuniones periódicas con director/supervisor</li>
+              <li>Seguimiento mensual con coordinación</li>
+              <li>Completar investigación o aplicación práctica</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker">📄</div>
+          <div class="timeline-content">
+            <div class="timeline-title">Fase 4: Entrega y Evaluación</div>
+            <span class="timeline-duration">⏱️ 2-4 semanas</span>
+            <p>Finalice su documento escrito, obtenga la aprobación del director y prepárelo para evaluación de jurados.</p>
+            <strong style="font-size: 0.9rem;">Requisitos de entrega:</strong>
+            <ul>
+              <li>Documento final completo en formato oficial</li>
+              <li>Carta de aprobación del director</li>
+              <li>Resumen ejecutivo</li>
+              <li>Evaluación de jurados/evaluador</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker">🎓</div>
+          <div class="timeline-content">
+            <div class="timeline-title">Fase 5: Sustentación (solo TDG)</div>
+            <span class="timeline-duration">⏱️ 1-2 semanas</span>
+            <p>Presente su trabajo ante jurados y responda preguntas sobre su investigación en una defensa pública.</p>
+            <strong style="font-size: 0.9rem;">Formato de sustentación:</strong>
+            <ul>
+              <li>Presentación oral (20-30 minutos)</li>
+              <li>Sesión de preguntas de jurados</li>
+              <li>Defensa pública del trabajo</li>
+              <li>Calificación final</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-box">
+        <p><strong>Tiempo total estimado:</strong> 6-12 meses (1-2 semestres académicos)</p>
+      </div>
+    </section>
+
+    <!-- Sección 4: FAQ -->
+    <section class="section">
+      <div class="section-header">
+        <h2>
+          <span class="material-icons">help_outline</span>
+          Preguntas Frecuentes
+        </h2>
+        <p>Encuentre respuestas a las consultas más comunes sobre Trabajos de Grado</p>
+      </div>
+
+      <div class="accordion">
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div class="accordion-title">
+              ¿Qué requisitos de PAPA necesito?
+            </div>
+            <span class="material-icons expand-icon">expand_more</span>
+          </div>
+          <div class="accordion-content">
+            <div class="accordion-body">
+              <ul>
+                <li>PAPA mínimo: 3.5 para Trabajo de Grado</li>
+                <li>Algunos programas pueden exigir PAPA superior</li>
+                <li>Si su PAPA es inferior a 3.5, consulte con su director de programa</li>
+              </ul>
+              <p><strong>Importante:</strong> Verifique los requisitos específicos en la normativa de su programa.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div class="accordion-title">
+              ¿Cómo elijo un director de TDG?
+            </div>
+            <span class="material-icons expand-icon">expand_more</span>
+          </div>
+          <div class="accordion-content">
+            <div class="accordion-body">
+              <p><strong>Pasos recomendados:</strong></p>
+              <ul>
+                <li>Identifique profesores de su área de interés</li>
+                <li>Revise sus líneas de investigación publicadas</li>
+                <li>Contacte al profesor directamente</li>
+                <li>Presente su idea de proyecto</li>
+                <li>Si acepta, incluya sus datos en el formato de preinscripción</li>
+              </ul>
+              <p><strong>Nota importante:</strong> El director debe ser profesor de planta de la UNAL. Los profesores ocasionales pueden actuar como co-directores.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div class="accordion-title">
+              ¿Cuánto tiempo toma completar un TDG?
+            </div>
+            <span class="material-icons expand-icon">expand_more</span>
+          </div>
+          <div class="accordion-content">
+            <div class="accordion-body">
+              <p><strong>Duración típica:</strong> 6-12 meses (1-2 semestres académicos)</p>
+              <p><strong>Factores que afectan la duración:</strong></p>
+              <ul>
+                <li>Complejidad del tema de investigación</li>
+                <li>Disponibilidad del director</li>
+                <li>Su dedicación y tiempo disponible</li>
+                <li>Acceso a recursos (laboratorios, datos, bibliografía)</li>
+              </ul>
+              <p>El 70% de los Trabajos de Grado se completan entre 8 y 10 meses.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div class="accordion-title">
+              ¿Puedo cambiar de modalidad después de inscrito?
+            </div>
+            <span class="material-icons expand-icon">expand_more</span>
+          </div>
+          <div class="accordion-content">
+            <div class="accordion-body">
+              <p><strong>Sí, pero con condiciones:</strong></p>
+              <ul>
+                <li>Debe solicitar el cambio ante el Comité de TDG</li>
+                <li>Solo es posible antes de completar el 50% del proyecto</li>
+                <li>Requiere justificación académica sólida</li>
+                <li>Necesita aprobación del director/supervisor</li>
+              </ul>
+              <p><strong>Recomendación:</strong> Planifique cuidadosamente desde el inicio para evitar cambios posteriores.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div class="accordion-title">
+              ¿Puedo hacer TDG con una empresa externa?
+            </div>
+            <span class="material-icons expand-icon">expand_more</span>
+          </div>
+          <div class="accordion-content">
+            <div class="accordion-body">
+              <p><strong>Sí, es posible:</strong></p>
+              <ul>
+                <li>La empresa puede proveer el caso de estudio o problemática</li>
+                <li>Debe contar con un director de la UNAL</li>
+                <li>La empresa puede asignar un co-asesor técnico</li>
+                <li>El proyecto debe cumplir con requisitos académicos de la universidad</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div class="accordion-title">
+              ¿Necesito publicar mi TDG?
+            </div>
+            <span class="material-icons expand-icon">expand_more</span>
+          </div>
+          <div class="accordion-content">
+            <div class="accordion-body">
+              <p><strong>No es obligatorio, pero es altamente recomendado:</strong></p>
+              <ul>
+                <li>Fortalece significativamente su hoja de vida académica</li>
+                <li>Facilita el ingreso a programas de posgrado</li>
+                <li>Aporta al desarrollo de la comunidad científica</li>
+              </ul>
+              <p>Su director puede orientarlo en la preparación de artículos para revistas especializadas.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div class="accordion-title">
+              ¿Qué formato debe tener el documento final?
+            </div>
+            <span class="material-icons expand-icon">expand_more</span>
+          </div>
+          <div class="accordion-content">
+            <div class="accordion-body">
+              <p><strong>Estructura típica:</strong></p>
+              <ul>
+                <li>Portada</li>
+                <li>Resumen (español e inglés)</li>
+                <li>Introducción</li>
+                <li>Marco teórico</li>
+                <li>Metodología</li>
+                <li>Resultados</li>
+                <li>Discusión</li>
+                <li>Conclusiones</li>
+                <li>Referencias</li>
+                <li>Anexos</li>
+              </ul>
+              <p><strong>Extensión recomendada:</strong> 50-100 páginas</p>
+              <p><strong>Formato de presentación:</strong></p>
+              <ul>
+                <li>Letra: Times New Roman 12 puntos</li>
+                <li>Interlineado: 1.5</li>
+                <li>Márgenes: 3cm izquierdo, 2cm en los demás</li>
+                <li>Normas de citación: APA o según su programa</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección 5: Normativa por Programa -->
+    <section class="section">
+      <div class="section-header">
+        <h2>
+          <span class="material-icons">menu_book</span>
+          Normativa y Documentos por Programa
+        </h2>
+        <p>Consulte los requisitos específicos y documentación oficial de su programa académico</p>
+      </div>
+
+      <div class="info-box">
+        <p><strong>Requisito general:</strong> El estudiante deberá haber cursado el número de créditos o el porcentaje establecido en el Plan de Estudios de su programa curricular.</p>
+      </div>
+
+      <div class="accordion">
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div class="accordion-title">
+              <span class="material-icons">precision_manufacturing</span>
+              Ingeniería Mecatrónica
+            </div>
+            <span class="material-icons expand-icon">expand_more</span>
+          </div>
+          <div class="accordion-content">
+            <div class="accordion-body">
+              <p><strong>Requisitos específicos:</strong></p>
+              <ul>
+                <li>PAPA mínimo: 3.5</li>
+                <li>Permite Trabajo de Grado (TDG) y Práctica Académica Especial (PAE)</li>
+                <li>Créditos completados: Mínimo 80% (créditos exigidos mín. 146)</li>
+              </ul>
+              <a href="http://www.legal.unal.edu.co/rlunal/home/doc.jsp?d_i=93959" target="_blank" class="official-link">
+                <span class="material-icons">description</span>
+                <span>Consulte el <strong>Acuerdo 009 de 2019</strong></span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div class="accordion-title">
+              <span class="material-icons">biotech</span>
+              Ingeniería Biológica
+            </div>
+            <span class="material-icons expand-icon">expand_more</span>
+          </div>
+          <div class="accordion-content">
+            <div class="accordion-body">
+              <p><strong>Requisitos específicos:</strong></p>
+              <ul>
+                <li>PAPA mínimo: 3.5</li>
+                <li>Permite Trabajo de Grado (TDG) y Práctica Académica Especial (PAE)</li>
+                <li>Haber aprobado 59 créditos (80%) del componente de Formación Disciplinar o Profesional</li>
+              </ul>
+              <a href="http://www.legal.unal.edu.co/rlunal/home/doc.jsp?d_i=93962" target="_blank" class="official-link">
+                <span class="material-icons">description</span>
+                <span>Consulte el <strong>Acuerdo 013 de 2019</strong></span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div class="accordion-title">
+              <span class="material-icons">eco</span>
+              Biología
+            </div>
+            <span class="material-icons expand-icon">expand_more</span>
+          </div>
+          <div class="accordion-content">
+            <div class="accordion-body">
+              <p><strong>Requisitos específicos:</strong></p>
+              <ul>
+                <li>PAPA mínimo: 3.5</li>
+                <li>Permite Trabajo de Grado (TDG) y Práctica Académica Especial (PAE)</li>
+                <li>Haber aprobado 100% del componente de Fundamentación</li>
+                <li>Haber aprobado: Laboratorio molecular y celular <strong>o</strong> Trabajo de campo interdisciplinar</li>
+              </ul>
+              <a href="http://www.legal.unal.edu.co/rlunal/home/doc.jsp?d_i=93961" target="_blank" class="official-link">
+                <span class="material-icons">description</span>
+                <span>Consulte el <strong>Acuerdo 011 de 2019</strong></span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div class="accordion-title">
+              <span class="material-icons">palette</span>
+              Gestión Cultural y Comunicativa
+            </div>
+            <span class="material-icons expand-icon">expand_more</span>
+          </div>
+          <div class="accordion-content">
+            <div class="accordion-body">
+              <p><strong>Requisitos específicos:</strong></p>
+              <ul>
+                <li>PAPA mínimo: 3.5</li>
+                <li>Modalidad de grado: Trabajo de Grado (TDG)</li>
+                <li>Haber aprobado 58 créditos (70%) del componente de Formación Disciplinar o Profesional</li>
+              </ul>
+              <a href="http://www.legal.unal.edu.co/rlunal/home/doc.jsp?d_i=93960" target="_blank" class="official-link">
+                <span class="material-icons">description</span>
+                <span>Consulte el <strong>Acuerdo 010 de 2019</strong></span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div class="accordion-title">
+              <span class="material-icons">public</span>
+              Geografía
+            </div>
+            <span class="material-icons expand-icon">expand_more</span>
+          </div>
+          <div class="accordion-content">
+            <div class="accordion-body">
+              <p><strong>Requisitos específicos:</strong></p>
+              <ul>
+                <li>PAPA mínimo: 3.5</li>
+                <li>Modalidad de grado: Trabajo de Grado (TDG)</li>
+                <li>Haber aprobado: Trabajo de campo y Laboratorio de investigación</li>
+              </ul>
+              <a href="http://www.legal.unal.edu.co/rlunal/home/doc.jsp?d_i=93978" target="_blank" class="official-link">
+                <span class="material-icons">description</span>
+                <span>Consulte el <strong>Acuerdo 014 de 2019</strong></span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div class="accordion-title">
+              <span class="material-icons">bar_chart</span>
+              Estadística
+            </div>
+            <span class="material-icons expand-icon">expand_more</span>
+          </div>
+          <div class="accordion-content">
+            <div class="accordion-body">
+              <p><strong>Requisitos específicos:</strong></p>
+              <ul>
+                <li>PAPA mínimo: 3.5</li>
+                <li>Modalidad de grado: Trabajo de Grado (TDG)</li>
+                <li>Haber aprobado 47 créditos (75%) del componente de Formación Disciplinar o Profesional</li>
+              </ul>
+              <a href="http://www.legal.unal.edu.co/rlunal/home/doc.jsp?d_i=93958" target="_blank" class="official-link">
+                <span class="material-icons">description</span>
+                <span>Consulte el <strong>Acuerdo 012 de 2019</strong></span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="quick-start-box" style="margin-top: 2rem;">
+        <p><strong>Normativa General (Aplica a todos los programas):</strong></p>
+        <ul style="margin-top: 1rem; list-style: none; padding: 0;">
+          <li style="padding: 0.5rem 0;">
+            <a href="http://www.legal.unal.edu.co/rlunal/home/doc.jsp?d_i=34983" target="_blank" style="color: var(--unal-green); text-decoration: none; font-weight: 500;">
+              📄 Acuerdo 026 de 2012 - Reglamento General de Trabajos de Grado
+            </a>
+          </li>
+          <li style="padding: 0.5rem 0;">
+            <a href="http://www.legal.unal.edu.co/rlunal/home/doc.jsp?d_i=34800" target="_blank" style="color: var(--unal-green); text-decoration: none; font-weight: 500;">
+              📄 Acuerdo 033 de 2007 - Normas Académicas UNAL
+            </a>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Sección 6: Contacto y Soporte -->
+    <section class="section">
+      <div class="section-header">
+        <h2>
+          <span class="material-icons">contact_support</span>
+          Contacto y Soporte
+        </h2>
+        <p>¿Necesita orientación? Estamos disponibles para apoyarle en el proceso</p>
+      </div>
+
+      <div class="contact-grid">
+        <div class="contact-card">
+          <span class="material-icons">email</span>
+          <h4>Correo Electrónico</h4>
+          <p>Tiempo de respuesta: 1-2 días hábiles</p>
+          <a href="mailto:acad_lapaz@unal.edu.co">acad_lapaz@unal.edu.co</a>
+        </div>
+
+        <div class="contact-card">
+          <span class="material-icons">phone</span>
+          <h4>Teléfono</h4>
+          <p>Lunes a Viernes</p>
+          <p>8:00am - 12:00pm | 2:00pm - 5:00pm</p>
+        </div>
+
+        <div class="contact-card">
+          <span class="material-icons">location_on</span>
+          <h4>Atención Presencial</h4>
+          <p>Coordinación Académica</p>
+          <p>UNAL Sede de La Paz</p>
+          <p style="font-size: 0.85rem; margin-top: 0.5rem;">Recomendamos agendar cita previa</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Modales de Modalidades -->
+  <!-- Modal Monografía -->
+  <div id="modal-monografia" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Monografía</h3>
+        <button class="modal-close" onclick="closeModal('modal-monografia')">
+          <span class="material-icons">close</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-section">
+          <h4>
+            <span class="material-icons">info</span>
+            ¿Qué es?
+          </h4>
+          <p>Es un tipo de documento expositivo o explicativo en el que se aborda un tema específico desde una perspectiva nueva o se muestran los resultados y las conclusiones de una investigación. Para realizarla, se consultan diversas fuentes, que permiten agotar todo lo posible del abordaje del tema en cuestión.</p>
+        </div>
+
+        <div class="modal-section">
+          <h4>
+            <span class="material-icons">assignment</span>
+            Documentos Requeridos
+          </h4>
+          <p>Necesita realizar la solicitud a través del formulario y, posteriormente, se presenta al Comité Académico Asesor el formato de preinscripción diligenciado y un anteproyecto que contenga:</p>
+          <ul>
+            <li>Introducción del tema</li>
+            <li>Antecedentes</li>
+            <li>Marco teórico</li>
+            <li>Justificación</li>
+            <li>Objetivos</li>
+            <li>Metodología</li>
+            <li>Competencias</li>
+            <li>Cronograma de actividades</li>
+            <li>Riesgos</li>
+            <li>Referencias</li>
+          </ul>
+        </div>
+
+        <div class="modal-section">
+          <div class="modal-requirements">
+            <h5>Requisitos por Programa</h5>
+            <ul>
+            <div class="accordion" style="margin-top:1rem;">
+              <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                  <span class="material-icons" style="color:#4CAF50; margin-right:0.5rem;">palette</span>
+                  <strong>Gestión Cultural y Comunicativa</strong>
+                  <span class="material-icons expand-icon">expand_more</span>
+                </div>
+                <div class="accordion-content">
+                  <div class="accordion-body">
+                    Haber aprobado 58 créditos (70%) del componente de Formación Disciplinar o Profesional.
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                  <span class="material-icons" style="color:#4CAF50; margin-right:0.5rem;">precision_manufacturing</span>
+                  <strong>Ingeniería Mecatrónica</strong>
+                  <span class="material-icons expand-icon">expand_more</span>
+                </div>
+                <div class="accordion-content">
+                  <div class="accordion-body">
+                    Haber aprobado 80% de los créditos exigidos (mínimo 146 créditos).
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                  <span class="material-icons" style="color:#4CAF50; margin-right:0.5rem;">public</span>
+                  <strong>Geografía</strong>
+                  <span class="material-icons expand-icon">expand_more</span>
+                </div>
+                <div class="accordion-content">
+                  <div class="accordion-body">
+                    Haber aprobado Trabajo de campo y Laboratorio de investigación.
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                  <span class="material-icons" style="color:#4CAF50; margin-right:0.5rem;">biotech</span>
+                  <strong>Ingeniería Biológica</strong>
+                  <span class="material-icons expand-icon">expand_more</span>
+                </div>
+                <div class="accordion-content">
+                  <div class="accordion-body">
+                    Haber aprobado 59 créditos (80%) del componente de Formación Disciplinar o Profesional.
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                  <span class="material-icons" style="color:#4CAF50; margin-right:0.5rem;">eco</span>
+                  <strong>Biología</strong>
+                  <span class="material-icons expand-icon">expand_more</span>
+                </div>
+                <div class="accordion-content">
+                  <div class="accordion-body">
+                    Haber aprobado 100% del componente de Fundamentación y Laboratorio molecular y celular "o" Trabajo de campo interdisciplinar.
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                  <span class="material-icons" style="color:#4CAF50; margin-right:0.5rem;">bar_chart</span>
+                  <strong>Estadística</strong>
+                  <span class="material-icons expand-icon">expand_more</span>
+                </div>
+                <div class="accordion-content">
+                  <div class="accordion-body">
+                    Haber aprobado 47 créditos (75%) del componente de Formación Disciplinar o Profesional.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <h4>
+            <span class="material-icons">timeline</span>
+            Fases de Inscripción
+          </h4>
+          <p><strong>Periodo:</strong> La fase de preinscripción se realiza dos veces al año, una en cada semestre. Se recomienda estar atento a las fechas de preinscripción, las cuales se publican oportunamente a través de Postmaster, como medio masivo de información institucional, y en el calendario académico.</p>
+          <ul>
+          <div class="accordion" style="margin-top:1rem;">
+            <div class="accordion-item">
+              <div class="accordion-header" onclick="toggleAccordion(this)">
+                <div class="accordion-title"><strong>Fase 1 - Preinscripción</strong></div>
+                <span class="material-icons expand-icon">expand_more</span>
+              </div>
+              <div class="accordion-content">
+                <div class="accordion-body">
+                  Elija el lugar o proyecto, diseñe con su tutor el plan de trabajo, diligencie el formato de preinscripción y regístrelo en el formulario anexando los documentos requeridos.
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <div class="accordion-header" onclick="toggleAccordion(this)">
+                <div class="accordion-title"><strong>Fase 2 - Revisión Académica</strong></div>
+                <span class="material-icons expand-icon">expand_more</span>
+              </div>
+              <div class="accordion-content">
+                <div class="accordion-body">
+                  El Comité Académico Asesor de la sede de La Paz estudiará y recomendará su inscripción ante el Consejo de Escuelas.
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <div class="accordion-header" onclick="toggleAccordion(this)">
+                <div class="accordion-title"><strong>Fase 3 - Aprobación</strong></div>
+                <span class="material-icons expand-icon">expand_more</span>
+              </div>
+              <div class="accordion-content">
+                <div class="accordion-body">
+                  El Consejo de Escuelas estudiará su solicitud para aprobación.
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <div class="accordion-header" onclick="toggleAccordion(this)">
+                <div class="accordion-title"><strong>Fase 4 - Inscripción</strong></div>
+                <span class="material-icons expand-icon">expand_more</span>
+              </div>
+              <div class="accordion-content">
+                <div class="accordion-body">
+                  Una vez aprobado el Trabajo de Grado, se inscribe como asignatura en el SIA.
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <div class="accordion-header" onclick="toggleAccordion(this)">
+                <div class="accordion-title"><strong>Fase 5 - Seguimiento y evaluación</strong></div>
+                <span class="material-icons expand-icon">expand_more</span>
+              </div>
+              <div class="accordion-content">
+                <div class="accordion-body">
+                  Durante el desarrollo, el docente tutor realiza seguimiento y al final se evalúa el desempeño del estudiante.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Participación en Proyecto de Investigación -->
+  <div id="modal-proyecto" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Participación en Proyecto de Investigación</h3>
+        <button class="modal-close" onclick="closeModal('modal-proyecto')">
+          <span class="material-icons">close</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-section">
+          <h4>
+            <span class="material-icons">info</span>
+            ¿Qué es?
+          </h4>
+          <p>Es cuando un estudiante se vincula a un proyecto de investigación ya existente (generalmente dirigido por docentes o grupos de investigación), aportando con actividades, análisis o productos específicos. Así, su trabajo de grado se integra a ese proyecto, en lugar de hacer una investigación independiente desde cero.</p>
+        </div>
+
+        <div class="modal-section">
+          <h4>
+            <span class="material-icons">assignment</span>
+            Documentos Requeridos
+          </h4>
+          <p>Necesita realizar la solicitud a través del formulario y, posteriormente, se presenta al Comité Académico Asesor el formato de preinscripción diligenciado y un anteproyecto que contenga:</p>
+          <ul>
+            <li>Introducción del tema</li>
+            <li>Antecedentes</li>
+            <li>Marco teórico</li>
+            <li>Justificación</li>
+            <li>Objetivos</li>
+            <li>Metodología</li>
+            <li>Competencias</li>
+            <li>Cronograma de actividades</li>
+            <li>Riesgos</li>
+            <li>Referencias</li>
+          </ul>
+        </div>
+
+        <div class="modal-section">
+          <div class="modal-requirements">
+            <h5>Requisitos por Programa</h5>
+            <p>Los requisitos son los mismos que para la modalidad de Monografía. Consulte la sección "Normativa por Programa" para conocer los requisitos específicos de su carrera.</p>
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <h4>
+            <span class="material-icons">timeline</span>
+            Fases de Inscripción
+          </h4>
+          <p><strong>Periodo:</strong> Del 10 de septiembre al 10 de noviembre de 2025</p>
+          <ul>
+            <li><strong>Fase 1 - Preinscripción:</strong> Identifique el proyecto de investigación, coordine con el director del proyecto, diseñe su plan de trabajo y diligencie el formato de preinscripción</li>
+            <li><strong>Fase 2 - Revisión Académica:</strong> El Comité Académico Asesor estudiará y recomendará su inscripción</li>
+            <li><strong>Fase 3 - Aprobación:</strong> El Consejo de Escuelas estudiará su solicitud para aprobación</li>
+            <li><strong>Fase 4 - Inscripción:</strong> Una vez aprobado, se inscribe como asignatura en el SIA</li>
+            <li><strong>Fase 5 - Seguimiento y evaluación:</strong> El docente tutor realiza seguimiento y al final se evalúa el desempeño</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Pasantía -->
+  <div id="modal-pasantia" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Pasantía</h3>
+        <button class="modal-close" onclick="closeModal('modal-pasantia')">
+          <span class="material-icons">close</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-section">
+          <h4>
+            <span class="material-icons">info</span>
+            ¿Qué es?
+          </h4>
+          <p>El estudiante aplicará los métodos de investigación, de evaluación y análisis frente a situaciones específicas en la Entidad/Dependencia UNAL, con el propósito de presentar un diagnóstico del estudio realizado y a su vez, aportar propuestas de mejora o solución de dichas situaciones.</p>
+        </div>
+
+        <div class="modal-section">
+          <h4>
+            <span class="material-icons">business</span>
+            Características
+          </h4>
+          <ul>
+            <li>Se realiza en una Entidad o Dependencia de la Universidad Nacional de Colombia</li>
+            <li>Tiene un enfoque práctico orientado a diagnóstico y solución de problemas reales</li>
+            <li>Permite aplicar conocimientos en contextos laborales reales dentro de la UNAL</li>
+            <li>Genera propuestas de mejora o solución a situaciones identificadas</li>
+          </ul>
+        </div>
+
+        <div class="modal-section">
+          <div class="modal-requirements">
+            <h5>Requisitos por Programa</h5>
+            <ul>
+              <li><strong>Gestión Cultural y Comunicativa:</strong> Haber aprobado 58 créditos (70%) del componente de Formación Disciplinar o Profesional</li>
+              <li><strong>Ingeniería Mecatrónica:</strong> Haber aprobado 80% de los créditos exigidos (mínimo 146 créditos)</li>
+              <li><strong>Geografía:</strong> Haber aprobado Trabajo de campo y Laboratorio de investigación</li>
+              <li><strong>Ingeniería Biológica:</strong> Haber aprobado 59 créditos (80%) del componente de Formación Disciplinar o Profesional</li>
+              <li><strong>Biología:</strong> Haber aprobado 100% del componente de Fundamentación y Laboratorio molecular y celular "o" Trabajo de campo interdisciplinar</li>
+              <li><strong>Estadística:</strong> Haber aprobado 47 créditos (75%) del componente de Formación Disciplinar o Profesional</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Asignaturas de Postgrado -->
+  <div id="modal-postgrado" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Asignaturas de Postgrado</h3>
+        <button class="modal-close" onclick="closeModal('modal-postgrado')">
+          <span class="material-icons">close</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-section">
+          <h4>
+            <span class="material-icons">info</span>
+            ¿Qué es?
+          </h4>
+          <p>Es una opción que permite a estudiantes de pregrado cursar asignaturas en un programa de posgrado afín para cumplir con los créditos del Trabajo de Grado.</p>
+        </div>
+
+        <div class="modal-section">
+          <div class="info-box">
+            <p><strong>Nota importante:</strong> Si opta por esta modalidad pagará el valor de su matrícula regular en pregrado.</p>
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <h4>
+            <span class="material-icons">school</span>
+            Ventajas de esta Modalidad
+          </h4>
+          <ul>
+            <li>Permite adelantar estudios de posgrado mientras completa su pregrado</li>
+            <li>Paga el valor de matrícula regular de pregrado (no el valor de posgrado)</li>
+            <li>Fortalece su formación académica con asignaturas de nivel avanzado</li>
+            <li>Facilita la transición a estudios de posgrado si planea continuar</li>
+            <li>Amplía su conocimiento en áreas especializadas de su disciplina</li>
+          </ul>
+        </div>
+
+        <div class="modal-section">
+          <div class="modal-requirements">
+            <h5>Requisitos por Programa</h5>
+            <ul>
+              <li><strong>Gestión Cultural y Comunicativa:</strong> Haber aprobado 58 créditos (70%) del componente de Formación Disciplinar o Profesional</li>
+              <li><strong>Ingeniería Mecatrónica:</strong> Haber aprobado 80% de los créditos exigidos (mínimo 146 créditos)</li>
+              <li><strong>Geografía:</strong> Haber aprobado Trabajo de campo y Laboratorio de investigación</li>
+              <li><strong>Ingeniería Biológica:</strong> Haber aprobado 59 créditos (80%) del componente de Formación Disciplinar o Profesional</li>
+              <li><strong>Biología:</strong> Haber aprobado 100% del componente de Fundamentación y Laboratorio molecular y celular "o" Trabajo de campo interdisciplinar</li>
+              <li><strong>Estadística:</strong> Haber aprobado 47 créditos (75%) del componente de Formación Disciplinar o Profesional</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <h4>
+            <span class="material-icons">help_outline</span>
+            ¿Cómo Funciona?
+          </h4>
+          <p>Debe identificar un programa de posgrado relacionado con su área de estudio, seleccionar las asignaturas que cursará y tramitar la inscripción siguiendo el proceso establecido por la universidad.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Funciones para modales
+    function openModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+
+        // Actualizar altura del iframe
+        setTimeout(() => {
+          if (window.self !== window.top) {
+            sendHeightToParent();
+          }
+        }, 100);
+      }
+    }
+
+    function closeModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+
+        // Actualizar altura del iframe
+        setTimeout(() => {
+          if (window.self !== window.top) {
+            sendHeightToParent();
+          }
+        }, 100);
+      }
+    }
+
+    // Cerrar modal al hacer click fuera del contenido
+    window.addEventListener('click', function(event) {
+      if (event.target.classList.contains('modal')) {
+        closeModal(event.target.id);
+      }
+    });
+
+    // Cerrar modal con tecla ESC
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Escape') {
+        const activeModal = document.querySelector('.modal.active');
+        if (activeModal) {
+          closeModal(activeModal.id);
+        }
+      }
+    });
+
+    function toggleAccordion(header) {
+      const item = header.parentElement;
+      const isActive = item.classList.contains('active');
+
+      // Cerrar todos los acordeones
+      document.querySelectorAll('.accordion-item').forEach(i => {
+        i.classList.remove('active');
+      });
+
+      // Abrir el acordeón clickeado si no estaba activo
+      if (!isActive) {
+        item.classList.add('active');
+      }
+
+      // Actualizar altura del iframe después del cambio
+      setTimeout(() => {
+        if (window.self !== window.top) {
+          sendHeightToParent();
+        }
+      }, 350);
+    }
+
+    function sendHeightToParent() {
+      try {
+        const height = Math.max(
+          document.body.scrollHeight,
+          document.body.offsetHeight,
+          document.documentElement.scrollHeight
+        );
+
+        window.parent.postMessage({
+          type: 'setHeight',
+          height: height + 50
+        }, '*');
+      } catch (e) {
+        console.log('No se pudo comunicar con el iframe padre');
+      }
+    }
+
+    function setupIframeHeight() {
+      const inIframe = window.self !== window.top;
+
+      if (inIframe) {
+        sendHeightToParent();
+
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+          clearTimeout(resizeTimeout);
+          resizeTimeout = setTimeout(sendHeightToParent, 250);
+        });
+
+        window.addEventListener('orientationchange', () => {
+          setTimeout(sendHeightToParent, 300);
+        });
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', setupIframeHeight);
+  </script>
+</body>
+</html>

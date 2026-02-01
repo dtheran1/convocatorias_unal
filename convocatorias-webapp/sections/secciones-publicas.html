@@ -72,7 +72,7 @@
 
     .comparison-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
       gap: 2rem;
       max-width: 1200px;
       margin: 0 auto;
@@ -99,6 +99,10 @@
 
     .comparison-card.pasantia {
       border-top: 4px solid #f59e0b;
+    }
+
+    .comparison-card.pae {
+      border-top: 4px solid #10b981;
     }
 
     .comparison-header {
@@ -133,6 +137,15 @@
 
     .comparison-card.pasantia .comparison-icon .material-icons {
       color: #f59e0b;
+      font-size: 2rem;
+    }
+
+    .comparison-card.pae .comparison-icon {
+      background: #d1fae5;
+    }
+
+    .comparison-card.pae .comparison-icon .material-icons {
+      color: #10b981;
       font-size: 2rem;
     }
 
@@ -646,8 +659,8 @@
   <!-- COMPARISON SECTION -->
   <section class="comparison-section">
     <div class="section-header">
-      <h2>¿Práctica o Pasantía?</h2>
-      <p>Conozca las diferencias entre ambas modalidades y seleccione la que mejor se adapte a su perfil y objetivos profesionales.</p>
+      <h2>¿Práctica, Pasantía o PAE?</h2>
+      <p>Conozca las diferencias entre estas modalidades y seleccione la que mejor se adapte a su perfil y objetivos profesionales.</p>
     </div>
 
     <div class="comparison-grid">
@@ -703,6 +716,42 @@
           <li>
             <span class="material-icons">check_circle</span>
             <span>Desarrollo de proyecto específico</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="comparison-card pae">
+        <div class="comparison-header">
+          <div class="comparison-icon">
+            <span class="material-icons">school</span>
+          </div>
+          <h3>Práctica Académica Especial (PAE)</h3>
+        </div>
+        <p>Modalidad de grado que permite al estudiante aplicar conocimientos en un contexto real a través de una práctica académica supervisada.</p>
+        <ul class="comparison-features">
+          <li>
+            <span class="material-icons">check_circle</span>
+            <span>Modalidad de trabajo de grado</span>
+          </li>
+          <li>
+            <span class="material-icons">check_circle</span>
+            <span>Experiencia profesional práctica</span>
+          </li>
+          <li>
+            <span class="material-icons">check_circle</span>
+            <span>Duración: 1 semestre</span>
+          </li>
+          <li>
+            <span class="material-icons">check_circle</span>
+            <span>PAPA mínimo: 3.5</span>
+          </li>
+          <li>
+            <span class="material-icons">check_circle</span>
+            <span>Requiere supervisor académico</span>
+          </li>
+          <li>
+            <span class="material-icons">check_circle</span>
+            <span>Sin defensa pública</span>
           </li>
         </ul>
       </div>

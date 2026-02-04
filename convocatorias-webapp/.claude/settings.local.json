@@ -1,4 +1,7 @@
 {
+  "env": {
+    "GOOGLE_DRIVE_OAUTH_CREDENTIALS": "/mnt/c/Users/elint/Documents/unal/gcp-oauth.keys.json"
+  },
   "permissions": {
     "allow": [
       "Bash(ls:*)",
@@ -7,7 +10,17 @@
       "Bash(find:*)",
       "Bash(du:*)",
       "Bash(grep:*)",
-      "WebFetch(domain:sites.google.com)"
+      "WebFetch(domain:sites.google.com)",
+      "Bash(claude mcp:*)",
+      "Bash(npx -y @modelcontextprotocol/server-google-drive)",
+      "Bash(npm search:*)",
+      "Bash(npm pack:*)",
+      "Bash(npx:*)",
+      "mcp__google-drive__listFolder"
     ]
+  },
+  "enabledPlugins": {
+    "frontend-design@claude-plugins-official": true,
+    "superpowers@superpowers-marketplace": true
   }
 }

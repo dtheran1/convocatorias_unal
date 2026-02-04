@@ -209,6 +209,86 @@ function getConvenios() {
   }
 }
 
+// ========== SUGERENCIA DE EMPRESA ==========
+
+const EMAIL_DESTINO_SUGERENCIAS = 'practicas_paz@unal.edu.co';
+
+/**
+ * Recibe una sugerencia de empresa y la envía por correo.
+ * @param {Object} datos — { empresa, sector, ciudad, representante, emailEmpresa, telefonoEmpresa, nombre, correo, modalidad }
+ * @returns {Object} { success: boolean, error?: string }
+ */
+function enviarSugerencia(datos) {
+  try {
+    // Validación server-side: campos obligatorios
+    var campos = ['empresa', 'representante', 'emailEmpresa', 'telefonoEmpresa', 'nombre', 'correo', 'modalidad'];
+    for (var i = 0; i < campos.length; i++) {
+      if (!datos[campos[i]] || !datos[campos[i]].toString().trim()) {
+        return { success: false, error: 'Falta el campo: ' + campos[i] };
+      }
+    }
+
+    // Correo del estudiante debe ser @unal.edu.co
+    if (!datos.correo.toLowerCase().endsWith('@unal.edu.co')) {
+      return { success: false, error: 'El correo debe ser @unal.edu.co.' };
+    }
+
+    var asunto = '[Sugerencia de empresa] \u2013 ' + datos.empresa + ' \u2013 ' + datos.nombre;
+
+    var cuerpo =
+      '<table style="font-family:sans-serif;font-size:14px;width:100%;max-width:560px;border-collapse:collapse;margin:0 auto;">' +
+        '<tr><td style="padding:20px 0;border-bottom:2px solid #4CAF50;">' +
+          '<strong style="font-size:18px;">Sugerencia de empresa</strong><br>' +
+          '<span style="color:#64748b;font-size:13px;">Enviada desde la sección de Convenios &ndash; UNAL Sede de La Paz</span>' +
+        '</td></tr>' +
+
+        // Datos empresa
+        '<tr><td style="padding:16px 0 4px;"><strong style="color:#64748b;font-size:12px;text-transform:uppercase;letter-spacing:0.5px;">Datos de la empresa</strong></td></tr>' +
+        '<tr><td style="padding:4px 0;"><strong>Nombre:</strong> ' + escapeHtmlGs(datos.empresa) + '</td></tr>' +
+        (datos.sector ? '<tr><td style="padding:4px 0;"><strong>Sector / Rubro:</strong> ' + escapeHtmlGs(datos.sector) + '</td></tr>' : '') +
+        (datos.ciudad ? '<tr><td style="padding:4px 0;"><strong>Ciudad:</strong> ' + escapeHtmlGs(datos.ciudad) + '</td></tr>' : '') +
+
+        // Contacto empresa
+        '<tr><td style="padding:16px 0 4px;"><strong style="color:#64748b;font-size:12px;text-transform:uppercase;letter-spacing:0.5px;">Contacto de la empresa</strong></td></tr>' +
+        '<tr><td style="padding:4px 0;"><strong>Representante:</strong> ' + escapeHtmlGs(datos.representante) + '</td></tr>' +
+        '<tr><td style="padding:4px 0;"><strong>Correo:</strong> ' + escapeHtmlGs(datos.emailEmpresa) + '</td></tr>' +
+        '<tr><td style="padding:4px 0;"><strong>Teléfono:</strong> ' + escapeHtmlGs(datos.telefonoEmpresa) + '</td></tr>' +
+
+        // Datos estudiante
+        '<tr><td style="padding:16px 0 4px;"><strong style="color:#64748b;font-size:12px;text-transform:uppercase;letter-spacing:0.5px;">Estudiante</strong></td></tr>' +
+        '<tr><td style="padding:4px 0;"><strong>Nombre:</strong> ' + escapeHtmlGs(datos.nombre) + '</td></tr>' +
+        '<tr><td style="padding:4px 0;"><strong>Correo:</strong> ' + escapeHtmlGs(datos.correo) + '</td></tr>' +
+        '<tr><td style="padding:4px 0;"><strong>Modalidad de interés:</strong> ' + escapeHtmlGs(datos.modalidad) + '</td></tr>' +
+
+        '<tr><td style="padding:20px 0 0;border-top:1px solid #e2e8f0;">' +
+          '<span style="color:#94a3b8;font-size:12px;">Este mensaje fue generado automáticamente.</span>' +
+        '</td></tr>' +
+      '</table>';
+
+    MailApp.sendEmail({
+      to: EMAIL_DESTINO_SUGERENCIAS,
+      subject: asunto,
+      htmlBody: cuerpo
+    });
+
+    return { success: true };
+
+  } catch (error) {
+    console.error('Error en enviarSugerencia:', error);
+    return { success: false, error: 'Error interno al enviar la sugerencia.' };
+  }
+}
+
+function escapeHtmlGs(text) {
+  if (!text) return '';
+  return text.toString()
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
 // ========== CONFIGURACIÓN ==========
 
 /**

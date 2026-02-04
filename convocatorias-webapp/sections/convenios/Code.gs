@@ -115,6 +115,35 @@ function cleanEnlaceConvenio(val) {
 // ========== DATOS ==========
 
 /**
+ * Extrae la URL de un enlace de una celda usando tres estrategias en cascada:
+ *   1. getRichTextValues → getHyperlink() (hyperlinks añadidos por la UI de Sheets)
+ *   2. Parseo de fórmula =HYPERLINK("url","texto")
+ *   3. Valor crudo si ya es una URL
+ * @param {*}      richTextCell  — elemento de getRichTextValues() (puede no ser RichTextValue)
+ * @param {string} formulaValue  — elemento de getFormulas()
+ * @returns {string|null}
+ */
+function getEnlaceUrl(richTextCell, formulaValue) {
+  // Estrategia 1: hyperlink via RichTextValue (falla silenciosa si el objeto no soporta el método)
+  if (richTextCell && typeof richTextCell.getHyperlink === 'function') {
+    var hyperlink = richTextCell.getHyperlink();
+    if (hyperlink) return hyperlink;
+  }
+
+  // Estrategia 2 y 3: basadas en la fórmula / valor de texto
+  var formula = (formulaValue || '').toString().trim();
+
+  // =HYPERLINK("url", "texto")
+  var match = formula.match(/=HYPERLINK\(\s*"([^"]+)"/i);
+  if (match) return match[1];
+
+  // URL cruda directa en la celda
+  if (formula.startsWith('http://') || formula.startsWith('https://')) return formula;
+
+  return null;
+}
+
+/**
  * Obtiene todos los convenios del Sheet de Convenios P&P
  * @returns {Object} { success: boolean, data: Array, error?: string }
  */
@@ -127,7 +156,13 @@ function getConvenios() {
       throw new Error('No se encontró la hoja: ' + SHEET_CONVENIOS);
     }
 
-    const data = sheet.getDataRange().getValues();
+    const range   = sheet.getDataRange();
+    const data    = range.getValues();
+    const formulas = range.getFormulas();
+
+    // getRichTextValues puede fallar en sheets con celdas mergeadas; se captura el error
+    var richText;
+    try { richText = range.getRichTextValues(); } catch(e) { richText = null; }
 
     // Buscar la fila de encabezados (contiene "N°" en la primera columna)
     let headerRowIndex = -1;
@@ -142,12 +177,17 @@ function getConvenios() {
       throw new Error('No se encontró la fila de encabezados en el Sheet de Convenios');
     }
 
-    const rows = data.slice(headerRowIndex + 1);
-    const convenios = [];
+    const rows         = data.slice(headerRowIndex + 1);
+    const formulaRows  = formulas.slice(headerRowIndex + 1);
+    const richTextRows = richText ? richText.slice(headerRowIndex + 1) : null;
+    const convenios    = [];
 
-    rows.forEach(function(row) {
+    rows.forEach(function(row, index) {
       const institucion = cleanInstitucion(row[COL_CONV.INSTITUCION]);
       if (!institucion) return; // Saltar filas vacías
+
+      var rtCell = richTextRows ? richTextRows[index][COL_CONV.ENLACE] : null;
+      var fmCell = formulaRows[index][COL_CONV.ENLACE];
 
       convenios.push({
         id: parseInt(row[COL_CONV.NUMERO]) || convenios.length + 1,
@@ -157,7 +197,7 @@ function getConvenios() {
         estado: (row[COL_CONV.ESTADO] || '').toString().trim().toUpperCase(),
         fecha: formatFechaConvenio(row[COL_CONV.FECHA_SUSCRIPCION]),
         duracion: (row[COL_CONV.DURACION] || '').toString().trim(),
-        doc: cleanEnlaceConvenio(row[COL_CONV.ENLACE])
+        doc: getEnlaceUrl(rtCell, fmCell) || cleanEnlaceConvenio(row[COL_CONV.ENLACE])
       });
     });
 

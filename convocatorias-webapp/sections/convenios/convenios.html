@@ -312,135 +312,32 @@
     a.doc-ref { text-decoration: none; cursor: pointer; }
     a.doc-ref:hover { text-decoration: underline; }
 
-    /* ========== PDF MODAL ========== */
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(15, 23, 42, 0.6);
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
-      z-index: 1000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 1rem;
-    }
-
-    .modal-container {
-      background: var(--bg-card);
-      border-radius: var(--radius-lg);
-      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
-      width: 100%;
-      max-width: 820px;
-      max-height: 90vh;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-    }
-
-    .modal-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1rem 1.25rem;
-      border-bottom: 1px solid var(--border);
-      flex-shrink: 0;
-      gap: 0.75rem;
-    }
-
-    .modal-title {
-      font-weight: 600;
-      font-size: 0.95rem;
-      color: var(--text-primary);
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .modal-title .material-icons { color: var(--primary); font-size: 1.2rem; }
-
-    .modal-close {
-      background: none;
-      border: none;
-      cursor: pointer;
-      color: var(--text-secondary);
-      padding: 0.25rem;
-      border-radius: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.15s, color 0.15s;
-      flex-shrink: 0;
-    }
-
-    .modal-close:hover { background: #fee2e2; color: var(--danger); }
-
-    .modal-body {
-      flex: 1;
-      min-height: 0;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .pdf-iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-      display: block;
-    }
-
-    .modal-footer {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      gap: 0.75rem;
-      padding: 0.875rem 1.25rem;
-      border-top: 1px solid var(--border);
-      flex-shrink: 0;
-      background: var(--bg-primary);
-    }
-
-    .btn-download {
+    /* ========== DOCUMENT BUTTON ========== */
+    .btn-doc {
       display: inline-flex;
       align-items: center;
       gap: 0.4rem;
       background: var(--unal-green);
       color: white;
       border: none;
-      padding: 0.6rem 1.1rem;
+      padding: 0.5rem 1rem;
       border-radius: 8px;
-      font-size: 0.875rem;
+      font-size: 0.8rem;
       font-weight: 600;
       font-family: inherit;
       cursor: pointer;
-      transition: background 0.15s;
+      text-decoration: none;
+      transition: background 0.15s, transform 0.1s;
       touch-action: manipulation;
     }
 
-    .btn-download:hover { background: var(--unal-green-dark); }
-
-    .btn-modal-close {
-      background: var(--bg-card);
-      color: var(--text-secondary);
-      border: 1px solid var(--border);
-      padding: 0.6rem 1.1rem;
-      border-radius: 8px;
-      font-size: 0.875rem;
-      font-weight: 500;
-      font-family: inherit;
-      cursor: pointer;
-      transition: border-color 0.15s, color 0.15s;
-      touch-action: manipulation;
+    .btn-doc:hover {
+      background: var(--unal-green-dark);
+      transform: translateY(-1px);
     }
 
-    .btn-modal-close:hover { border-color: var(--text-secondary); color: var(--text-primary); }
-
-    @media (max-width: 600px) {
-      .modal-overlay { padding: 0.5rem; }
-      .modal-container { max-height: 95vh; border-radius: var(--radius); }
-      .modal-header { padding: 0.875rem 1rem; }
-      .modal-footer { padding: 0.75rem 1rem; }
-      .btn-download, .btn-modal-close { flex: 1; justify-content: center; }
+    .btn-doc .material-icons {
+      font-size: 1rem;
     }
 
     .muted { color: var(--text-muted); font-style: italic; font-size: 0.82rem; }
@@ -696,23 +593,6 @@
 
 </div><!-- /container -->
 
-<!-- PDF MODAL -->
-<div id="pdfModal" class="modal-overlay" style="display:none;">
-  <div class="modal-container">
-    <div class="modal-header">
-      <span class="modal-title"><span class="material-icons">picture_as_pdf</span> Documento del Convenio</span>
-      <button class="modal-close" onclick="closePdfModal()" aria-label="Cerrar"><span class="material-icons">close</span></button>
-    </div>
-    <div class="modal-body">
-      <iframe id="pdfFrame" class="pdf-iframe" src="" allowfullscreen></iframe>
-    </div>
-    <div class="modal-footer">
-      <button class="btn-modal-close" onclick="closePdfModal()">Cerrar</button>
-      <button class="btn-download" onclick="downloadPdf()"><span class="material-icons">download</span> Descargar PDF</button>
-    </div>
-  </div>
-</div>
-
 <script>
 // ============================================================
 // DATA
@@ -796,52 +676,17 @@ function estadoBadge(estado) {
   return estado === 'ACTIVO' ? 'badge-activo' : 'badge-inactivo';
 }
 
-function getDownloadUrl(url) {
-  var match = url.match(/drive\.google\.com\/file\/d\/([^/]+)/);
-  if (match) return 'https://drive.google.com/uc?export=download&id=' + match[1];
-  return url;
-}
-
-function getPreviewUrl(url) {
-  var match = url.match(/drive\.google\.com\/file\/d\/([^/]+)/);
-  if (match) return 'https://drive.google.com/file/d/' + match[1] + '/preview';
-  return url;
-}
-
-// ---- Modal PDF ----
-var currentPdfUrl = null;
-
-function openPdfModal(url) {
-  currentPdfUrl = url;
-  document.getElementById('pdfFrame').src = getPreviewUrl(url);
-  document.getElementById('pdfModal').style.display = 'flex';
-}
-
-function closePdfModal() {
-  document.getElementById('pdfModal').style.display = 'none';
-  document.getElementById('pdfFrame').src = '';
-  currentPdfUrl = null;
-}
-
-function downloadPdf() {
-  if (!currentPdfUrl) return;
-  var link = document.createElement('a');
-  link.href = getDownloadUrl(currentPdfUrl);
-  link.target = '_blank';
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-}
-
 function docHtml(doc) {
   if (!doc) return '<span class="muted">\u2014</span>';
   var isUrl = doc.startsWith('http://') || doc.startsWith('https://');
   if (isUrl) {
-    return '<a href="javascript:void(0)" onclick="openPdfModal(this.dataset.url)" data-url="' +
-      doc.replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;') +
-      '" class="doc-ref"><span class="material-icons">picture_as_pdf</span>Ver documento</a>';
+    return '<a href="' + doc.replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;') + 
+      '" target="_blank" rel="noopener noreferrer" class="btn-doc">' +
+      '<span class="material-icons">description</span>Ver documento</a>';
+  } else {
+    return '<span class="doc-ref"><span class="material-icons">picture_as_pdf</span>' + 
+      doc.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</span>';
   }
-  return '<span class="doc-ref"><span class="material-icons">picture_as_pdf</span>' + doc + '</span>';
 }
 
 // ============================================================
@@ -966,17 +811,6 @@ function setupIframeHeight() {
   window.addEventListener('resize', function(){ clearTimeout(t); t = setTimeout(sendHeight, 250); });
   window.addEventListener('orientationchange', function(){ setTimeout(sendHeight, 300); });
 }
-
-// ============================================================
-// MODAL — cerrar con click en overlay o tecla Escape
-// ============================================================
-document.getElementById('pdfModal').addEventListener('click', function(e) {
-  if (e.target === this) closePdfModal();
-});
-
-document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape' && currentPdfUrl) closePdfModal();
-});
 
 // ============================================================
 // INIT

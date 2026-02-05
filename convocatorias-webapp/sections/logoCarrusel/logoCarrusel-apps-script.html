@@ -239,8 +239,8 @@
     }
 
     .modal-company-logo.brand-asohofrucol {
-      background: #144003;
-      border-color: #1a5004;
+      background: #01b301;
+      border-color: #01a001;
     }
 
     .modal-company-logo.brand-tananeos {
@@ -313,27 +313,6 @@
       line-height: 1.5;
     }
 
-    /* ========== RESPONSIVE MODAL ========== */
-    @media (max-width: 600px) {
-      .modal-content {
-        width: 95%;
-        max-height: 85vh;
-      }
-      
-      .modal-header {
-        padding: 1rem;
-      }
-      
-      .modal-body {
-        padding: 1rem;
-      }
-      
-      .modal-company-logo {
-        width: 50px;
-        height: 50px;
-      }
-    }
-
     /* ========== ANIMACIÓN ========== */
     @keyframes scrollLogos {
       0%   { transform: translateX(0); }
@@ -356,6 +335,24 @@
       }
 
       .carousel-track { animation-duration: 22s; }
+
+      .modal-content {
+        width: 95%;
+        max-height: 85vh;
+      }
+      
+      .modal-header {
+        padding: 1rem;
+      }
+      
+      .modal-body {
+        padding: 1rem;
+      }
+      
+      .modal-company-logo {
+        width: 50px;
+        height: 50px;
+      }
     }
 
     @media (max-width: 480px) {
@@ -410,7 +407,11 @@
 </div>
 
 <script>
-// Lista de logos en assets/logosEmpresas/
+// ============================================================
+// CONFIGURACIÓN PARA APPS SCRIPT
+// ============================================================
+
+// Lista de logos - REEMPLAZAR con URLs de Google Drive
 var LOGOS = [
   'ANEI.webp',
   'Alcaldía de La Paz.png',
@@ -429,7 +430,24 @@ var LOGOS = [
   'Logos Reserva Natural Los Tananeos.avif'
 ];
 
-var BASE_PATH = '../../assets/logosEmpresas/';
+// URLs temporales - ACTUALIZAR con IDs reales de Google Drive
+var GOOGLE_DRIVE_URLS = {
+  'ANEI.webp': 'https://lh3.googleusercontent.com/d/1QvqeCcysp7_FaroRI8YLBxDCIxemlJXF',
+  'Alcaldía de La Paz.png': 'https://lh3.googleusercontent.com/d/11WH6VcGbQNT0kShievyOH7EDdkLg059Z',
+  'ASOHOFRUCOL.png': 'https://lh3.googleusercontent.com/d/1dPpk8_EmOGYnIxt8-8BdmlX_wracWDBD',
+  'Alianza Francesa.png': 'https://lh3.googleusercontent.com/d/1sjvyh4aglQpbcVuqJMSwIBth0p1tMo9I',
+  'comfacesar.png': 'https://lh3.googleusercontent.com/d/1_WgXaU87rtvKVmru8Ir15Q-Au4WbiDwV',
+  'Alcaldía de San Diego.png': 'https://lh3.googleusercontent.com/d/1AHrrQuNwQshdzNuxtcONBAnskPOGrThw',
+  'Cámara de comercio de Valledupar.png': 'https://lh3.googleusercontent.com/d/1wLQ0omihDPVuGucRFFj3-K91uk20sdmg',
+  'La rotativa.png': 'https://lh3.googleusercontent.com/d/1WDuLt6BaIAx3ld69MnYnjg4pwdOqBY-8',
+  'Laboratorio Nancy Florez.png': 'https://lh3.googleusercontent.com/d/1ZrodE4XelRUpPoziQri0quM8VE0hfYUH',
+  'LOGO-AGROSOLIDARIA-.png': 'https://lh3.googleusercontent.com/d/1WyA4z85ytm87SUU_3NQfwcH7QIYQUGLi',
+  'logo-palmas.png': 'https://lh3.googleusercontent.com/d/1KZj91lpS0JHQa27c73CGyI6Krh7ra40g',
+  'Logo-PDPC-.webp': 'https://lh3.googleusercontent.com/d/1cWe-wtkm_fMV5lUW8Pe4_oQCcwh0URjp',
+  'LOGO-PRODERI-CON-SLOGAN-BLANCO-1-2048x621.png': 'https://lh3.googleusercontent.com/d/1lHosdjzqS-m5d6dWGeTGPdwA7nDr_iOj',
+  'logo-dark.svg': 'https://lh3.googleusercontent.com/d/1-wccxb1y9k664HSoIoCMgUhRS2TRKb8G',
+  'Logos Reserva Natural Los Tananeos.avif': 'https://lh3.googleusercontent.com/d/1DM41GdPC9L2QCgowoVPR8dteXK5dkgmN'
+};
 
 // Base de datos de información de empresas
 var COMPANY_INFO = {
@@ -531,8 +549,11 @@ function logoCard(logo, index) {
   var cardId = 'logo-card-' + index;
   var imgId = 'logo-img-' + index;
   
+  // Usar URL de Google Drive o placeholder
+  var imageUrl = GOOGLE_DRIVE_URLS[logo] || 'https://via.placeholder.com/140x100/f0f0f0/666?text=' + encodeURIComponent(cleanName);
+  
   return '<div class="logo-card" id="' + cardId + '" onclick="openModal(\'' + alt + '\')" style="cursor: pointer;">' +
-    '<img id="' + imgId + '" src="' + BASE_PATH + encodeURI(logo) + '" alt="' + alt + '" loading="lazy" onload="checkLightLogo(\'' + logo + '\', \'' + cardId + '\', \'' + imgId + '\')">' +
+    '<img id="' + imgId + '" src="' + imageUrl + '" alt="' + alt + '" loading="lazy" onload="checkLightLogo(\'' + logo + '\', \'' + cardId + '\', \'' + imgId + '\')">' +
     '<div class="logo-tooltip">' + cleanName + '</div>' +
     '</div>';
 }
@@ -546,6 +567,15 @@ function formatCompanyName(name) {
     .replace(/^logo-/i, '')
     .replace(/-/g, ' ')
     .replace(/\b\w/g, function(l) { return l.toUpperCase(); });
+}
+
+function renderCarousel() {
+  var track = document.getElementById('carouselTrack');
+  // Dos copias idénticas → translateX(-50%) cierra el loop sin salto
+  var cards = LOGOS.map(function(logo, index) {
+    return logoCard(logo, index);
+  }).join('');
+  track.innerHTML = cards + cards;
 }
 
 // ============================================================
@@ -684,15 +714,6 @@ function applyLightLogoStyle(cardId) {
   }
 }
 
-function renderCarousel() {
-  var track = document.getElementById('carouselTrack');
-  // Dos copias idénticas → translateX(-50%) cierra el loop sin salto
-  var cards = LOGOS.map(function(logo, index) {
-    return logoCard(logo, index);
-  }).join('');
-  track.innerHTML = cards + cards;
-}
-
 // ============================================================
 // MODAL FUNCTIONS
 // ============================================================
@@ -713,7 +734,7 @@ function openModal(logoId) {
   
   // Llenar información del modal
   var modalLogo = document.getElementById('modalLogo');
-  modalLogo.src = BASE_PATH + encodeURI(fullLogo);
+  modalLogo.src = GOOGLE_DRIVE_URLS[fullLogo] || 'https://via.placeholder.com/140x100/f0f0f0/666?text=' + encodeURIComponent(companyData.name);
   
   // Aplicar color corporativo al logo del modal si corresponde
   var brandClass = getBrandColorClass(fullLogo);

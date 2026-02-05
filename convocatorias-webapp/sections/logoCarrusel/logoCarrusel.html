@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Instituciones con Convenio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --unal-green: #4CAF50;
+      --unal-green-dark: #388E3C;
+      --unal-green-light: #C8E6C9;
+      --text-primary: #1e293b;
+      --text-secondary: #64748b;
+      --text-muted: #94a3b8;
+      --border: #e2e8f0;
+      --shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+      --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+      --radius: 12px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #fafafa;
+      padding: 2.25rem 0 2rem;
+    }
+
+    /* ========== TÍTULO ========== */
+    .section-title {
+      text-align: center;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      margin-bottom: 1.75rem;
+    }
+
+    /* ========== CARRUSEL ========== */
+    .carousel-wrapper {
+      overflow: hidden;
+      width: 100%;
+      padding-top: 50px;
+      /* Fade suave en los bordes izquierdo y derecho */
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+      mask-image:         linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+    }
+
+    .carousel-track {
+      display: flex;
+      width: max-content;
+      animation: scrollLogos 30s linear infinite;
+    }
+
+    .carousel-track:hover {
+      animation-play-state: paused;
+    }
+
+    /* ========== TARJETA DE LOGO ========== */
+    .logo-card {
+      flex-shrink: 0;
+      width: 140px;
+      height: 150px;
+      margin: 0 1rem;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      position: relative;
+    }
+
+    .logo-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .logo-card img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      transition: background-color 0.3s ease;
+    }
+
+    /* ========== CONTRASTE PARA LOGOS CLAROS ========== */
+    .logo-card.light-logo {
+      background: #f8f9fa;
+    }
+
+    .logo-card.light-logo img {
+      background: #f8f9fa;
+      border-radius: 6px;
+    }
+
+    /* ========== COLORES CORPORATIVOS ESPECÍFICOS ========== */
+    .logo-card.brand-proderi {
+      background: #062743;
+      border-color: #0a3658;
+    }
+
+    .logo-card.brand-proderi img {
+      background: #062743;
+      border-radius: 6px;
+    }
+
+    .logo-card.brand-asohofrucol {
+      background: #01b301;
+      border-color: #01a001;
+    }
+
+    .logo-card.brand-asohofrucol img {
+      background: #01b301;
+      border-radius: 6px;
+    }
+
+    .logo-card.brand-tananeos {
+      background: #144003;
+      border-color: #1a5004;
+    }
+
+    .logo-card.brand-tananeos img {
+      background: #144003;
+      border-radius: 6px;
+    }
+
+    /* Hover para cards con colores corporativos */
+    .logo-card.brand-proderi:hover,
+    .logo-card.brand-asohofrucol:hover,
+    .logo-card.brand-tananeos:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 16px -4px rgba(0,0,0,0.15), 0 4px 8px -2px rgba(0,0,0,0.1);
+    }
+
+    /* ========== TOOLTIP ========== */
+    .logo-tooltip {
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.9);
+      color: white;
+      padding: 0.5rem 0.75rem;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      white-space: nowrap;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
+      transform: translateX(-50%) translateY(5px);
+      pointer-events: none;
+      z-index: 10;
+      margin-bottom: 8px;
+    }
+
+    .logo-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-top: 5px solid rgba(0, 0, 0, 0.9);
+    }
+
+    .logo-card:hover .logo-tooltip {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* ========== MODAL ========== */
+    .company-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .company-modal.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-content {
+      background: white;
+      border-radius: var(--radius);
+      max-width: 500px;
+      width: 90%;
+      max-height: 80vh;
+      overflow-y: auto;
+      box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+      transform: scale(0.9) translateY(20px);
+      transition: transform 0.3s ease;
+    }
+
+    .company-modal.show .modal-content {
+      transform: scale(1) translateY(0);
+    }
+
+    .modal-header {
+      padding: 1.5rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .modal-company-logo {
+      width: 60px;
+      height: 60px;
+      border-radius: 8px;
+      object-fit: contain;
+      border: 1px solid var(--border);
+      padding: 8px;
+      background: #fafafa;
+    }
+
+    /* Modal logos con colores corporativos */
+    .modal-company-logo.brand-proderi {
+      background: #062743;
+      border-color: #0a3658;
+    }
+
+    .modal-company-logo.brand-asohofrucol {
+      background: #144003;
+      border-color: #1a5004;
+    }
+
+    .modal-company-logo.brand-tananeos {
+      background: #144003;
+      border-color: #1a5004;
+    }
+
+    .modal-company-info h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin: 0 0 0.25rem 0;
+    }
+
+    .modal-company-sector {
+      font-size: 0.875rem;
+      color: var(--unal-green);
+      font-weight: 500;
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 0;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px;
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    .modal-close:hover {
+      background: var(--border);
+      color: var(--text-primary);
+    }
+
+    .modal-body {
+      padding: 1.5rem;
+    }
+
+    .modal-description {
+      font-size: 0.875rem;
+      line-height: 1.6;
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+    }
+
+    .modal-convenio {
+      background: var(--unal-green-light);
+      padding: 1rem;
+      border-radius: 8px;
+      border-left: 4px solid var(--unal-green);
+    }
+
+    .modal-convenio-title {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--unal-green-dark);
+      margin-bottom: 0.5rem;
+    }
+
+    .modal-convenio-desc {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* ========== RESPONSIVE MODAL ========== */
+    @media (max-width: 600px) {
+      .modal-content {
+        width: 95%;
+        max-height: 85vh;
+      }
+      
+      .modal-header {
+        padding: 1rem;
+      }
+      
+      .modal-body {
+        padding: 1rem;
+      }
+      
+      .modal-company-logo {
+        width: 50px;
+        height: 50px;
+      }
+    }
+
+    /* ========== ANIMACIÓN ========== */
+    @keyframes scrollLogos {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 600px) {
+      body { padding: 1.75rem 0 1.5rem; }
+
+      .carousel-wrapper {
+        padding-top: 40px;
+      }
+
+      .logo-card {
+        width: 110px;
+        height: 120px;
+        margin: 0 0.75rem;
+        padding: 0.75rem;
+      }
+
+      .carousel-track { animation-duration: 22s; }
+    }
+
+    @media (max-width: 480px) {
+      body { padding: 1.25rem 0 1rem; }
+
+      .section-title { margin-bottom: 1.25rem; }
+
+      .carousel-wrapper {
+        padding-top: 35px;
+      }
+
+      .logo-card {
+        width: 90px;
+        height: 100px;
+        margin: 0 0.5rem;
+        padding: 0.5rem;
+      }
+
+      .carousel-track { animation-duration: 18s; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="section-title">Instituciones con convenio</div>
+
+<div class="carousel-wrapper">
+  <div class="carousel-track" id="carouselTrack"></div>
+</div>
+
+<!-- Modal de información de empresa -->
+<div class="company-modal" id="companyModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <div style="display: flex; gap: 1rem; align-items: flex-start;">
+        <img class="modal-company-logo" id="modalLogo" src="" alt="">
+        <div class="modal-company-info">
+          <h3 id="modalName"></h3>
+          <div class="modal-company-sector" id="modalSector"></div>
+        </div>
+      </div>
+      <button class="modal-close" id="modalClose">&times;</button>
+    </div>
+    <div class="modal-body">
+      <p class="modal-description" id="modalDescription"></p>
+      <div class="modal-convenio">
+        <div class="modal-convenio-title">Tipo de Convenio con UNAL</div>
+        <div class="modal-convenio-desc" id="modalConvenio"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Lista de logos en assets/logosEmpresas/
+var LOGOS = [
+  'ANEI.webp',
+  'Alcaldía de La Paz.png',
+  'ASOHOFRUCOL.png',
+  'Alianza Francesa.png',
+  'comfacesar.png',
+  'Alcaldía de San Diego.png',
+  'Cámara de comercio de Valledupar.png',
+  'La rotativa.png',
+  'Laboratorio Nancy Florez.png',
+  'LOGO-AGROSOLIDARIA-.png',
+  'logo-palmas.png',
+  'Logo-PDPC-.webp',
+  'LOGO-PRODERI-CON-SLOGAN-BLANCO-1-2048x621.png',
+  'logo-dark.svg',
+  'Logos Reserva Natural Los Tananeos.avif'
+];
+
+var BASE_PATH = '../../assets/logosEmpresas/';
+
+// Base de datos de información de empresas
+var COMPANY_INFO = {
+  'ANEI': {
+    name: 'ANEI',
+    sector: 'Asociación Industrial',
+    description: 'Asociación Nacional de Empresarios de Colombia que promueve el desarrollo industrial y empresarial del país, representando los intereses del sector privado ante diferentes instancias.',
+    convenio: 'Convenio de cooperación para el desarrollo de programas de investigación e innovación industrial.'
+  },
+  'Alcaldía de La Paz': {
+    name: 'Alcaldía de La Paz',
+    sector: 'Administración Pública',
+    description: 'Gobierno municipal del municipio de La Paz, encargado de la administración local y el desarrollo territorial en coordinación con las instituciones educativas.',
+    convenio: 'Convenio interadministrativo para proyectos de desarrollo social y educativo en la región.'
+  },
+  'ASOHOFRUCOL': {
+    name: 'ASOHOFRUCOL',
+    sector: 'Desarrollo Agropecuario',
+    description: 'Asociación Hortifrutícola de Colombia que promueve el desarrollo integral de la hortifruticultura colombiana a través del Fondo Nacional de Fomento Hortifrutícola.',
+    convenio: 'Convenio para investigación y desarrollo tecnológico del sector hortofrutícola colombiano.'
+  },
+  'Alianza Francesa': {
+    name: 'Alianza Francesa',
+    sector: 'Educación y Cultura',
+    description: 'Institución educativa y cultural franco-colombiana dedicada a la enseñanza del francés, intercambio cultural y promoción de la francofonía en Colombia.',
+    convenio: 'Convenio de cooperación académica e intercambio estudiantil y cultural.'
+  },
+  'comfacesar': {
+    name: 'COMFACESAR',
+    sector: 'Bienestar Social',
+    description: 'Caja de Compensación Familiar del Cesar que brinda servicios de bienestar social, recreación, salud y educación a trabajadores y sus familias en la región.',
+    convenio: 'Convenio para programas de capacitación técnica y desarrollo social regional.'
+  },
+  'Alcaldía de San Diego': {
+    name: 'Alcaldía de San Diego',
+    sector: 'Administración Pública',
+    description: 'Administración municipal de San Diego, Cesar, enfocada en el desarrollo local y la implementación de políticas públicas para el bienestar ciudadano.',
+    convenio: 'Convenio interadministrativo para proyectos de desarrollo territorial y educación.'
+  },
+  'Cámara de comercio de Valledupar': {
+    name: 'Cámara de Comercio de Valledupar',
+    sector: 'Desarrollo Empresarial',
+    description: 'Entidad que promueve el desarrollo empresarial y comercial en Valledupar y la región, brindando servicios de registro mercantil y fomento empresarial.',
+    convenio: 'Convenio de cooperación para programas de emprendimiento y desarrollo empresarial.'
+  },
+  'La rotativa': {
+    name: 'La Rotativa',
+    sector: 'Comunicaciones',
+    description: 'Empresa de comunicaciones y medios que se especializa en servicios de información y comunicación para el sector empresarial y gubernamental.',
+    convenio: 'Convenio para servicios de comunicación y divulgación de actividades académicas.'
+  },
+  'Laboratorio Nancy Florez': {
+    name: 'Laboratorio Nancy Flórez',
+    sector: 'Salud y Diagnóstico',
+    description: 'Laboratorio clínico especializado en análisis médicos y diagnósticos de salud, brindando servicios de apoyo para la investigación biomédica.',
+    convenio: 'Convenio para investigación biomédica y servicios de apoyo diagnóstico.'
+  },
+  'LOGO-AGROSOLIDARIA-': {
+    name: 'AGROSOLIDARIA',
+    sector: 'Economía Solidaria Rural',
+    description: 'Confederación de cooperativas que promueve el desarrollo rural sostenible a través de la economía solidaria y el comercio justo en el sector agropecuario.',
+    convenio: 'Convenio para investigación en desarrollo rural sostenible y economía solidaria.'
+  },
+  'logo-palmas': {
+    name: 'Grupo Palmas',
+    sector: 'Agroindustria',
+    description: 'Una de las principales compañías agroindustriales de Colombia, especializada en aceite de palma, alimentos y productos derivados del agro.',
+    convenio: 'Convenio para investigación agroindustrial y desarrollo de productos derivados del agro.'
+  },
+  'Logo-PDPC-': {
+    name: 'PDPC',
+    sector: 'Desarrollo Territorial',
+    description: 'Programa de Desarrollo y Paz del César que trabaja en la construcción de paz, desarrollo territorial y fortalecimiento institucional.',
+    convenio: 'Convenio para investigación social y programas de desarrollo territorial.'
+  },
+  'LOGO-PRODERI-CON-SLOGAN-BLANCO-1-2048x621': {
+    name: 'PRODERI',
+    sector: 'Desarrollo Rural Integral',
+    description: 'Programa de Desarrollo Rural Integral que promueve el desarrollo sostenible del sector rural a través de proyectos productivos e infraestructura.',
+    convenio: 'Convenio para investigación en desarrollo rural integral y sostenibilidad agropecuaria.'
+  },
+  'logo-dark': {
+    name: 'Empresa Asociada',
+    sector: 'Sector Empresarial',
+    description: 'Empresa del sector privado que mantiene vínculos de cooperación con la Universidad Nacional para el desarrollo de proyectos conjuntos.',
+    convenio: 'Convenio de cooperación empresarial para proyectos de investigación y desarrollo.'
+  },
+  'Logos Reserva Natural Los Tananeos': {
+    name: 'Reserva Natural Los Tananeos',
+    sector: 'Conservación Ambiental',
+    description: 'Reserva natural privada dedicada a la conservación de la biodiversidad, investigación ambiental y educación sobre sostenibilidad.',
+    convenio: 'Convenio para investigación en conservación ambiental y biodiversidad.'
+  }
+};
+
+function logoCard(logo, index) {
+  var alt = logo.replace(/\.[^.]+$/, '');
+  var cleanName = formatCompanyName(alt);
+  var cardId = 'logo-card-' + index;
+  var imgId = 'logo-img-' + index;
+  
+  return '<div class="logo-card" id="' + cardId + '" onclick="openModal(\'' + alt + '\')" style="cursor: pointer;">' +
+    '<img id="' + imgId + '" src="' + BASE_PATH + encodeURI(logo) + '" alt="' + alt + '" loading="lazy" onload="checkLightLogo(\'' + logo + '\', \'' + cardId + '\', \'' + imgId + '\')">' +
+    '<div class="logo-tooltip">' + cleanName + '</div>' +
+    '</div>';
+}
+
+function formatCompanyName(name) {
+  // Limpiar y formatear el nombre de la empresa
+  return name
+    .replace(/^LOGO-?/i, '')
+    .replace(/-CON-SLOGAN.*$/i, '')
+    .replace(/-1-\d+x\d+$/, '')
+    .replace(/^logo-/i, '')
+    .replace(/-/g, ' ')
+    .replace(/\b\w/g, function(l) { return l.toUpperCase(); });
+}
+
+// ============================================================
+// BRAND COLORS AND LOGO DETECTION
+// ============================================================
+function checkLightLogo(logoFilename, cardId, imgId) {
+  // Primero verificar si tiene color corporativo específico
+  var brandClass = getBrandColorClass(logoFilename);
+  if (brandClass) {
+    applyBrandStyle(cardId, brandClass);
+    return; // STOP aquí - no hacer más análisis
+  }
+  
+  // Si no tiene color corporativo, verificar si necesita contraste
+  if (isLightLogoByName(logoFilename)) {
+    applyLightLogoStyle(cardId);
+    return;
+  }
+  
+  // Analizar imagen si es necesario (solo si no tiene color corporativo)
+  var img = document.getElementById(imgId);
+  if (img && img.complete) {
+    if (isImageLight(img)) {
+      applyLightLogoStyle(cardId);
+    }
+  }
+}
+
+function getBrandColorClass(logoFilename) {
+  // Mapeo EXACTO de archivos a clases de colores corporativos
+  var exactMapping = {
+    'LOGO-PRODERI-CON-SLOGAN-BLANCO-1-2048x621.png': 'brand-proderi',
+    'ASOHOFRUCOL.png': 'brand-asohofrucol', 
+    'Logos Reserva Natural Los Tananeos.avif': 'brand-tananeos'
+  };
+  
+  // Primero buscar coincidencia exacta
+  if (exactMapping[logoFilename]) {
+    return exactMapping[logoFilename];
+  }
+  
+  // Fallback: buscar coincidencias parciales
+  var partialMapping = {
+    'LOGO-PRODERI-CON-SLOGAN-BLANCO-1-2048x621': 'brand-proderi',
+    'ASOHOFRUCOL': 'brand-asohofrucol', 
+    'Logos Reserva Natural Los Tananeos': 'brand-tananeos'
+  };
+  
+  for (var key in partialMapping) {
+    if (logoFilename.includes(key)) {
+      return partialMapping[key];
+    }
+  }
+  
+  return null;
+}
+
+function applyBrandStyle(cardId, brandClass) {
+  var card = document.getElementById(cardId);
+  if (card && !card.classList.contains(brandClass)) {
+    // Remover otras clases de estilo primero
+    card.classList.remove('light-logo');
+    card.classList.add(brandClass);
+  }
+}
+
+function isLightLogoByName(filename) {
+  // Lista de patrones que indican logos claros/blancos
+  var lightPatterns = [
+    'blanco', 'white', 'light', 'clear',
+    'BLANCO', 'WHITE', 'LIGHT',
+    'logo-dark' // Aunque dice "dark", este específico es problemático
+  ];
+  
+  // Lista manual de logos conocidos que necesitan contraste
+  var knownLightLogos = [
+    'LOGO-PRODERI-CON-SLOGAN-BLANCO-1-2048x621.png',
+    'Alianza Francesa.png'
+  ];
+  
+  return lightPatterns.some(pattern => filename.includes(pattern)) ||
+         knownLightLogos.some(logo => filename.includes(logo.replace(/\.[^.]+$/, '')));
+}
+
+function isImageLight(img) {
+  try {
+    // Crear canvas para analizar la imagen
+    var canvas = document.createElement('canvas');
+    var ctx = canvas.getContext('2d');
+    
+    canvas.width = img.naturalWidth || img.width;
+    canvas.height = img.naturalHeight || img.height;
+    
+    // Dibujar imagen en canvas
+    ctx.drawImage(img, 0, 0);
+    
+    // Analizar una muestra de píxeles
+    var imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    var data = imageData.data;
+    
+    var lightPixels = 0;
+    var totalPixels = 0;
+    
+    // Muestrear cada 10 píxeles para performance
+    for (var i = 0; i < data.length; i += 40) {
+      var r = data[i];
+      var g = data[i + 1];
+      var b = data[i + 2];
+      var a = data[i + 3];
+      
+      // Solo contar píxeles no transparentes
+      if (a > 128) {
+        totalPixels++;
+        // Considerar "claro" si el promedio RGB es > 200
+        var avgBrightness = (r + g + b) / 3;
+        if (avgBrightness > 200) {
+          lightPixels++;
+        }
+      }
+    }
+    
+    // Si más del 60% de píxeles son claros, necesita contraste
+    return totalPixels > 0 && (lightPixels / totalPixels) > 0.6;
+    
+  } catch (e) {
+    // Si hay error en el análisis, usar fallback conservador
+    console.warn('Error analyzing image:', e);
+    return false;
+  }
+}
+
+function applyLightLogoStyle(cardId) {
+  var card = document.getElementById(cardId);
+  if (card && !card.classList.contains('light-logo')) {
+    card.classList.add('light-logo');
+  }
+}
+
+function renderCarousel() {
+  var track = document.getElementById('carouselTrack');
+  // Dos copias idénticas → translateX(-50%) cierra el loop sin salto
+  var cards = LOGOS.map(function(logo, index) {
+    return logoCard(logo, index);
+  }).join('');
+  track.innerHTML = cards + cards;
+}
+
+// ============================================================
+// MODAL FUNCTIONS
+// ============================================================
+function openModal(logoId) {
+  var companyData = COMPANY_INFO[logoId];
+  if (!companyData) {
+    // Fallback para empresas sin información
+    companyData = {
+      name: formatCompanyName(logoId),
+      sector: 'Sector Empresarial',
+      description: 'Institución con convenio de cooperación con la Universidad Nacional de Colombia.',
+      convenio: 'Convenio de cooperación académica y de investigación.'
+    };
+  }
+
+  // Encontrar el logo completo
+  var fullLogo = LOGOS.find(logo => logo.includes(logoId)) || logoId + '.png';
+  
+  // Llenar información del modal
+  var modalLogo = document.getElementById('modalLogo');
+  modalLogo.src = BASE_PATH + encodeURI(fullLogo);
+  
+  // Aplicar color corporativo al logo del modal si corresponde
+  var brandClass = getBrandColorClass(fullLogo);
+  modalLogo.className = 'modal-company-logo'; // Reset clases
+  if (brandClass) {
+    modalLogo.classList.add(brandClass);
+  }
+  
+  document.getElementById('modalName').textContent = companyData.name;
+  document.getElementById('modalSector').textContent = companyData.sector;
+  document.getElementById('modalDescription').textContent = companyData.description;
+  document.getElementById('modalConvenio').textContent = companyData.convenio;
+
+  // Mostrar modal
+  var modal = document.getElementById('companyModal');
+  modal.classList.add('show');
+  
+  // Prevenir scroll del body
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  var modal = document.getElementById('companyModal');
+  modal.classList.remove('show');
+  
+  // Restaurar scroll del body
+  document.body.style.overflow = '';
+}
+
+function setupModalEvents() {
+  var modal = document.getElementById('companyModal');
+  var closeBtn = document.getElementById('modalClose');
+  
+  // Cerrar con botón X
+  closeBtn.addEventListener('click', closeModal);
+  
+  // Cerrar al hacer click fuera del modal
+  modal.addEventListener('click', function(e) {
+    if (e.target === modal) {
+      closeModal();
+    }
+  });
+  
+  // Cerrar con tecla ESC
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && modal.classList.contains('show')) {
+      closeModal();
+    }
+  });
+}
+
+// ============================================================
+// IFRAME HEIGHT — contrato con Google Sites
+// ============================================================
+function setupIframeHeight() {
+  if (window.self === window.top) return;
+
+  function sendHeight() {
+    try {
+      var h = Math.max(
+        document.body.scrollHeight,
+        document.body.offsetHeight,
+        document.documentElement.scrollHeight
+      );
+      window.parent.postMessage({ type: 'setHeight', height: h + 20 }, '*');
+    } catch (e) { /* no-op */ }
+  }
+
+  sendHeight();
+  var t;
+  window.addEventListener('resize', function () { clearTimeout(t); t = setTimeout(sendHeight, 250); });
+}
+
+// ============================================================
+// INIT
+// ============================================================
+document.addEventListener('DOMContentLoaded', function () {
+  renderCarousel();
+  setupIframeHeight();
+  setupModalEvents();
+});
+</script>
+</body>
+</html>

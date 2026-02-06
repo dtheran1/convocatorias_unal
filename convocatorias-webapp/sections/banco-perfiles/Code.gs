@@ -26,7 +26,7 @@ function getConfig() {
   
   return {
     // ID de la hoja de cálculo donde se guardarán los perfiles
-    spreadsheetId: scriptProps.getProperty(CONFIG_KEYS_BANCO.BANCO_PERFILES_SHEET_ID) || 'TU_SHEET_ID_AQUI',
+    spreadsheetId: scriptProps.getProperty(CONFIG_KEYS_BANCO.BANCO_PERFILES_SHEET_ID) || '1234hFhc7yiGR2CB-qvO9nkzsJ8JPmLCD35fIcTUbQSs',
     
     // Email donde se enviarán las notificaciones
     emailNotificacion: scriptProps.getProperty(CONFIG_KEYS_BANCO.EMAIL_NOTIFICACION) || 'practicas_paz@unal.edu.co'
@@ -73,7 +73,7 @@ function setupBancoPerfiles() {
   
   // ⬇️ EDITA ESTOS VALORES CON TUS DATOS REALES:
   const config = {
-    'BANCO_PERFILES_SHEET_ID': '15fdiU4NpewnhGZnDLNMTjkYRg6UYF4oXXk0LA-LA1BA',  // ← Reemplaza con tu Sheet ID
+    'BANCO_PERFILES_SHEET_ID': '1234hFhc7yiGR2CB-qvO9nkzsJ8JPmLCD35fIcTUbQSs',  // ← Reemplaza con tu Sheet ID
     'EMAIL_NOTIFICACION': 'practicas_paz@unal.edu.co'
   };
   

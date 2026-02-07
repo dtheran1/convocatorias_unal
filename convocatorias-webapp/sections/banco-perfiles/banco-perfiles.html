@@ -140,6 +140,7 @@
 
     .form-group {
       margin-bottom: 1.25rem;
+      position: relative;
     }
 
     .form-label {
@@ -148,6 +149,40 @@
       font-weight: 600;
       color: var(--text-primary);
       margin-bottom: 0.4rem;
+    }
+
+    .field-wrapper {
+      position: relative;
+    }
+
+    .field-icon {
+      position: absolute;
+      right: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--success);
+      opacity: 0;
+      transition: opacity 0.2s;
+      pointer-events: none;
+    }
+
+    .field-icon.visible {
+      opacity: 1;
+    }
+
+    .field-icon .material-icons {
+      font-size: 1.25rem;
+    }
+
+    .char-counter {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-align: right;
+      margin-top: 0.25rem;
+    }
+
+    .char-counter.warning {
+      color: var(--warning);
     }
 
     .required {
@@ -175,6 +210,13 @@
       outline: none;
       border-color: var(--unal-green);
       box-shadow: 0 0 0 3px var(--unal-green-light);
+    }
+
+    .form-input.valid,
+    .form-textarea.valid,
+    .form-select.valid {
+      border-color: var(--success);
+      padding-right: 2.5rem;
     }
 
     .form-textarea {
@@ -313,6 +355,57 @@
       font-weight: 600;
       color: var(--text-primary);
       flex: 1;
+    }
+
+    .perfil-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      padding: 0.25rem 0.6rem;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-left: 0.5rem;
+    }
+
+    .perfil-badge.incomplete {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .perfil-badge.complete {
+      background: #d1fae5;
+      color: #065f46;
+    }
+
+    .perfil-badge .material-icons {
+      font-size: 0.9rem;
+    }
+
+    .perfil-progress {
+      margin-top: 1rem;
+      padding: 0 1.5rem 1rem;
+    }
+
+    .progress-bar-container {
+      height: 6px;
+      background: var(--border);
+      border-radius: 3px;
+      overflow: hidden;
+      margin-bottom: 0.5rem;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--unal-green) 0%, var(--unal-green-dark) 100%);
+      border-radius: 3px;
+      transition: width 0.3s ease;
+    }
+
+    .progress-text {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-align: right;
     }
 
     .perfil-body {
@@ -590,18 +683,26 @@
       .btn-remove-perfil .material-icons {
         font-size: 0.9rem;
       }
-    }
 
-    @media (max-width: 380px) {
-      .btn-remove-perfil span:not(.material-icons) {
+      .perfil-header-right {
+        gap: 0.5rem;
+      }
+
+      .perfil-header-right .btn span:not(.material-icons) {
         display: none;
       }
 
-      .btn-remove-perfil {
+      .perfil-header-right .btn {
         padding: 0.4rem;
-        width: 32px;
+        min-width: 32px;
         height: 32px;
         justify-content: center;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .perfil-header-right {
+        gap: 0.35rem;
       }
     }
 
@@ -851,6 +952,212 @@
         width: 100%;
       }
     }
+
+    /* ========== PREVIEW MODAL ========== */
+    .preview-modal-content {
+      max-width: 900px;
+    }
+
+    .preview-section {
+      margin-bottom: 2rem;
+    }
+
+    .preview-section-title {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .preview-field {
+      margin-bottom: 1rem;
+    }
+
+    .preview-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 0.25rem;
+    }
+
+    .preview-value {
+      font-size: 0.9rem;
+      color: var(--text-primary);
+      padding: 0.5rem;
+      background: var(--bg-primary);
+      border-radius: var(--radius-sm);
+    }
+
+    .preview-perfil-card {
+      background: var(--bg-primary);
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .preview-perfil-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 2px solid var(--unal-green-light);
+    }
+
+    .preview-perfil-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--unal-green-dark);
+    }
+
+    .preview-actions {
+      display: flex;
+      gap: 0.75rem;
+      justify-content: flex-end;
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 2px solid var(--border);
+    }
+
+    @media (max-width: 768px) {
+      .preview-actions {
+        flex-direction: column;
+      }
+
+      .preview-actions .btn {
+        width: 100%;
+      }
+    }
+
+    /* ========== TOAST NOTIFICATIONS ========== */
+    .toast-container {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 4000;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      max-width: 400px;
+      pointer-events: none;
+    }
+
+    .toast {
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-lg);
+      padding: 1rem 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      min-width: 300px;
+      transform: translateX(450px);
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      pointer-events: auto;
+      border-left: 4px solid;
+    }
+
+    .toast.show {
+      transform: translateX(0);
+      opacity: 1;
+    }
+
+    .toast.success {
+      border-left-color: var(--success);
+    }
+
+    .toast.success .toast-icon {
+      color: var(--success);
+    }
+
+    .toast.error {
+      border-left-color: var(--danger);
+    }
+
+    .toast.error .toast-icon {
+      color: var(--danger);
+    }
+
+    .toast.warning {
+      border-left-color: var(--warning);
+    }
+
+    .toast.warning .toast-icon {
+      color: var(--warning);
+    }
+
+    .toast.info {
+      border-left-color: var(--primary);
+    }
+
+    .toast.info .toast-icon {
+      color: var(--primary);
+    }
+
+    .toast-icon {
+      flex-shrink: 0;
+    }
+
+    .toast-icon .material-icons {
+      font-size: 1.5rem;
+    }
+
+    .toast-content {
+      flex: 1;
+    }
+
+    .toast-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.25rem;
+    }
+
+    .toast-message {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.4;
+    }
+
+    .toast-close {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.2s;
+      flex-shrink: 0;
+    }
+
+    .toast-close:hover {
+      color: var(--text-primary);
+    }
+
+    .toast-close .material-icons {
+      font-size: 1.25rem;
+    }
+
+    @media (max-width: 768px) {
+      .toast-container {
+        right: 10px;
+        left: 10px;
+        max-width: none;
+      }
+
+      .toast {
+        min-width: 0;
+        width: 100%;
+      }
+    }
   </style>
 </head>
 <body>
@@ -901,20 +1208,47 @@
     </div>
   </div>
 
-  <!-- CONFIRM DELETE MODAL -->
+  <!-- PREVIEW MODAL -->
+  <div class="modal-overlay" id="previewModal">
+    <div class="modal-content preview-modal-content">
+      <div class="modal-header">
+        <div class="modal-header-text">
+          <h2 class="modal-title">Vista previa del formulario</h2>
+        </div>
+        <button type="button" class="btn-close-modal" id="btnClosePreview">
+          <span class="material-icons">close</span>
+        </button>
+      </div>
+      <div class="modal-body" id="previewBody">
+        <!-- Content will be injected here -->
+      </div>
+      <div class="preview-actions">
+        <button type="button" class="btn btn-secondary" id="btnEditFromPreview">
+          <span class="material-icons">edit</span>
+          Editar
+        </button>
+        <button type="button" class="btn btn-primary" id="btnSubmitFromPreview">
+          <span class="material-icons">send</span>
+          Enviar formulario
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONFIRM MODAL (Generic) -->
   <div class="confirm-overlay" id="confirmModal">
     <div class="confirm-content">
-      <div class="confirm-icon">
+      <div class="confirm-icon" id="confirmIcon">
         <span class="material-icons">warning</span>
       </div>
       <h3 class="confirm-title" id="confirmTitle">¿Eliminar este perfil?</h3>
       <p class="confirm-message" id="confirmMessage">¿Estás seguro de que deseas eliminar este perfil? Esta acción no se puede deshacer.</p>
       <div class="confirm-actions">
-        <button type="button" class="btn-confirm btn-confirm-secondary" id="btnCancelDelete">
+        <button type="button" class="btn-confirm btn-confirm-secondary" id="btnCancelConfirm">
           Cancelar
         </button>
-        <button type="button" class="btn-confirm btn-confirm-primary" id="btnConfirmDelete">
-          Eliminar
+        <button type="button" class="btn-confirm btn-confirm-primary" id="btnAcceptConfirm">
+          Aceptar
         </button>
       </div>
     </div>
@@ -976,6 +1310,10 @@
           <span class="material-icons">restart_alt</span>
           Limpiar formulario
         </button>
+        <button type="button" class="btn btn-secondary" id="btnPreview">
+          <span class="material-icons">visibility</span>
+          Vista previa
+        </button>
         <button type="submit" class="btn btn-primary" id="btnSubmit">
           <span class="material-icons">send</span>
           Enviar formulario
@@ -1001,6 +1339,9 @@
     <p>Enviando formulario...</p>
   </div>
 </div>
+
+<!-- TOAST CONTAINER -->
+<div class="toast-container" id="toastContainer"></div>
 
 <script>
 // ============================================================
@@ -1089,14 +1430,31 @@ function createPerfilCard(index) {
         <div class="perfil-toggle">
           <span class="material-icons">expand_more</span>
         </div>
-        <div class="perfil-title">Perfil #${index + 1}</div>
+        <div class="perfil-title">
+          Perfil #${index + 1}
+          <span class="perfil-badge incomplete" id="badge-${index}">
+            <span class="material-icons">schedule</span>
+            Incompleto
+          </span>
+        </div>
       </div>
       <div class="perfil-header-right">
+        <button type="button" class="btn btn-secondary" style="padding: 0.4rem 0.8rem; font-size: 0.8rem;" onclick="event.stopPropagation(); duplicatePerfil(${index})">
+          <span class="material-icons" style="font-size: 1rem;">content_copy</span>
+          <span>Duplicar</span>
+        </button>
         <button type="button" class="btn-remove-perfil" data-perfil-index="${index}" onclick="event.stopPropagation(); removePerfil(${index})">
           <span class="material-icons">delete</span>
-          <span>Eliminar perfil</span>
+          <span>Eliminar</span>
         </button>
       </div>
+    </div>
+
+    <div class="perfil-progress" id="progress-${index}">
+      <div class="progress-bar-container">
+        <div class="progress-bar-fill" style="width: 0%"></div>
+      </div>
+      <div class="progress-text">0 de 9 campos completados</div>
     </div>
 
     <div class="perfil-body">
@@ -1124,7 +1482,13 @@ function createPerfilCard(index) {
           <label class="form-label" for="descripcionPerfil-${index}">
             Descripción general del perfil de acuerdo al tipo de modalidad <span class="required">*</span>
           </label>
-          <textarea class="form-textarea" id="descripcionPerfil-${index}" required></textarea>
+          <div class="field-wrapper">
+            <textarea class="form-textarea" id="descripcionPerfil-${index}" maxlength="500" required></textarea>
+            <div class="field-icon" id="icon-descripcionPerfil-${index}">
+              <span class="material-icons">check_circle</span>
+            </div>
+          </div>
+          <div class="char-counter" id="counter-descripcionPerfil-${index}">0 / 500</div>
           <div class="form-error" id="error-descripcionPerfil-${index}">Este campo es obligatorio.</div>
         </div>
 
@@ -1132,7 +1496,12 @@ function createPerfilCard(index) {
           <label class="form-label" for="dependenciaProyecto-${index}">
             Dependencia/Proyecto donde se desarrollará la Práctica y/o Pasantía <span class="required">*</span>
           </label>
-          <input type="text" class="form-input" id="dependenciaProyecto-${index}" required>
+          <div class="field-wrapper">
+            <input type="text" class="form-input" id="dependenciaProyecto-${index}" required>
+            <div class="field-icon" id="icon-dependenciaProyecto-${index}">
+              <span class="material-icons">check_circle</span>
+            </div>
+          </div>
           <div class="form-error" id="error-dependenciaProyecto-${index}">Este campo es obligatorio.</div>
         </div>
 
@@ -1184,7 +1553,13 @@ function createPerfilCard(index) {
           <label class="form-label" for="competenciasEspecificas-${index}">
             Competencias específicas o conocimientos deseados <span class="required">*</span>
           </label>
-          <textarea class="form-textarea" id="competenciasEspecificas-${index}" required></textarea>
+          <div class="field-wrapper">
+            <textarea class="form-textarea" id="competenciasEspecificas-${index}" maxlength="300" required></textarea>
+            <div class="field-icon" id="icon-competenciasEspecificas-${index}">
+              <span class="material-icons">check_circle</span>
+            </div>
+          </div>
+          <div class="char-counter" id="counter-competenciasEspecificas-${index}">0 / 300</div>
           <div class="form-error" id="error-competenciasEspecificas-${index}">Este campo es obligatorio.</div>
         </div>
 
@@ -1192,7 +1567,13 @@ function createPerfilCard(index) {
           <label class="form-label" for="habilidadesValoradas-${index}">
             Competencias/habilidades o actitudes valoradas <span class="required">*</span>
           </label>
-          <textarea class="form-textarea" id="habilidadesValoradas-${index}" required></textarea>
+          <div class="field-wrapper">
+            <textarea class="form-textarea" id="habilidadesValoradas-${index}" maxlength="300" required></textarea>
+            <div class="field-icon" id="icon-habilidadesValoradas-${index}">
+              <span class="material-icons">check_circle</span>
+            </div>
+          </div>
+          <div class="char-counter" id="counter-habilidadesValoradas-${index}">0 / 300</div>
           <div class="form-error" id="error-habilidadesValoradas-${index}">Este campo es obligatorio.</div>
         </div>
 
@@ -1226,6 +1607,7 @@ function createPerfilCard(index) {
       </div>
       </div>
     </div>
+    </div>
   `;
   
   return card;
@@ -1254,9 +1636,16 @@ function addPerfil() {
   const container = document.getElementById('perfilesContainer');
   const card = createPerfilCard(perfilCount);
   container.appendChild(card);
+  const currentIndex = perfilCount;
   perfilCount++;
   updatePerfilNumbers();
   updateRemoveButtons();
+  
+  // Attach completion tracking listeners
+  setTimeout(() => {
+    attachCompletionListeners(currentIndex);
+    updatePerfilCompletion(currentIndex);
+  }, 100);
 }
 
 function removePerfil(index) {
@@ -1278,8 +1667,76 @@ function confirmRemovePerfil(index) {
     card.remove();
     updatePerfilNumbers();
     updateRemoveButtons();
-    hideConfirmDelete();
+    showToast('Perfil eliminado', 'El perfil ha sido eliminado correctamente.', 'success', 3000);
   }
+}
+
+function duplicatePerfil(sourceIndex) {
+  // Get source perfil data
+  const sourceCard = document.getElementById(`perfil-${sourceIndex}`);
+  if (!sourceCard) return;
+  
+  showToast('Perfil duplicado', 'El perfil ha sido duplicado exitosamente.', 'success', 3000);
+  
+  // Collect data from source perfil
+  const sourceData = {
+    tipoModalidad: document.querySelector(`input[name="tipoModalidad-${sourceIndex}"]:checked`)?.value || '',
+    descripcionPerfil: document.getElementById(`descripcionPerfil-${sourceIndex}`)?.value || '',
+    dependenciaProyecto: document.getElementById(`dependenciaProyecto-${sourceIndex}`)?.value || '',
+    cantidadEstudiantes: document.getElementById(`cantidadEstudiantes-${sourceIndex}`)?.value || '',
+    modalidadTrabajo: document.querySelector(`input[name="modalidadTrabajo-${sourceIndex}"]:checked`)?.value || '',
+    programas: Array.from(document.querySelectorAll(`input[name="programas-${sourceIndex}"]:checked`)).map(cb => cb.value),
+    competenciasEspecificas: document.getElementById(`competenciasEspecificas-${sourceIndex}`)?.value || '',
+    habilidadesValoradas: document.getElementById(`habilidadesValoradas-${sourceIndex}`)?.value || '',
+    apoyoEstudiante: document.querySelector(`input[name="apoyoEstudiante-${sourceIndex}"]:checked`)?.value || '',
+    observaciones: document.getElementById(`observaciones-${sourceIndex}`)?.value || ''
+  };
+  
+  // Create new perfil
+  const container = document.getElementById('perfilesContainer');
+  const newCard = createPerfilCard(perfilCount);
+  container.appendChild(newCard);
+  const newIndex = perfilCount;
+  perfilCount++;
+  
+  // Populate new perfil with source data
+  setTimeout(() => {
+    // Text fields
+    if (sourceData.descripcionPerfil) document.getElementById(`descripcionPerfil-${newIndex}`).value = sourceData.descripcionPerfil;
+    if (sourceData.dependenciaProyecto) document.getElementById(`dependenciaProyecto-${newIndex}`).value = sourceData.dependenciaProyecto;
+    if (sourceData.cantidadEstudiantes) document.getElementById(`cantidadEstudiantes-${newIndex}`).value = sourceData.cantidadEstudiantes;
+    if (sourceData.competenciasEspecificas) document.getElementById(`competenciasEspecificas-${newIndex}`).value = sourceData.competenciasEspecificas;
+    if (sourceData.habilidadesValoradas) document.getElementById(`habilidadesValoradas-${newIndex}`).value = sourceData.habilidadesValoradas;
+    if (sourceData.observaciones) document.getElementById(`observaciones-${newIndex}`).value = sourceData.observaciones;
+    
+    // Radio buttons
+    if (sourceData.tipoModalidad) {
+      const tipoRadio = document.querySelector(`input[name="tipoModalidad-${newIndex}"][value="${sourceData.tipoModalidad}"]`);
+      if (tipoRadio) tipoRadio.checked = true;
+    }
+    if (sourceData.modalidadTrabajo) {
+      const modalidadRadio = document.querySelector(`input[name="modalidadTrabajo-${newIndex}"][value="${sourceData.modalidadTrabajo}"]`);
+      if (modalidadRadio) modalidadRadio.checked = true;
+    }
+    if (sourceData.apoyoEstudiante) {
+      const apoyoRadio = document.querySelector(`input[name="apoyoEstudiante-${newIndex}"][value="${sourceData.apoyoEstudiante}"]`);
+      if (apoyoRadio) apoyoRadio.checked = true;
+    }
+    
+    // Checkboxes (programas)
+    sourceData.programas.forEach(programa => {
+      const checkbox = document.querySelector(`input[name="programas-${newIndex}"][value="${programa}"]`);
+      if (checkbox) checkbox.checked = true;
+    });
+    
+    updatePerfilNumbers();
+    updateRemoveButtons();
+    attachCompletionListeners(newIndex);
+    updatePerfilCompletion(newIndex);
+    
+    // Scroll to new perfil
+    newCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 100);
 }
 
 function updatePerfilNumbers() {
@@ -1304,6 +1761,121 @@ function updateRemoveButtons() {
     } else {
       btn.style.display = 'flex';
     }
+  });
+}
+
+// ============================================================
+// PERFIL COMPLETION TRACKING
+// ============================================================
+function updatePerfilCompletion(index) {
+  const TOTAL_FIELDS = 9; // Total required fields per perfil
+  let completed = 0;
+  
+  // Text fields
+  const textFields = [
+    `descripcionPerfil-${index}`,
+    `dependenciaProyecto-${index}`,
+    `cantidadEstudiantes-${index}`,
+    `competenciasEspecificas-${index}`,
+    `habilidadesValoradas-${index}`
+  ];
+  
+  textFields.forEach(fieldId => {
+    const field = document.getElementById(fieldId);
+    if (field && field.value.trim() !== '') {
+      completed++;
+    }
+  });
+  
+  // Radio groups
+  const radioGroups = [
+    `tipoModalidad-${index}`,
+    `modalidadTrabajo-${index}`,
+    `apoyoEstudiante-${index}`
+  ];
+  
+  radioGroups.forEach(groupName => {
+    const checked = document.querySelector(`input[name="${groupName}"]:checked`);
+    if (checked) {
+      completed++;
+    }
+  });
+  
+  // Checkbox group (programas)
+  const checkedProgramas = document.querySelectorAll(`input[name="programas-${index}"]:checked`);
+  if (checkedProgramas.length > 0) {
+    completed++;
+  }
+  
+  // Update progress bar
+  const progressContainer = document.getElementById(`progress-${index}`);
+  if (progressContainer) {
+    const progressBar = progressContainer.querySelector('.progress-bar-fill');
+    const progressText = progressContainer.querySelector('.progress-text');
+    const percentage = (completed / TOTAL_FIELDS) * 100;
+    
+    if (progressBar) progressBar.style.width = percentage + '%';
+    if (progressText) progressText.textContent = `${completed} de ${TOTAL_FIELDS} campos completados`;
+  }
+  
+  // Update badge
+  const badge = document.getElementById(`badge-${index}`);
+  if (badge) {
+    if (completed === TOTAL_FIELDS) {
+      badge.className = 'perfil-badge complete';
+      badge.innerHTML = '<span class="material-icons">check_circle</span> Completo';
+    } else {
+      badge.className = 'perfil-badge incomplete';
+      badge.innerHTML = '<span class="material-icons">schedule</span> Incompleto';
+    }
+  }
+}
+
+function attachCompletionListeners(index) {
+  // Text inputs and textareas
+  const textFields = [
+    `descripcionPerfil-${index}`,
+    `dependenciaProyecto-${index}`,
+    `cantidadEstudiantes-${index}`,
+    `competenciasEspecificas-${index}`,
+    `habilidadesValoradas-${index}`
+  ];
+  
+  textFields.forEach(fieldId => {
+    const field = document.getElementById(fieldId);
+    if (field) {
+      field.addEventListener('input', () => {
+        updatePerfilCompletion(index);
+        updateFieldVisualState(fieldId);
+      });
+      field.addEventListener('blur', () => {
+        updatePerfilCompletion(index);
+        updateFieldVisualState(fieldId);
+      });
+      
+      // Initialize visual state
+      updateFieldVisualState(fieldId);
+    }
+  });
+  
+  // Radio groups
+  const radioGroups = [
+    `tipoModalidad-${index}`,
+    `modalidadTrabajo-${index}`,
+    `apoyoEstudiante-${index}`
+  ];
+  
+  radioGroups.forEach(groupName => {
+    const radios = document.querySelectorAll(`input[name="${groupName}"]`);
+    radios.forEach(radio => {
+      radio.addEventListener('change', () => updatePerfilCompletion(index));
+    });
+  });
+  
+  // Checkbox group
+  const checkboxes = document.querySelectorAll(`input[name="programas-${index}"]`);
+  checkboxes.forEach(checkbox => {
+    checkbox.addEventListener('change', () => updatePerfilCompletion(index));
   });
 }
 
@@ -1387,6 +1959,43 @@ function validateForm() {
   });
   
   return isValid;
+}
+
+// ============================================================
+// FIELD VISUAL STATE
+// ============================================================
+function updateFieldVisualState(fieldId) {
+  const field = document.getElementById(fieldId);
+  if (!field) return;
+  
+  const icon = document.getElementById(`icon-${fieldId}`);
+  const counter = document.getElementById(`counter-${fieldId}`);
+  const value = field.value.trim();
+  
+  // Update visual check icon
+  if (icon) {
+    if (value.length > 0) {
+      icon.classList.add('visible');
+      field.classList.add('valid');
+    } else {
+      icon.classList.remove('visible');
+      field.classList.remove('valid');
+    }
+  }
+  
+  // Update character counter for textareas
+  if (counter && field.tagName === 'TEXTAREA') {
+    const maxLength = field.getAttribute('maxlength') || 500;
+    const currentLength = value.length;
+    counter.textContent = `${currentLength} / ${maxLength}`;
+    
+    // Warning when approaching limit (>90%)
+    if (currentLength > maxLength * 0.9) {
+      counter.classList.add('warning');
+    } else {
+      counter.classList.remove('warning');
+    }
+  }
 }
 
 // ============================================================
@@ -1529,13 +2138,182 @@ function closeModal() {
 }
 
 // ============================================================
-// CONFIRM DELETE MODAL
+// PREVIEW MODAL
 // ============================================================
-let pendingDeleteIndex = null;
-
-function showConfirmDelete(index) {
-  pendingDeleteIndex = index;
+function openPreviewModal() {
+  // Validate form first
+  if (!validateForm()) {
+    showError('Por favor completa todos los campos obligatorios antes de ver la vista previa.');
+    return;
+  }
   
+  const formData = collectFormData();
+  
+  if (formData.perfiles.length === 0) {
+    showError('Debes agregar al menos un perfil.');
+    return;
+  }
+  
+  // Generate preview HTML
+  const previewBody = document.getElementById('previewBody');
+  
+  let html = `
+    <div class="preview-section">
+      <div class="preview-section-title">Datos de la Dirección/Dependencia/Proyecto</div>
+      <div class="preview-field">
+        <div class="preview-label">Nombre de la Dirección/Dependencia/Proyecto</div>
+        <div class="preview-value">${escapeHtml(formData.nombreDependencia)}</div>
+      </div>
+      <div class="preview-field">
+        <div class="preview-label">Correo electrónico</div>
+        <div class="preview-value">${escapeHtml(formData.correoContacto)}</div>
+      </div>
+      <div class="preview-field">
+        <div class="preview-label">Responsable</div>
+        <div class="preview-value">${escapeHtml(formData.responsable)}</div>
+      </div>
+    </div>
+    
+    <div class="preview-section">
+      <div class="preview-section-title">Perfiles (${formData.perfiles.length})</div>
+  `;
+  
+  formData.perfiles.forEach((perfil, idx) => {
+    html += `
+      <div class="preview-perfil-card">
+        <div class="preview-perfil-header">
+          <div class="preview-perfil-title">Perfil #${idx + 1}</div>
+        </div>
+        
+        <div class="preview-field">
+          <div class="preview-label">Tipo de modalidad</div>
+          <div class="preview-value">${escapeHtml(perfil.tipoModalidad)}</div>
+        </div>
+        
+        <div class="preview-field">
+          <div class="preview-label">Descripción del perfil</div>
+          <div class="preview-value">${escapeHtml(perfil.descripcionPerfil)}</div>
+        </div>
+        
+        <div class="preview-field">
+          <div class="preview-label">Dependencia/Proyecto</div>
+          <div class="preview-value">${escapeHtml(perfil.dependenciaProyecto)}</div>
+        </div>
+        
+        <div class="preview-field">
+          <div class="preview-label">Cantidad de estudiantes requeridos</div>
+          <div class="preview-value">${escapeHtml(perfil.cantidadEstudiantes)}</div>
+        </div>
+        
+        <div class="preview-field">
+          <div class="preview-label">Modalidad de trabajo</div>
+          <div class="preview-value">${escapeHtml(perfil.modalidadTrabajo)}</div>
+        </div>
+        
+        <div class="preview-field">
+          <div class="preview-label">Programas académicos</div>
+          <div class="preview-value">${perfil.programas.map(p => escapeHtml(p)).join(', ')}</div>
+        </div>
+        
+        <div class="preview-field">
+          <div class="preview-label">Competencias específicas</div>
+          <div class="preview-value">${escapeHtml(perfil.competenciasEspecificas)}</div>
+        </div>
+        
+        <div class="preview-field">
+          <div class="preview-label">Habilidades valoradas</div>
+          <div class="preview-value">${escapeHtml(perfil.habilidadesValoradas)}</div>
+        </div>
+        
+        <div class="preview-field">
+          <div class="preview-label">Apoyo al estudiante</div>
+          <div class="preview-value">${escapeHtml(perfil.apoyoEstudiante)}</div>
+        </div>
+        
+        ${perfil.observaciones ? `
+          <div class="preview-field">
+            <div class="preview-label">Observaciones</div>
+            <div class="preview-value">${escapeHtml(perfil.observaciones)}</div>
+          </div>
+        ` : ''}
+      </div>
+    `;
+  });
+  
+  html += `</div>`;
+  
+  previewBody.innerHTML = html;
+  
+  const modal = document.getElementById('previewModal');
+  modal.classList.add('visible');
+  document.body.style.overflow = 'hidden';
+}
+
+function closePreviewModal() {
+  const modal = document.getElementById('previewModal');
+  modal.classList.remove('visible');
+  document.body.style.overflow = '';
+}
+
+function escapeHtml(text) {
+  if (!text) return '';
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+// ============================================================
+// CONFIRM MODAL (Generic)
+// ============================================================
+let pendingConfirmCallback = null;
+
+function showConfirm(title, message, onConfirm, iconType = 'warning') {
+  const modal = document.getElementById('confirmModal');
+  const confirmTitle = document.getElementById('confirmTitle');
+  const confirmMessage = document.getElementById('confirmMessage');
+  const confirmIcon = document.getElementById('confirmIcon');
+  const btnAccept = document.getElementById('btnAcceptConfirm');
+  
+  confirmTitle.textContent = title;
+  confirmMessage.textContent = message;
+  
+  // Update icon
+  const iconMap = {
+    warning: 'warning',
+    error: 'error',
+    info: 'info',
+    question: 'help_outline'
+  };
+  confirmIcon.querySelector('.material-icons').textContent = iconMap[iconType] || 'warning';
+  
+  // Update button text based on icon
+  if (iconType === 'warning' || iconType === 'error') {
+    btnAccept.textContent = 'Eliminar';
+  } else {
+    btnAccept.textContent = 'Aceptar';
+  }
+  
+  pendingConfirmCallback = onConfirm;
+  modal.classList.add('visible');
+  document.body.style.overflow = 'hidden';
+}
+
+function hideConfirm() {
+  pendingConfirmCallback = null;
+  const modal = document.getElementById('confirmModal');
+  modal.classList.remove('visible');
+  document.body.style.overflow = '';
+}
+
+function acceptConfirm() {
+  if (pendingConfirmCallback) {
+    pendingConfirmCallback();
+  }
+  hideConfirm();
+}
+
+// Specific confirm functions
+function showConfirmDelete(index) {
   // Calcular el número del perfil basado en su posición actual
   const cards = document.querySelectorAll('.perfil-card');
   let perfilNumber = 1;
@@ -1546,27 +2324,59 @@ function showConfirmDelete(index) {
     }
   });
   
-  // Actualizar título y mensaje del modal
-  const confirmTitle = document.getElementById('confirmTitle');
-  const confirmMessage = document.getElementById('confirmMessage');
-  
-  confirmTitle.textContent = `¿Eliminar Perfil #${perfilNumber}?`;
-  confirmMessage.textContent = `¿Estás seguro de que deseas eliminar el Perfil #${perfilNumber}? Esta acción no se puede deshacer.`;
-  
-  const modal = document.getElementById('confirmModal');
-  modal.classList.add('visible');
-  document.body.style.overflow = 'hidden';
-}
-
-function hideConfirmDelete() {
-  pendingDeleteIndex = null;
-  const modal = document.getElementById('confirmModal');
-  modal.classList.remove('visible');
-  document.body.style.overflow = '';
+  showConfirm(
+    `¿Eliminar Perfil #${perfilNumber}?`,
+    `¿Estás seguro de que deseas eliminar el Perfil #${perfilNumber}? Esta acción no se puede deshacer.`,
+    () => confirmRemovePerfil(index),
+    'warning'
+  );
 }
 
 function showAlert(message) {
-  alert(message);
+  showToast('Atención', message, 'warning');
+}
+
+// ============================================================
+// TOAST NOTIFICATIONS
+// ============================================================
+function showToast(title, message, type = 'info', duration = 5000) {
+  const container = document.getElementById('toastContainer');
+  
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+  
+  const iconMap = {
+    success: 'check_circle',
+    error: 'error',
+    warning: 'warning',
+    info: 'info'
+  };
+  
+  toast.innerHTML = `
+    <div class="toast-icon">
+      <span class="material-icons">${iconMap[type] || 'info'}</span>
+    </div>
+    <div class="toast-content">
+      <div class="toast-title">${title}</div>
+      <div class="toast-message">${message}</div>
+    </div>
+    <button class="toast-close" onclick="this.parentElement.remove()">
+      <span class="material-icons">close</span>
+    </button>
+  `;
+  
+  container.appendChild(toast);
+  
+  // Trigger animation
+  setTimeout(() => toast.classList.add('show'), 10);
+  
+  // Auto-remove after duration
+  if (duration > 0) {
+    setTimeout(() => {
+      toast.classList.remove('show');
+      setTimeout(() => toast.remove(), 300);
+    }, duration);
+  }
 }
 
 // ============================================================
@@ -1575,14 +2385,22 @@ function showAlert(message) {
 document.getElementById('btnAddPerfil').addEventListener('click', addPerfil);
 
 document.getElementById('btnReset').addEventListener('click', function() {
-  if (confirm('¿Estás seguro de que deseas limpiar el formulario?')) {
-    document.getElementById('bancoPerfilesForm').reset();
-    document.getElementById('perfilesContainer').innerHTML = '';
-    perfilCount = 0;
-    addPerfil();
-    hideError();
-  }
+  showConfirm(
+    '¿Limpiar formulario?',
+    '¿Estás seguro de que deseas limpiar el formulario? Se perderán todos los datos ingresados.',
+    () => {
+      document.getElementById('bancoPerfilesForm').reset();
+      document.getElementById('perfilesContainer').innerHTML = '';
+      perfilCount = 0;
+      addPerfil();
+      hideError();
+      showToast('Formulario limpiado', 'El formulario ha sido reiniciado correctamente.', 'info', 3000);
+    },
+    'question'
+  );
 });
+
+document.getElementById('btnPreview').addEventListener('click', openPreviewModal);
 
 document.getElementById('bancoPerfilesForm').addEventListener('submit', handleSubmit);
 
@@ -1619,18 +2437,26 @@ window.addEventListener('DOMContentLoaded', function() {
     }
   });
   
-  // Confirm delete modal handlers
-  document.getElementById('btnConfirmDelete').addEventListener('click', function() {
-    if (pendingDeleteIndex !== null) {
-      confirmRemovePerfil(pendingDeleteIndex);
+  // Preview modal handlers
+  document.getElementById('btnClosePreview').addEventListener('click', closePreviewModal);
+  document.getElementById('btnEditFromPreview').addEventListener('click', closePreviewModal);
+  document.getElementById('btnSubmitFromPreview').addEventListener('click', function() {
+    closePreviewModal();
+    document.getElementById('bancoPerfilesForm').dispatchEvent(new Event('submit'));
+  });
+  document.getElementById('previewModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+      closePreviewModal();
     }
   });
   
-  document.getElementById('btnCancelDelete').addEventListener('click', hideConfirmDelete);
+  // Confirm modal handlers
+  document.getElementById('btnAcceptConfirm').addEventListener('click', acceptConfirm);
+  document.getElementById('btnCancelConfirm').addEventListener('click', hideConfirm);
   
   document.getElementById('confirmModal').addEventListener('click', function(e) {
     if (e.target === this) {
-      hideConfirmDelete();
+      hideConfirm();
     }
   });
   
@@ -1639,9 +2465,12 @@ window.addEventListener('DOMContentLoaded', function() {
     if (e.key === 'Escape') {
       const confirmModal = document.getElementById('confirmModal');
       const perfilModal = document.getElementById('modalPerfil');
+      const previewModal = document.getElementById('previewModal');
       
       if (confirmModal.classList.contains('visible')) {
-        hideConfirmDelete();
+        hideConfirm();
+      } else if (previewModal.classList.contains('visible')) {
+        closePreviewModal();
       } else if (perfilModal.classList.contains('visible')) {
         closeModal();
       }

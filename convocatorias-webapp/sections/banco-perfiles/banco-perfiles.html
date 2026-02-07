@@ -245,29 +245,89 @@
       cursor: pointer;
     }
 
-    /* ========== PERFIL CARD ========== */
+    /* ========== PERFIL CARD / ACCORDION ========== */
     .perfil-card {
-      background: var(--bg-primary);
+      background: var(--bg-card);
       border: 2px solid var(--border);
       border-radius: var(--radius);
-      padding: 1.5rem;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1rem;
       position: relative;
+      overflow: hidden;
+      transition: box-shadow 0.2s;
+    }
+
+    .perfil-card:hover {
+      box-shadow: var(--shadow-md);
     }
 
     .perfil-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 1.5rem;
-      padding-bottom: 0.75rem;
-      border-bottom: 2px solid var(--unal-green-light);
+      padding: 1.25rem 1.5rem;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.2s;
+    }
+
+    .perfil-header:hover {
+      background: var(--bg-primary);
+    }
+
+    .perfil-header-left {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex: 1;
+    }
+
+    .perfil-header-right {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .perfil-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      background: var(--unal-green-light);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .perfil-toggle .material-icons {
+      font-size: 1.5rem;
+      color: var(--unal-green-dark);
+      transition: transform 0.3s;
+    }
+
+    .perfil-card.collapsed .perfil-toggle .material-icons {
+      transform: rotate(-90deg);
     }
 
     .perfil-title {
       font-size: 1rem;
       font-weight: 600;
-      color: var(--unal-green-dark);
+      color: var(--text-primary);
+      flex: 1;
+    }
+
+    .perfil-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-out;
+    }
+
+    .perfil-card.expanded .perfil-body {
+      max-height: 5000px;
+      transition: max-height 0.5s ease-in;
+    }
+
+    .perfil-body-inner {
+      padding: 0 1.5rem 1.5rem;
     }
 
     .btn-remove-perfil {
@@ -283,6 +343,7 @@
       align-items: center;
       gap: 0.25rem;
       transition: background 0.2s;
+      flex-shrink: 0;
     }
 
     .btn-remove-perfil:hover {
@@ -475,8 +536,12 @@
         padding: 1.5rem;
       }
 
-      .perfil-card {
-        padding: 1.25rem;
+      .perfil-header {
+        padding: 1rem 1.25rem;
+      }
+
+      .perfil-body-inner {
+        padding: 0 1.25rem 1.25rem;
       }
 
       .form-actions {
@@ -504,9 +569,39 @@
       }
 
       .perfil-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.75rem;
+        padding: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .perfil-header-left {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .perfil-title {
+        font-size: 0.9rem;
+      }
+
+      .btn-remove-perfil {
+        padding: 0.35rem 0.7rem;
+        font-size: 0.75rem;
+      }
+
+      .btn-remove-perfil .material-icons {
+        font-size: 0.9rem;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .btn-remove-perfil span:not(.material-icons) {
+        display: none;
+      }
+
+      .btn-remove-perfil {
+        padding: 0.4rem;
+        width: 32px;
+        height: 32px;
+        justify-content: center;
       }
     }
 
@@ -648,6 +743,114 @@
         right: 1rem;
       }
     }
+
+    /* ========== CONFIRM MODAL ========== */
+    .confirm-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(30, 41, 59, 0.8);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 3000;
+      padding: 1rem;
+    }
+
+    .confirm-overlay.visible {
+      display: flex;
+    }
+
+    .confirm-content {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      max-width: 400px;
+      width: 100%;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .confirm-icon {
+      width: 60px;
+      height: 60px;
+      margin: 0 auto 1.5rem;
+      background: #fef2f2;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .confirm-icon .material-icons {
+      font-size: 2rem;
+      color: var(--danger);
+    }
+
+    .confirm-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.75rem;
+    }
+
+    .confirm-message {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+
+    .confirm-actions {
+      display: flex;
+      gap: 0.75rem;
+      justify-content: center;
+    }
+
+    .btn-confirm {
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-size: 0.9rem;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-confirm-primary {
+      background: var(--danger);
+      color: white;
+    }
+
+    .btn-confirm-primary:hover {
+      background: #dc2626;
+    }
+
+    .btn-confirm-secondary {
+      background: var(--bg-primary);
+      color: var(--text-secondary);
+      border: 2px solid var(--border);
+    }
+
+    .btn-confirm-secondary:hover {
+      border-color: var(--text-secondary);
+      color: var(--text-primary);
+    }
+
+    @media (max-width: 480px) {
+      .confirm-content {
+        padding: 1.5rem;
+      }
+
+      .confirm-actions {
+        flex-direction: column-reverse;
+      }
+
+      .btn-confirm {
+        width: 100%;
+      }
+    }
   </style>
 </head>
 <body>
@@ -694,6 +897,25 @@
       </div>
       <div class="modal-body" id="modalBody">
         <!-- Content will be injected here -->
+      </div>
+    </div>
+  </div>
+
+  <!-- CONFIRM DELETE MODAL -->
+  <div class="confirm-overlay" id="confirmModal">
+    <div class="confirm-content">
+      <div class="confirm-icon">
+        <span class="material-icons">warning</span>
+      </div>
+      <h3 class="confirm-title" id="confirmTitle">¿Eliminar este perfil?</h3>
+      <p class="confirm-message" id="confirmMessage">¿Estás seguro de que deseas eliminar este perfil? Esta acción no se puede deshacer.</p>
+      <div class="confirm-actions">
+        <button type="button" class="btn-confirm btn-confirm-secondary" id="btnCancelDelete">
+          Cancelar
+        </button>
+        <button type="button" class="btn-confirm btn-confirm-primary" id="btnConfirmDelete">
+          Eliminar
+        </button>
       </div>
     </div>
   </div>
@@ -857,22 +1079,29 @@ const PERFILES_EGRESADOS = {
 // ============================================================
 function createPerfilCard(index) {
   const card = document.createElement('div');
-  card.className = 'perfil-card';
+  card.className = 'perfil-card expanded';
   card.id = `perfil-${index}`;
   card.dataset.perfilIndex = index;
   
   card.innerHTML = `
-    <div class="perfil-header">
-      <div class="perfil-title">Perfil #${index + 1}</div>
-      ${index > 0 ? `
-        <button type="button" class="btn-remove-perfil" onclick="removePerfil(${index})">
+    <div class="perfil-header" onclick="togglePerfil(${index})">
+      <div class="perfil-header-left">
+        <div class="perfil-toggle">
+          <span class="material-icons">expand_more</span>
+        </div>
+        <div class="perfil-title">Perfil #${index + 1}</div>
+      </div>
+      <div class="perfil-header-right">
+        <button type="button" class="btn-remove-perfil" data-perfil-index="${index}" onclick="event.stopPropagation(); removePerfil(${index})">
           <span class="material-icons">delete</span>
-          Eliminar perfil
+          <span>Eliminar perfil</span>
         </button>
-      ` : ''}
+      </div>
     </div>
 
-    <div class="form-card">
+    <div class="perfil-body">
+      <div class="perfil-body-inner">
+        <div class="form-card">
       <div class="form-section">
         <div class="form-group">
           <label class="form-label" for="tipoModalidad-${index}">
@@ -995,10 +1224,27 @@ function createPerfilCard(index) {
           <textarea class="form-textarea" id="observaciones-${index}"></textarea>
         </div>
       </div>
+      </div>
     </div>
   `;
   
   return card;
+}
+
+// ============================================================
+// ACCORDION TOGGLE
+// ============================================================
+function togglePerfil(index) {
+  const card = document.getElementById(`perfil-${index}`);
+  if (!card) return;
+  
+  if (card.classList.contains('expanded')) {
+    card.classList.remove('expanded');
+    card.classList.add('collapsed');
+  } else {
+    card.classList.remove('collapsed');
+    card.classList.add('expanded');
+  }
 }
 
 // ============================================================
@@ -1010,13 +1256,29 @@ function addPerfil() {
   container.appendChild(card);
   perfilCount++;
   updatePerfilNumbers();
+  updateRemoveButtons();
 }
 
 function removePerfil(index) {
+  const cards = document.querySelectorAll('.perfil-card');
+  
+  // Validación: debe haber al menos 1 perfil
+  if (cards.length <= 1) {
+    showAlert('Debes mantener al menos un perfil en el formulario.');
+    return;
+  }
+  
+  // Mostrar modal de confirmación
+  showConfirmDelete(index);
+}
+
+function confirmRemovePerfil(index) {
   const card = document.getElementById(`perfil-${index}`);
   if (card) {
     card.remove();
     updatePerfilNumbers();
+    updateRemoveButtons();
+    hideConfirmDelete();
   }
 }
 
@@ -1026,6 +1288,21 @@ function updatePerfilNumbers() {
     const title = card.querySelector('.perfil-title');
     if (title) {
       title.textContent = `Perfil #${idx + 1}`;
+    }
+  });
+}
+
+function updateRemoveButtons() {
+  const cards = document.querySelectorAll('.perfil-card');
+  const buttons = document.querySelectorAll('.btn-remove-perfil');
+  
+  // Si solo hay 1 perfil, ocultar todos los botones
+  // Si hay 2+, mostrar todos los botones
+  buttons.forEach(btn => {
+    if (cards.length <= 1) {
+      btn.style.display = 'none';
+    } else {
+      btn.style.display = 'flex';
     }
   });
 }
@@ -1252,6 +1529,47 @@ function closeModal() {
 }
 
 // ============================================================
+// CONFIRM DELETE MODAL
+// ============================================================
+let pendingDeleteIndex = null;
+
+function showConfirmDelete(index) {
+  pendingDeleteIndex = index;
+  
+  // Calcular el número del perfil basado en su posición actual
+  const cards = document.querySelectorAll('.perfil-card');
+  let perfilNumber = 1;
+  
+  cards.forEach((card, idx) => {
+    if (card.dataset.perfilIndex == index) {
+      perfilNumber = idx + 1;
+    }
+  });
+  
+  // Actualizar título y mensaje del modal
+  const confirmTitle = document.getElementById('confirmTitle');
+  const confirmMessage = document.getElementById('confirmMessage');
+  
+  confirmTitle.textContent = `¿Eliminar Perfil #${perfilNumber}?`;
+  confirmMessage.textContent = `¿Estás seguro de que deseas eliminar el Perfil #${perfilNumber}? Esta acción no se puede deshacer.`;
+  
+  const modal = document.getElementById('confirmModal');
+  modal.classList.add('visible');
+  document.body.style.overflow = 'hidden';
+}
+
+function hideConfirmDelete() {
+  pendingDeleteIndex = null;
+  const modal = document.getElementById('confirmModal');
+  modal.classList.remove('visible');
+  document.body.style.overflow = '';
+}
+
+function showAlert(message) {
+  alert(message);
+}
+
+// ============================================================
 // EVENT LISTENERS
 // ============================================================
 document.getElementById('btnAddPerfil').addEventListener('click', addPerfil);
@@ -1282,6 +1600,9 @@ window.addEventListener('DOMContentLoaded', function() {
   // Add first perfil automatically
   addPerfil();
   
+  // Initialize: hide remove button when only 1 perfil
+  updateRemoveButtons();
+  
   // Add click listeners to programa list items
   document.querySelectorAll('.info-box li[data-programa]').forEach(item => {
     item.addEventListener('click', function() {
@@ -1298,10 +1619,32 @@ window.addEventListener('DOMContentLoaded', function() {
     }
   });
   
-  // Close modal on ESC key
+  // Confirm delete modal handlers
+  document.getElementById('btnConfirmDelete').addEventListener('click', function() {
+    if (pendingDeleteIndex !== null) {
+      confirmRemovePerfil(pendingDeleteIndex);
+    }
+  });
+  
+  document.getElementById('btnCancelDelete').addEventListener('click', hideConfirmDelete);
+  
+  document.getElementById('confirmModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+      hideConfirmDelete();
+    }
+  });
+  
+  // Close modals on ESC key
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') {
-      closeModal();
+      const confirmModal = document.getElementById('confirmModal');
+      const perfilModal = document.getElementById('modalPerfil');
+      
+      if (confirmModal.classList.contains('visible')) {
+        hideConfirmDelete();
+      } else if (perfilModal.classList.contains('visible')) {
+        closeModal();
+      }
     }
   });
   

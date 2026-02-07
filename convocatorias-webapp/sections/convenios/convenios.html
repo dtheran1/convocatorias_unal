@@ -2074,12 +2074,12 @@
         <div class="form-group">
           <label class="form-label" for="sg-telefonoEmpresa">Teléfono de la empresa <span class="req">*</span></label>
           <div class="field-wrapper">
-            <input type="tel" class="form-input" id="sg-telefonoEmpresa" autocomplete="off" placeholder="(300) 123-4567">
+            <input type="tel" class="form-input" id="sg-telefonoEmpresa" autocomplete="off" placeholder="3001234567" maxlength="10">
             <div class="field-icon" id="icon-sg-telefonoEmpresa">
               <span class="material-icons">check_circle</span>
             </div>
           </div>
-          <div class="form-error" id="err-telefonoEmpresa">Este campo es obligatorio.</div>
+          <div class="form-error" id="err-telefonoEmpresa">Ingrese un número válido (10 dígitos, debe empezar con 3).</div>
         </div>
         </div>
       </div>
@@ -3059,7 +3059,7 @@ function validateCurrentStep() {
       if (!value || !value.toLowerCase().endsWith('@unal.edu.co')) return false;
     } else if (fieldId === 'sg-telefonoEmpresa') {
       var digits = value.replace(/\D/g, '');
-      if (digits.length !== 10) return false;
+      if (digits.length !== 10 || !digits.startsWith('3')) return false;
     } else {
       if (!value) return false;
     }
@@ -3147,14 +3147,17 @@ function updateSugerenciaFieldState(fieldId, showErrors) {
       isValid = true;
     }
   } else if (fieldId === 'sg-telefonoEmpresa') {
-    // El teléfono formateado debe tener al menos 10 dígitos
+    // El teléfono debe tener exactamente 10 dígitos y empezar con 3
     var digits = value.replace(/\D/g, '');
     if (digits.length === 0) {
       isValid = false;
       errorMsg = 'Este campo es obligatorio.';
-    } else if (digits.length < 10) {
+    } else if (digits.length !== 10) {
       isValid = false;
-      errorMsg = 'Ingrese un número de teléfono válido (10 dígitos).';
+      errorMsg = 'El número debe tener exactamente 10 dígitos.';
+    } else if (!digits.startsWith('3')) {
+      isValid = false;
+      errorMsg = 'El número debe empezar con 3.';
     } else {
       isValid = true;
     }
@@ -3212,10 +3215,10 @@ function checkAllFieldsValid() {
   var emailEmpresaValid = emailEmpresa.length > 0 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailEmpresa);
   var correoValid = correo.length > 0 && correo.toLowerCase().endsWith('@unal.edu.co');
   var telefonoDigits = telefonoEmpresa.replace(/\D/g, '');
-  var telefonoValid = telefonoDigits.length === 10;
+  var telefonoValid = telefonoDigits.length === 10 && telefonoDigits.startsWith('3');
   
   return empresa.length > 0 && 
-         representante.length > 0 && 
+         representante.length > 1 && 
          emailEmpresaValid && 
          telefonoValid && 
          nombre.length > 0 && 
@@ -3279,18 +3282,18 @@ function initSugerenciaValidation() {
       
       // Validar en tiempo real mientras escribe (si ya fue tocado)
       field.addEventListener('input', function() {
-        // Formato especial para teléfono
+        // Limitar teléfono a máximo 10 dígitos (solo números)
         if (fieldId === 'sg-telefonoEmpresa') {
-          var cursorPos = this.selectionStart;
-          var oldLength = this.value.length;
-          this.value = formatPhoneNumber(this.value);
-          var newLength = this.value.length;
+          // Eliminar todo lo que no sea número
+          var digits = this.value.replace(/\D/g, '');
           
-          // Ajustar posición del cursor
-          if (newLength > oldLength) {
-            cursorPos += (newLength - oldLength);
+          // Limitar a 10 dígitos
+          if (digits.length > 10) {
+            digits = digits.substring(0, 10);
           }
-          this.setSelectionRange(cursorPos, cursorPos);
+          
+          // Actualizar el valor (solo números)
+          this.value = digits;
         }
         
         updateSugerenciaFieldState(fieldId, false);

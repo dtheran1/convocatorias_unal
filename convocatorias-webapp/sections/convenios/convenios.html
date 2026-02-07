@@ -1230,6 +1230,180 @@
       margin: 0 auto;
     }
 
+    /* ========== PAGINATION ========== */
+    .pagination-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1.5rem 1rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin-top: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .pagination-info {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .pagination-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .pagination-btn {
+      width: 36px;
+      height: 36px;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--text-secondary);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      padding: 0;
+    }
+
+    .pagination-btn:hover:not(:disabled) {
+      background: var(--bg-primary);
+      border-color: var(--unal-green);
+      color: var(--unal-green);
+    }
+
+    .pagination-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    .pagination-btn .material-icons {
+      font-size: 1.25rem;
+    }
+
+    .pagination-pages {
+      display: flex;
+      gap: 0.25rem;
+    }
+
+    .pagination-page {
+      min-width: 36px;
+      height: 36px;
+      padding: 0 0.5rem;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--text-secondary);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: 0.875rem;
+      font-weight: 600;
+    }
+
+    .pagination-page:hover:not(.active) {
+      background: var(--bg-primary);
+      border-color: var(--unal-green);
+      color: var(--unal-green);
+    }
+
+    .pagination-page.active {
+      background: var(--unal-green);
+      border-color: var(--unal-green);
+      color: white;
+      cursor: default;
+    }
+
+    .pagination-page.ellipsis {
+      border: none;
+      cursor: default;
+      pointer-events: none;
+    }
+
+    .pagination-size {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+    }
+
+    .page-size-select {
+      padding: 0.5rem 2rem 0.5rem 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: border-color 0.2s;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2364748b' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.5rem center;
+    }
+
+    .page-size-select:hover {
+      border-color: var(--unal-green);
+    }
+
+    .page-size-select:focus {
+      outline: none;
+      border-color: var(--unal-green);
+      box-shadow: 0 0 0 3px var(--unal-green-light);
+    }
+
+    @media (max-width: 768px) {
+      .pagination-container {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .pagination-info {
+        width: 100%;
+        text-align: center;
+      }
+
+      .pagination-controls {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .pagination-size {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .pagination-pages {
+        gap: 0.125rem;
+      }
+
+      .pagination-page {
+        min-width: 32px;
+        height: 32px;
+        font-size: 0.8rem;
+      }
+
+      .pagination-btn {
+        width: 32px;
+        height: 32px;
+      }
+
+      .pagination-btn .material-icons {
+        font-size: 1.125rem;
+      }
+    }
+
     /* ========== SUGERENCIA DE EMPRESA — BANNER ========== */
     .sugerencia-banner {
       background: var(--bg-card);
@@ -1708,6 +1882,41 @@
   <!-- CARDS (mobile) -->
   <div class="cards-view" id="cardsView"></div>
 
+  <!-- PAGINATION -->
+  <div class="pagination-container" id="paginationContainer">
+    <div class="pagination-info">
+      <span id="paginationInfo">Mostrando 0 de 0 convenios</span>
+    </div>
+    
+    <div class="pagination-controls">
+      <button class="pagination-btn" id="btnFirstPage" title="Primera página">
+        <span class="material-icons">first_page</span>
+      </button>
+      <button class="pagination-btn" id="btnPrevPage" title="Página anterior">
+        <span class="material-icons">chevron_left</span>
+      </button>
+      
+      <div class="pagination-pages" id="paginationPages"></div>
+      
+      <button class="pagination-btn" id="btnNextPage" title="Página siguiente">
+        <span class="material-icons">chevron_right</span>
+      </button>
+      <button class="pagination-btn" id="btnLastPage" title="Última página">
+        <span class="material-icons">last_page</span>
+      </button>
+    </div>
+    
+    <div class="pagination-size">
+      <label for="pageSize">Mostrar:</label>
+      <select id="pageSize" class="page-size-select">
+        <option value="10" selected>10</option>
+        <option value="25">25</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+      </select>
+    </div>
+  </div>
+
   <!-- SUGERIR EMPRESA -->
   <div class="sugerencia-banner">
     <span class="material-icons banner-icon">business</span>
@@ -1923,6 +2132,124 @@
 // DATA
 // ============================================================
 let convenios = [];
+
+// ============================================================
+// PAGINATION
+// ============================================================
+var pagination = {
+  currentPage: 1,
+  pageSize: 10,  // 10 items por página por defecto
+  totalItems: 0,
+  totalPages: 1
+};
+
+function updatePagination(filteredData) {
+  pagination.totalItems = filteredData.length;
+  pagination.totalPages = Math.ceil(filteredData.length / pagination.pageSize);
+  
+  console.log('updatePagination', {
+    totalItems: pagination.totalItems,
+    pageSize: pagination.pageSize,
+    totalPages: pagination.totalPages
+  });
+  
+  // Ajustar página actual si es necesario
+  if (pagination.currentPage > pagination.totalPages) {
+    pagination.currentPage = Math.max(1, pagination.totalPages);
+  }
+}
+
+function getPaginatedData(data) {
+  var startIndex = (pagination.currentPage - 1) * pagination.pageSize;
+  var endIndex = startIndex + pagination.pageSize;
+  return data.slice(startIndex, endIndex);
+}
+
+function renderPaginationControls() {
+  var container = document.getElementById('paginationContainer');
+  var info = document.getElementById('paginationInfo');
+  var pagesContainer = document.getElementById('paginationPages');
+  
+  if (!container || !info || !pagesContainer) {
+    console.error('renderPaginationControls: elementos no encontrados', {
+      container: !!container,
+      info: !!info,
+      pagesContainer: !!pagesContainer
+    });
+    return;
+  }
+  
+  console.log('renderPaginationControls called', {
+    totalItems: pagination.totalItems,
+    totalPages: pagination.totalPages,
+    currentPage: pagination.currentPage,
+    pageSize: pagination.pageSize
+  });
+  
+  // Mostrar/ocultar paginación
+  if (pagination.totalItems === 0) {
+    container.style.display = 'none';
+    return;
+  } else {
+    container.style.display = 'flex';
+    console.log('Paginación visible');
+  }
+  
+  // Actualizar info
+  var startItem = (pagination.currentPage - 1) * pagination.pageSize + 1;
+  var endItem = Math.min(pagination.currentPage * pagination.pageSize, pagination.totalItems);
+  info.textContent = 'Mostrando ' + startItem + '-' + endItem + ' de ' + pagination.totalItems + ' convenios';
+  
+  // Generar números de página
+  var pages = [];
+  var maxVisiblePages = 5;
+  
+  if (pagination.totalPages <= maxVisiblePages) {
+    // Mostrar todas las páginas
+    for (var i = 1; i <= pagination.totalPages; i++) {
+      pages.push(i);
+    }
+  } else {
+    // Mostrar con elipsis
+    if (pagination.currentPage <= 3) {
+      pages = [1, 2, 3, 4, '...', pagination.totalPages];
+    } else if (pagination.currentPage >= pagination.totalPages - 2) {
+      pages = [1, '...', pagination.totalPages - 3, pagination.totalPages - 2, pagination.totalPages - 1, pagination.totalPages];
+    } else {
+      pages = [1, '...', pagination.currentPage - 1, pagination.currentPage, pagination.currentPage + 1, '...', pagination.totalPages];
+    }
+  }
+  
+  // Renderizar páginas
+  pagesContainer.innerHTML = pages.map(function(page) {
+    if (page === '...') {
+      return '<div class="pagination-page ellipsis">...</div>';
+    }
+    var isActive = page === pagination.currentPage;
+    return '<div class="pagination-page' + (isActive ? ' active' : '') + '" data-page="' + page + '">' + page + '</div>';
+  }).join('');
+  
+  // Actualizar botones
+  var btnFirst = document.getElementById('btnFirstPage');
+  var btnPrev = document.getElementById('btnPrevPage');
+  var btnNext = document.getElementById('btnNextPage');
+  var btnLast = document.getElementById('btnLastPage');
+  
+  if (btnFirst && btnPrev && btnNext && btnLast) {
+    btnFirst.disabled = pagination.currentPage === 1;
+    btnPrev.disabled = pagination.currentPage === 1;
+    btnNext.disabled = pagination.currentPage === pagination.totalPages;
+    btnLast.disabled = pagination.currentPage === pagination.totalPages;
+  } else {
+    console.error('renderPaginationControls: botones no encontrados');
+  }
+}
+
+function goToPage(page) {
+  if (page < 1 || page > pagination.totalPages) return;
+  pagination.currentPage = page;
+  render();
+}
 
 // ============================================================
 // LOGO CAROUSEL CONFIGURATION
@@ -2362,10 +2689,15 @@ function docHtml(doc) {
 // RENDER
 // ============================================================
 function render() {
-  var data = getFiltered();
-  renderTable(data);
-  renderCards(data);
-  updateStats(data);
+  var filteredData = getFiltered();
+  updatePagination(filteredData);
+  
+  var paginatedData = getPaginatedData(filteredData);
+  
+  renderTable(paginatedData);
+  renderCards(paginatedData);
+  updateStats(filteredData); // Stats muestran todos los filtrados, no solo la página
+  renderPaginationControls();
 }
 
 function renderTable(data) {
@@ -2421,10 +2753,25 @@ function renderCards(data) {
 }
 
 function updateStats(data) {
-  document.getElementById('statTotal').textContent    = data.length;
-  document.getElementById('statActivos').textContent  = data.filter(function(c){ return c.estado === 'ACTIVO'; }).length;
-  document.getElementById('statInactivos').textContent = data.filter(function(c){ return c.estado === 'INACTIVO'; }).length;
-  document.getElementById('statAnios').textContent    = [].concat.apply([], [data.map(function(c){ return c.anio; })]).filter(function(v,i,a){ return a.indexOf(v)===i; }).length;
+  if (!data || !Array.isArray(data)) {
+    console.warn('updateStats: data is invalid', data);
+    return;
+  }
+  
+  var statTotal = document.getElementById('statTotal');
+  var statActivos = document.getElementById('statActivos');
+  var statInactivos = document.getElementById('statInactivos');
+  var statAnios = document.getElementById('statAnios');
+  
+  if (!statTotal || !statActivos || !statInactivos || !statAnios) {
+    console.warn('updateStats: some stat elements not found');
+    return;
+  }
+  
+  statTotal.textContent = data.length;
+  statActivos.textContent = data.filter(function(c){ return c.estado === 'ACTIVO'; }).length;
+  statInactivos.textContent = data.filter(function(c){ return c.estado === 'INACTIVO'; }).length;
+  statAnios.textContent = [].concat.apply([], [data.map(function(c){ return c.anio; })]).filter(function(v,i,a){ return a.indexOf(v)===i; }).length;
 }
 
 // ============================================================
@@ -2946,6 +3293,41 @@ document.getElementById('btnWizardNext').addEventListener('click', nextWizardSte
 document.getElementById('btnWizardPrev').addEventListener('click', prevWizardStep);
 
 // ============================================================
+// PAGINATION EVENT LISTENERS
+// ============================================================
+function setupPaginationListeners() {
+  document.getElementById('btnFirstPage').addEventListener('click', function() {
+    goToPage(1);
+  });
+
+  document.getElementById('btnPrevPage').addEventListener('click', function() {
+    goToPage(pagination.currentPage - 1);
+  });
+
+  document.getElementById('btnNextPage').addEventListener('click', function() {
+    goToPage(pagination.currentPage + 1);
+  });
+
+  document.getElementById('btnLastPage').addEventListener('click', function() {
+    goToPage(pagination.totalPages);
+  });
+
+  document.getElementById('paginationPages').addEventListener('click', function(e) {
+    var pageBtn = e.target.closest('.pagination-page:not(.ellipsis)');
+    if (pageBtn) {
+      var page = parseInt(pageBtn.getAttribute('data-page'));
+      if (page) goToPage(page);
+    }
+  });
+
+  document.getElementById('pageSize').addEventListener('change', function() {
+    pagination.pageSize = parseInt(this.value);
+    pagination.currentPage = 1; // Reset a primera página
+    render();
+  });
+}
+
+// ============================================================
 // MODAL — cerrar con click en overlay o tecla Escape
 // ============================================================
 document.getElementById('pdfModal').addEventListener('click', function(e) {
@@ -2965,6 +3347,7 @@ document.addEventListener('DOMContentLoaded', function() {
   renderCarousel();
   setupModalEvents();
   setupIframeHeight();
+  setupPaginationListeners(); // Inicializar listeners de paginación
   loadConvenios();
 });
 </script>

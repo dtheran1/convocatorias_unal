@@ -931,6 +931,24 @@
       align-items: center;
       justify-content: center;
       padding: 1rem;
+      overflow-y: auto;
+    }
+    
+    .modal-overlay::-webkit-scrollbar {
+      width: 8px;
+    }
+    
+    .modal-overlay::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    
+    .modal-overlay::-webkit-scrollbar-thumb {
+      background: rgba(100, 116, 139, 0.3);
+      border-radius: 4px;
+    }
+    
+    .modal-overlay::-webkit-scrollbar-thumb:hover {
+      background: rgba(100, 116, 139, 0.5);
     }
 
     .modal-container {
@@ -2863,10 +2881,31 @@ function openSugerenciaModal() {
   
   // Actualizar UI del wizard
   updateWizardUI();
+  
+  // Enfocar el modal y hacer scroll al contenido del formulario
+  setTimeout(function() {
+    // Prevenir scroll del body
+    document.body.style.overflow = 'hidden';
+    
+    // Scroll al inicio del modal container
+    var modalContainer = document.querySelector('#sugerenciaModal .modal-container');
+    if (modalContainer) {
+      modalContainer.scrollTop = 0;
+    }
+    
+    // Enfocar el primer campo del formulario
+    var firstField = document.getElementById('sg-empresa');
+    if (firstField) {
+      firstField.focus();
+    }
+  }, 100);
 }
 
 function closeSugerenciaModal() {
   document.getElementById('sugerenciaModal').style.display = 'none';
+  
+  // Restaurar scroll del body
+  document.body.style.overflow = '';
 }
 
 // ============================================================

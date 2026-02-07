@@ -298,15 +298,15 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: var(--bg-overlay);
-      backdrop-filter: blur(20px);
+      background: rgba(30, 41, 59, 0.7);
+      backdrop-filter: blur(4px);
       display: flex;
       align-items: center;
       justify-content: center;
       z-index: 1000;
       opacity: 0;
       visibility: hidden;
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      transition: all 0.3s ease;
       padding: 2rem;
     }
 
@@ -316,163 +316,173 @@
     }
 
     .modal-content {
-      background: var(--bg-card);
-      background-image: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-elevated) 100%);
+      background: var(--bg-white);
       border-radius: var(--radius-xl);
-      max-width: 600px;
+      max-width: 640px;
       width: 100%;
       max-height: 85vh;
       overflow-y: auto;
-      box-shadow: var(--shadow-xl);
-      border: 1px solid rgba(212, 175, 55, 0.1);
-      transform: scale(0.8) translateY(2rem) rotateX(15deg);
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      border: 1px solid var(--border);
+      transform: scale(0.95) translateY(1rem);
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
       position: relative;
-      overflow: hidden;
-    }
-
-    .modal-content::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='1' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.015'/%3E%3C/svg%3E");
-      pointer-events: none;
     }
 
     .company-modal.show .modal-content {
-      transform: scale(1) translateY(0) rotateX(0);
+      transform: scale(1) translateY(0);
+      opacity: 1;
     }
 
-    .modal-header {
-      padding: 2rem 2rem 1.5rem;
+    .company-modal .modal-header {
+      padding: 2rem;
       border-bottom: 1px solid var(--border);
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
       position: relative;
       z-index: 2;
-      background: linear-gradient(135deg, rgba(212, 175, 55, 0.03) 0%, transparent 100%);
+      background: var(--bg-white);
     }
 
-    .modal-company-logo {
-      width: 60px;
-      height: 60px;
-      border-radius: 8px;
+    .company-modal .modal-header-top {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+
+    .company-modal .modal-company-logo {
+      width: 80px;
+      height: 80px;
+      border-radius: var(--radius);
       object-fit: contain;
       border: 1px solid var(--border);
-      padding: 8px;
+      padding: 12px;
       background: #fafafa;
+      box-shadow: var(--shadow);
+      flex-shrink: 0;
     }
 
-    .modal-company-logo.brand-proderi {
+    .company-modal .modal-company-logo.brand-proderi {
       background: #062743;
       border-color: #0a3658;
     }
 
-    .modal-company-logo.brand-asohofrucol {
+    .company-modal .modal-company-logo.brand-asohofrucol {
       background: #01b301;
       border-color: #01a001;
     }
 
-    .modal-company-logo.brand-tananeos {
+    .company-modal .modal-company-logo.brand-tananeos {
       background: #144003;
       border-color: #1a5004;
     }
 
-    .modal-company-info h3 {
-      font-size: 1.5rem;
-      font-weight: 600;
-      color: var(--primary);
-      margin: 0 0 0.5rem 0;
-      line-height: 1.3;
-    }
-
-    .modal-company-sector {
-      font-size: 0.9rem;
-      color: var(--text-accent);
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      padding: 0.25rem 0.75rem;
-      background: rgba(76, 175, 80, 0.1);
-      border-radius: var(--radius);
-      border: 1px solid rgba(76, 175, 80, 0.2);
-      display: inline-block;
-    }
-
-    .modal-close {
-      background: none;
+    .company-modal .modal-close {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      background: var(--bg-primary);
       border: none;
-      font-size: 1.5rem;
       color: var(--text-muted);
       cursor: pointer;
       padding: 0;
-      width: 32px;
-      height: 32px;
+      width: 36px;
+      height: 36px;
       display: flex;
       align-items: center;
       justify-content: center;
-      border-radius: 6px;
-      transition: background-color 0.2s ease, color 0.2s ease;
+      border-radius: 50%;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+      z-index: 10;
     }
 
-    .modal-close:hover {
+    .company-modal .modal-close .material-icons {
+      font-size: 1.25rem;
+    }
+
+    .company-modal .modal-close:hover {
       background: var(--border);
       color: var(--text-primary);
     }
 
-    .modal-body {
-      padding: 1.5rem 2rem 2rem;
+    .company-modal .modal-header-content {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .company-modal .modal-header-content h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin: 0;
+      line-height: 1.3;
+      word-wrap: break-word;
+    }
+
+    .company-modal .modal-company-sector {
+      font-size: 0.75rem;
+      color: var(--unal-green-dark);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      padding: 0.4rem 0.9rem;
+      background: var(--unal-green-light);
+      border-radius: 20px;
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+    }
+
+    .company-modal .modal-body {
+      padding: 2rem;
       position: relative;
       z-index: 2;
     }
 
-    .modal-description {
-      font-size: 0.95rem;
-      line-height: 1.7;
+    .company-modal .modal-description {
+      font-size: 1rem;
+      line-height: 1.8;
       color: var(--text-secondary);
-      margin-bottom: 1.5rem;
-      font-weight: 300;
+      margin-bottom: 2rem;
+      font-weight: 400;
     }
 
-    .modal-convenio {
-      background: linear-gradient(135deg, var(--unal-green-light) 0%, rgba(76, 175, 80, 0.08) 100%);
-      padding: 1.5rem;
-      border-radius: var(--radius-md);
-      border: 1px solid var(--unal-green-light);
-      border-left: 4px solid var(--unal-green);
+    .company-modal .modal-convenio {
+      background: var(--unal-green-bg);
+      padding: 1.75rem;
+      border-radius: var(--radius-lg);
+      border: 2px solid var(--unal-green-light);
       position: relative;
       overflow: hidden;
     }
 
-    .modal-convenio::before {
+    .company-modal .modal-convenio::before {
       content: '';
       position: absolute;
       top: 0;
       left: 0;
-      right: 0;
-      bottom: 0;
-      background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='1' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.025'/%3E%3C/svg%3E");
-      pointer-events: none;
+      width: 4px;
+      height: 100%;
+      background: var(--unal-green);
     }
 
-    .modal-convenio-title {
-      font-size: 1rem;
-      font-weight: 600;
+    .company-modal .modal-convenio-title {
+      font-size: 1.1rem;
+      font-weight: 700;
       color: var(--unal-green-dark);
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.875rem;
       position: relative;
       z-index: 1;
     }
 
-    .modal-convenio-desc {
-      font-size: 0.9rem;
-      color: var(--text-secondary);
-      line-height: 1.6;
-      font-weight: 300;
+    .company-modal .modal-convenio-desc {
+      font-size: 0.95rem;
+      color: var(--text-primary);
+      line-height: 1.7;
+      font-weight: 400;
       position: relative;
       z-index: 1;
     }
@@ -494,28 +504,51 @@
         animation-duration: 28s; 
       }
 
-      .modal-content {
+      .company-modal .modal-content {
         width: 95%;
         max-height: 90vh;
         border-radius: var(--radius-lg);
         margin: 1rem;
       }
       
-      .modal-header {
+      .company-modal .modal-header {
         padding: 1.5rem;
+      }
+
+      .company-modal .modal-close {
+        top: 1.25rem;
+        right: 1.25rem;
+        width: 32px;
+        height: 32px;
+      }
+
+      .company-modal .modal-close .material-icons {
+        font-size: 1.125rem;
+      }
+
+      .company-modal .modal-header-top {
+        gap: 1rem;
+      }
+
+      .company-modal .modal-header-content {
+        padding-right: 2.75rem;
       }
       
       .modal-body {
-        padding: 1rem 1.5rem 1.5rem;
+        padding: 1.5rem;
       }
       
       .modal-company-logo {
-        width: 50px;
-        height: 50px;
+        width: 64px;
+        height: 64px;
       }
 
       .modal-company-info h3 {
-        font-size: 1.25rem;
+        font-size: 1.4rem;
+      }
+
+      .modal-description {
+        font-size: 0.95rem;
       }
     }
 
@@ -544,21 +577,58 @@
         animation-duration: 22s; 
       }
 
-      .modal-content {
+      .company-modal .modal-content {
         margin: 0.5rem;
         max-height: 95vh;
       }
 
-      .modal-header {
+      .company-modal .modal-header {
         padding: 1.25rem;
       }
 
-      .modal-body {
-        padding: 0.875rem 1.25rem 1.25rem;
+      .company-modal .modal-close {
+        top: 1rem;
+        right: 1rem;
+        width: 32px;
+        height: 32px;
       }
 
-      .modal-company-info h3 {
+      .company-modal .modal-close .material-icons {
         font-size: 1.125rem;
+      }
+
+      .company-modal .modal-header-top {
+        gap: 0.75rem;
+      }
+
+      .company-modal .modal-header-content {
+        padding-right: 0;
+      }
+
+      .company-modal .modal-header-content h3 {
+        font-size: 1.25rem;
+      }
+      
+      .company-modal .modal-body {
+        padding: 1.25rem;
+      }
+      
+      .company-modal .modal-company-logo {
+        width: 56px;
+        height: 56px;
+      }
+
+      .company-modal .modal-header-content h3 {
+        font-size: 1.125rem;
+      }
+
+      .company-modal .modal-description {
+        font-size: 0.9rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .modal-convenio {
+        padding: 1.25rem;
       }
     }
 
@@ -875,42 +945,55 @@
       overflow: hidden;
     }
 
-    .modal-header {
+    .modal-container .modal-header {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      padding: 1rem 1.25rem;
+      padding: 1.25rem 1.5rem;
       border-bottom: 1px solid var(--border);
       flex-shrink: 0;
-      gap: 0.75rem;
+      position: relative;
     }
 
     .modal-title {
       font-weight: 600;
-      font-size: 0.95rem;
+      font-size: 1rem;
       color: var(--text-primary);
       display: flex;
       align-items: center;
       gap: 0.5rem;
+      padding-right: 3rem;
     }
 
-    .modal-title .material-icons { color: var(--primary); font-size: 1.2rem; }
+    .modal-title .material-icons { color: var(--primary); font-size: 1.25rem; }
 
-    .modal-close {
-      background: none;
+    .modal-container .modal-close {
+      position: absolute;
+      top: 1.25rem;
+      right: 1.25rem;
+      background: var(--bg-primary);
       border: none;
       cursor: pointer;
-      color: var(--text-secondary);
-      padding: 0.25rem;
-      border-radius: 6px;
+      color: var(--text-muted);
+      padding: 0;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: background 0.15s, color 0.15s;
+      transition: all 0.2s ease;
       flex-shrink: 0;
+      z-index: 10;
     }
 
-    .modal-close:hover { background: #fee2e2; color: var(--danger); }
+    .modal-container .modal-close .material-icons {
+      font-size: 1.25rem;
+    }
+
+    .modal-container .modal-close:hover { 
+      background: var(--border);
+      color: var(--text-primary);
+    }
 
     .modal-body {
       flex: 1;
@@ -975,7 +1058,20 @@
     @media (max-width: 600px) {
       .modal-overlay { padding: 0.5rem; }
       .modal-container { max-height: 85vh; border-radius: var(--radius); }
-      .modal-header { padding: 0.875rem 1rem; }
+      .modal-container .modal-header { padding: 1rem 1.25rem; }
+      .modal-container .modal-close {
+        top: 1rem;
+        right: 1rem;
+        width: 32px;
+        height: 32px;
+      }
+      .modal-container .modal-close .material-icons {
+        font-size: 1.125rem;
+      }
+      .modal-title {
+        font-size: 0.95rem;
+        padding-right: 2.5rem;
+      }
       .modal-footer { padding: 0.75rem 1rem; }
       .btn-download, .btn-modal-close { flex: 1; justify-content: center; }
     }
@@ -1252,6 +1348,225 @@
 
     .btn-download:disabled { opacity: 0.55; cursor: not-allowed; }
 
+    /* ========== FIELD VALIDATION FEATURES ========== */
+    .field-wrapper {
+      position: relative;
+    }
+
+    .field-icon {
+      position: absolute;
+      right: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--success);
+      opacity: 0;
+      transition: opacity 0.2s;
+      pointer-events: none;
+    }
+
+    .field-icon.visible {
+      opacity: 1;
+    }
+
+    .field-icon .material-icons {
+      font-size: 1.25rem;
+    }
+
+    .form-input.valid {
+      border-color: var(--success);
+      padding-right: 2.5rem;
+    }
+
+    .char-counter {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-align: right;
+      margin-top: 0.25rem;
+    }
+
+    .char-counter.warning {
+      color: var(--warning);
+    }
+
+    /* ========== WIZARD STYLES ========== */
+    .wizard-steps {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem 1rem;
+      margin-bottom: 1.5rem;
+      background: var(--bg-primary);
+      border-radius: var(--radius-sm);
+    }
+
+    .wizard-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      position: relative;
+    }
+
+    .step-number {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--border);
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+    }
+
+    .wizard-step.active .step-number {
+      background: var(--unal-green);
+      color: white;
+      box-shadow: 0 0 0 4px var(--unal-green-light);
+    }
+
+    .wizard-step.completed .step-number {
+      background: var(--success);
+      color: white;
+    }
+
+    .step-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-align: center;
+      transition: color 0.3s ease;
+    }
+
+    .wizard-step.active .step-label {
+      color: var(--unal-green);
+    }
+
+    .wizard-step.completed .step-label {
+      color: var(--success);
+    }
+
+    .wizard-step-line {
+      width: 60px;
+      height: 2px;
+      background: var(--border);
+      margin: 0 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .wizard-step.completed + .wizard-step-line {
+      background: var(--success);
+    }
+
+    .wizard-content {
+      display: none;
+      animation: fadeIn 0.3s ease;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .wizard-content.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .wizard-navigation {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1.5rem 1rem 1rem;
+      border-top: 1px solid var(--border);
+      margin-top: 1.5rem;
+    }
+
+    .btn-wizard-prev,
+    .btn-wizard-next {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.7rem 1.2rem;
+      border-radius: 8px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: none;
+    }
+
+    .btn-wizard-prev {
+      background: var(--bg-card);
+      color: var(--text-secondary);
+      border: 1.5px solid var(--border);
+    }
+
+    .btn-wizard-prev:hover {
+      border-color: var(--text-secondary);
+      color: var(--text-primary);
+    }
+
+    .btn-wizard-next {
+      background: var(--unal-green);
+      color: white;
+      margin-left: auto;
+    }
+
+    .btn-wizard-next:hover {
+      background: var(--unal-green-dark);
+    }
+
+    .btn-wizard-next:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .btn-wizard-prev .material-icons,
+    .btn-wizard-next .material-icons {
+      font-size: 1.1rem;
+    }
+
+    @media (max-width: 600px) {
+      .wizard-steps {
+        padding: 1rem 0.5rem;
+      }
+
+      .step-number {
+        width: 36px;
+        height: 36px;
+        font-size: 0.875rem;
+      }
+
+      .step-label {
+        font-size: 0.7rem;
+      }
+
+      .wizard-step-line {
+        width: 40px;
+      }
+
+      .wizard-navigation {
+        padding: 1rem 0.5rem 0.5rem;
+      }
+
+      .btn-wizard-prev,
+      .btn-wizard-next {
+        padding: 0.6rem 1rem;
+        font-size: 0.8rem;
+      }
+    }
+
     .sugerencia-success {
       text-align: center;
       padding: 2.5rem 1rem;
@@ -1436,11 +1751,36 @@
     <div id="sugerenciaForm" class="modal-body-scroll">
       <div class="modal-error" id="sugerenciaError"></div>
 
-      <div class="form-section">
-        <div class="form-section-title">Datos de la empresa</div>
+      <!-- Wizard Steps Indicator -->
+      <div class="wizard-steps">
+        <div class="wizard-step active" data-step="1">
+          <div class="step-number">1</div>
+          <div class="step-label">Empresa</div>
+        </div>
+        <div class="wizard-step-line"></div>
+        <div class="wizard-step" data-step="2">
+          <div class="step-number">2</div>
+          <div class="step-label">Contacto</div>
+        </div>
+        <div class="wizard-step-line"></div>
+        <div class="wizard-step" data-step="3">
+          <div class="step-number">3</div>
+          <div class="step-label">Tus datos</div>
+        </div>
+      </div>
+
+      <!-- Step 1: Datos de la empresa -->
+      <div class="wizard-content active" data-step="1">
+        <div class="form-section">
+          <div class="form-section-title">Datos de la empresa</div>
         <div class="form-group">
           <label class="form-label" for="sg-empresa">Nombre de la empresa <span class="req">*</span></label>
-          <input type="text" class="form-input" id="sg-empresa" autocomplete="off">
+          <div class="field-wrapper">
+            <input type="text" class="form-input" id="sg-empresa" placeholder="Ej: Tecnología Innovadora S.A.S" autocomplete="off">
+            <div class="field-icon" id="icon-sg-empresa">
+              <span class="material-icons">check_circle</span>
+            </div>
+          </div>
           <div class="form-error" id="err-empresa">Este campo es obligatorio.</div>
         </div>
         <div class="form-group">
@@ -1449,39 +1789,70 @@
         </div>
         <div class="form-group">
           <label class="form-label" for="sg-ciudad">Ciudad</label>
-          <input type="text" class="form-input" id="sg-ciudad" autocomplete="off">
+          <input type="text" class="form-input" id="sg-ciudad" placeholder="Ej: Bogotá, Medellín, Cali..." autocomplete="off">
+        </div>
         </div>
       </div>
 
-      <div class="form-section">
-        <div class="form-section-title">Contacto de la empresa</div>
+      <!-- Step 2: Contacto de la empresa -->
+      <div class="wizard-content" data-step="2">
+        <div class="form-section">
+          <div class="form-section-title">Contacto de la empresa</div>
         <div class="form-group">
           <label class="form-label" for="sg-representante">Nombre del representante <span class="req">*</span></label>
-          <input type="text" class="form-input" id="sg-representante" autocomplete="off">
+          <div class="field-wrapper">
+            <input type="text" class="form-input" id="sg-representante" placeholder="Ej: Juan Pérez García" autocomplete="off">
+            <div class="field-icon" id="icon-sg-representante">
+              <span class="material-icons">check_circle</span>
+            </div>
+          </div>
           <div class="form-error" id="err-representante">Este campo es obligatorio.</div>
         </div>
         <div class="form-group">
           <label class="form-label" for="sg-emailEmpresa">Correo de la empresa <span class="req">*</span></label>
-          <input type="email" class="form-input" id="sg-emailEmpresa" autocomplete="off">
+          <div class="field-wrapper">
+            <input type="email" class="form-input" id="sg-emailEmpresa" placeholder="contacto@empresa.com" autocomplete="off">
+            <div class="field-icon" id="icon-sg-emailEmpresa">
+              <span class="material-icons">check_circle</span>
+            </div>
+          </div>
           <div class="form-error" id="err-emailEmpresa">Este campo es obligatorio.</div>
         </div>
         <div class="form-group">
           <label class="form-label" for="sg-telefonoEmpresa">Teléfono de la empresa <span class="req">*</span></label>
-          <input type="tel" class="form-input" id="sg-telefonoEmpresa" autocomplete="off">
+          <div class="field-wrapper">
+            <input type="tel" class="form-input" id="sg-telefonoEmpresa" autocomplete="off" placeholder="(300) 123-4567">
+            <div class="field-icon" id="icon-sg-telefonoEmpresa">
+              <span class="material-icons">check_circle</span>
+            </div>
+          </div>
           <div class="form-error" id="err-telefonoEmpresa">Este campo es obligatorio.</div>
+        </div>
         </div>
       </div>
 
-      <div class="form-section">
-        <div class="form-section-title">Tus datos</div>
+      <!-- Step 3: Tus datos -->
+      <div class="wizard-content" data-step="3">
+        <div class="form-section">
+          <div class="form-section-title">Tus datos</div>
         <div class="form-group">
           <label class="form-label" for="sg-nombre">Nombre completo <span class="req">*</span></label>
-          <input type="text" class="form-input" id="sg-nombre" autocomplete="off">
+          <div class="field-wrapper">
+            <input type="text" class="form-input" id="sg-nombre" placeholder="Ej: María López Rodríguez" autocomplete="off">
+            <div class="field-icon" id="icon-sg-nombre">
+              <span class="material-icons">check_circle</span>
+            </div>
+          </div>
           <div class="form-error" id="err-nombre">Este campo es obligatorio.</div>
         </div>
         <div class="form-group">
           <label class="form-label" for="sg-correo">Correo universitario <span class="req">*</span></label>
-          <input type="email" class="form-input" id="sg-correo" placeholder="ejemplo@unal.edu.co" autocomplete="off">
+          <div class="field-wrapper">
+            <input type="email" class="form-input" id="sg-correo" placeholder="ejemplo@unal.edu.co" autocomplete="off">
+            <div class="field-icon" id="icon-sg-correo">
+              <span class="material-icons">check_circle</span>
+            </div>
+          </div>
           <div class="form-error" id="err-correo">Debe ser un correo @unal.edu.co.</div>
         </div>
         <div class="form-group">
@@ -1492,6 +1863,17 @@
           </div>
           <div class="form-error" id="err-modalidad">Selecciona una modalidad.</div>
         </div>
+        </div>
+      </div>
+
+      <!-- Wizard Navigation Buttons -->
+      <div class="wizard-navigation">
+        <button type="button" class="btn-wizard-prev" id="btnWizardPrev" style="display:none;">
+          <span class="material-icons">arrow_back</span> Anterior
+        </button>
+        <button type="button" class="btn-wizard-next" id="btnWizardNext">
+          Siguiente <span class="material-icons">arrow_forward</span>
+        </button>
       </div>
     </div>
 
@@ -1504,7 +1886,7 @@
 
     <div class="modal-footer" id="sugerenciaFooter">
       <button class="btn-modal-close" id="btnCancelSugerencia">Cancelar</button>
-      <button class="btn-download" id="btnEnviarSugerencia">
+      <button class="btn-download" id="btnEnviarSugerencia" style="display:none;">
         <span class="material-icons">send</span>Enviar sugerencia
       </button>
     </div>
@@ -1515,14 +1897,16 @@
 <div class="company-modal" id="companyModal">
   <div class="modal-content">
     <div class="modal-header">
-      <div style="display: flex; gap: 1rem; align-items: flex-start;">
+      <button class="modal-close" id="modalClose">
+        <span class="material-icons">close</span>
+      </button>
+      <div class="modal-header-top">
         <img class="modal-company-logo" id="modalLogo" src="" alt="">
-        <div class="modal-company-info">
+        <div class="modal-header-content">
           <h3 id="modalName"></h3>
           <div class="modal-company-sector" id="modalSector"></div>
         </div>
       </div>
-      <button class="modal-close" id="modalClose">&times;</button>
     </div>
     <div class="modal-body">
       <p class="modal-description" id="modalDescription"></p>
@@ -2103,67 +2487,388 @@ function setupIframeHeight() {
 var SG_FIELDS = ['sg-empresa','sg-sector','sg-ciudad','sg-representante','sg-emailEmpresa','sg-telefonoEmpresa','sg-nombre','sg-correo'];
 
 function openSugerenciaModal() {
-  // Reset campos
+  // Reset wizard
+  currentWizardStep = 1;
+  
+  // Reset estado de campos tocados
+  touchedFields = {};
+  
+  // Reset campos primero
   SG_FIELDS.forEach(function(id) { document.getElementById(id).value = ''; });
   document.querySelectorAll('input[name="sg-modalidad"]').forEach(function(r) { r.checked = false; });
   document.querySelectorAll('.form-error').forEach(function(el) { el.classList.remove('visible'); });
-  document.querySelectorAll('.form-input').forEach(function(el) { el.classList.remove('input-error'); });
+  document.querySelectorAll('.form-input').forEach(function(el) { 
+    el.classList.remove('input-error');
+    el.classList.remove('valid');
+  });
+  document.querySelectorAll('.field-icon').forEach(function(el) { el.classList.remove('visible'); });
   document.getElementById('sugerenciaError').classList.remove('visible');
 
   // Mostrar formulario, esconder éxito
   document.getElementById('sugerenciaForm').style.display = 'block';
   document.getElementById('sugerenciaSuccess').style.display = 'none';
-  document.getElementById('btnEnviarSugerencia').style.display = 'inline-flex';
-  document.getElementById('btnEnviarSugerencia').disabled = false;
   document.getElementById('btnCancelSugerencia').textContent = 'Cancelar';
 
   document.getElementById('sugerenciaModal').style.display = 'flex';
+  
+  // Inicializar validación en tiempo real
+  initSugerenciaValidation();
+  
+  // Actualizar UI del wizard
+  updateWizardUI();
 }
 
 function closeSugerenciaModal() {
   document.getElementById('sugerenciaModal').style.display = 'none';
 }
 
-function validateSugerencia() {
-  var valid = true;
+// ============================================================
+// WIZARD NAVIGATION
+// ============================================================
+var currentWizardStep = 1;
+var totalWizardSteps = 3;
 
-  // Campos de texto obligatorios
-  var obligatorios = [
-    { id: 'sg-empresa',         errId: 'err-empresa' },
-    { id: 'sg-representante',   errId: 'err-representante' },
-    { id: 'sg-emailEmpresa',    errId: 'err-emailEmpresa' },
-    { id: 'sg-telefonoEmpresa', errId: 'err-telefonoEmpresa' },
-    { id: 'sg-nombre',          errId: 'err-nombre' }
-  ];
-
-  obligatorios.forEach(function(rule) {
-    var input = document.getElementById(rule.id);
-    var err   = document.getElementById(rule.errId);
-    if (!input.value.trim()) {
-      input.classList.add('input-error');
-      err.classList.add('visible');
-      valid = false;
-    } else {
-      input.classList.remove('input-error');
-      err.classList.remove('visible');
+function updateWizardUI() {
+  // Actualizar indicadores de pasos
+  document.querySelectorAll('.wizard-step').forEach(function(step) {
+    var stepNum = parseInt(step.getAttribute('data-step'));
+    step.classList.remove('active', 'completed');
+    
+    if (stepNum === currentWizardStep) {
+      step.classList.add('active');
+    } else if (stepNum < currentWizardStep) {
+      step.classList.add('completed');
     }
   });
-
-  // Correo @unal.edu.co
-  var correoInput = document.getElementById('sg-correo');
-  var correoErr   = document.getElementById('err-correo');
-  if (!correoInput.value.trim() || !correoInput.value.trim().toLowerCase().endsWith('@unal.edu.co')) {
-    correoInput.classList.add('input-error');
-    correoErr.classList.add('visible');
-    valid = false;
+  
+  // Mostrar/ocultar contenido de pasos
+  document.querySelectorAll('.wizard-content').forEach(function(content) {
+    var stepNum = parseInt(content.getAttribute('data-step'));
+    content.classList.toggle('active', stepNum === currentWizardStep);
+  });
+  
+  // Actualizar botones de navegación
+  var btnPrev = document.getElementById('btnWizardPrev');
+  var btnNext = document.getElementById('btnWizardNext');
+  var btnSubmit = document.getElementById('btnEnviarSugerencia');
+  
+  // Botón Anterior
+  if (currentWizardStep === 1) {
+    btnPrev.style.display = 'none';
   } else {
-    correoInput.classList.remove('input-error');
-    correoErr.classList.remove('visible');
+    btnPrev.style.display = 'inline-flex';
   }
+  
+  // Botón Siguiente / Enviar
+  if (currentWizardStep === totalWizardSteps) {
+    btnNext.style.display = 'none';
+    btnSubmit.style.display = 'inline-flex';
+  } else {
+    btnNext.style.display = 'inline-flex';
+    btnSubmit.style.display = 'none';
+  }
+  
+  // Validar si se puede avanzar
+  updateNextButtonState();
+}
 
-  // Modalidad (radio)
+function validateCurrentStep() {
+  var fieldsInStep = [];
+  
+  if (currentWizardStep === 1) {
+    fieldsInStep = ['sg-empresa']; // Solo empresa es requerido en paso 1
+  } else if (currentWizardStep === 2) {
+    fieldsInStep = ['sg-representante', 'sg-emailEmpresa', 'sg-telefonoEmpresa'];
+  } else if (currentWizardStep === 3) {
+    fieldsInStep = ['sg-nombre', 'sg-correo'];
+    // También validar modalidad
+    var modalidad = document.querySelector('input[name="sg-modalidad"]:checked');
+    if (!modalidad) return false;
+  }
+  
+  // Validar todos los campos del paso actual
+  for (var i = 0; i < fieldsInStep.length; i++) {
+    var fieldId = fieldsInStep[i];
+    var field = document.getElementById(fieldId);
+    var value = field.value.trim();
+    
+    if (fieldId === 'sg-emailEmpresa') {
+      if (!value || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) return false;
+    } else if (fieldId === 'sg-correo') {
+      if (!value || !value.toLowerCase().endsWith('@unal.edu.co')) return false;
+    } else if (fieldId === 'sg-telefonoEmpresa') {
+      var digits = value.replace(/\D/g, '');
+      if (digits.length !== 10) return false;
+    } else {
+      if (!value) return false;
+    }
+  }
+  
+  return true;
+}
+
+function updateNextButtonState() {
+  var btnNext = document.getElementById('btnWizardNext');
+  if (btnNext && btnNext.style.display !== 'none') {
+    btnNext.disabled = !validateCurrentStep();
+  }
+}
+
+function goToWizardStep(step) {
+  if (step < 1 || step > totalWizardSteps) return;
+  currentWizardStep = step;
+  updateWizardUI();
+}
+
+function nextWizardStep() {
+  // Marcar campos del paso actual como tocados
+  var fieldsInStep = [];
+  if (currentWizardStep === 1) {
+    fieldsInStep = ['sg-empresa'];
+  } else if (currentWizardStep === 2) {
+    fieldsInStep = ['sg-representante', 'sg-emailEmpresa', 'sg-telefonoEmpresa'];
+  } else if (currentWizardStep === 3) {
+    fieldsInStep = ['sg-nombre', 'sg-correo'];
+  }
+  
+  fieldsInStep.forEach(function(fieldId) {
+    markFieldAsTouched(fieldId);
+    updateSugerenciaFieldState(fieldId, true);
+  });
+  
+  if (validateCurrentStep()) {
+    goToWizardStep(currentWizardStep + 1);
+  }
+}
+
+function prevWizardStep() {
+  goToWizardStep(currentWizardStep - 1);
+}
+
+// ============================================================
+// REAL-TIME VALIDATION FOR SUGERENCIA FORM
+// ============================================================
+var touchedFields = {};
+
+function markFieldAsTouched(fieldId) {
+  touchedFields[fieldId] = true;
+}
+
+function updateSugerenciaFieldState(fieldId, showErrors) {
+  var field = document.getElementById(fieldId);
+  if (!field) return;
+  
+  var icon = document.getElementById('icon-' + fieldId);
+  var errorEl = document.getElementById('err-' + fieldId.replace('sg-', ''));
+  var value = field.value.trim();
+  var isValid = false;
+  var errorMsg = 'Este campo es obligatorio.';
+  
+  // Validación específica por campo
+  if (fieldId === 'sg-correo') {
+    if (value.length === 0) {
+      isValid = false;
+      errorMsg = 'Este campo es obligatorio.';
+    } else if (!value.toLowerCase().endsWith('@unal.edu.co')) {
+      isValid = false;
+      errorMsg = 'Debe ser un correo @unal.edu.co';
+    } else {
+      isValid = true;
+    }
+  } else if (fieldId === 'sg-emailEmpresa') {
+    if (value.length === 0) {
+      isValid = false;
+      errorMsg = 'Este campo es obligatorio.';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+      isValid = false;
+      errorMsg = 'Ingrese un correo electrónico válido.';
+    } else {
+      isValid = true;
+    }
+  } else if (fieldId === 'sg-telefonoEmpresa') {
+    // El teléfono formateado debe tener al menos 10 dígitos
+    var digits = value.replace(/\D/g, '');
+    if (digits.length === 0) {
+      isValid = false;
+      errorMsg = 'Este campo es obligatorio.';
+    } else if (digits.length < 10) {
+      isValid = false;
+      errorMsg = 'Ingrese un número de teléfono válido (10 dígitos).';
+    } else {
+      isValid = true;
+    }
+  } else {
+    // Campos de texto simple
+    isValid = value.length > 0;
+  }
+  
+  // Actualizar ícono de validación
+  if (icon) {
+    if (isValid) {
+      icon.classList.add('visible');
+      field.classList.add('valid');
+      field.classList.remove('input-error');
+    } else {
+      icon.classList.remove('visible');
+      field.classList.remove('valid');
+    }
+  }
+  
+  // Actualizar mensaje de error
+  // Mostrar error si: el campo ha sido tocado Y es inválido
+  // O si showErrors es true (forzado, ej: al hacer submit)
+  if (errorEl) {
+    if ((touchedFields[fieldId] || showErrors) && !isValid) {
+      errorEl.textContent = errorMsg;
+      errorEl.classList.add('visible');
+      field.classList.add('input-error');
+    } else {
+      errorEl.classList.remove('visible');
+      field.classList.remove('input-error');
+    }
+  }
+  
+  updateSubmitButtonState();
+  updateNextButtonState();
+}
+
+function updateModalidadState() {
   var modalidad = document.querySelector('input[name="sg-modalidad"]:checked');
-  var modalErr  = document.getElementById('err-modalidad');
+  updateSubmitButtonState();
+  updateNextButtonState();
+}
+
+function checkAllFieldsValid() {
+  var empresa = document.getElementById('sg-empresa').value.trim();
+  var representante = document.getElementById('sg-representante').value.trim();
+  var emailEmpresa = document.getElementById('sg-emailEmpresa').value.trim();
+  var telefonoEmpresa = document.getElementById('sg-telefonoEmpresa').value.trim();
+  var nombre = document.getElementById('sg-nombre').value.trim();
+  var correo = document.getElementById('sg-correo').value.trim();
+  var modalidad = document.querySelector('input[name="sg-modalidad"]:checked');
+  
+  // Validaciones específicas
+  var emailEmpresaValid = emailEmpresa.length > 0 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailEmpresa);
+  var correoValid = correo.length > 0 && correo.toLowerCase().endsWith('@unal.edu.co');
+  var telefonoDigits = telefonoEmpresa.replace(/\D/g, '');
+  var telefonoValid = telefonoDigits.length === 10;
+  
+  return empresa.length > 0 && 
+         representante.length > 0 && 
+         emailEmpresaValid && 
+         telefonoValid && 
+         nombre.length > 0 && 
+         correoValid && 
+         modalidad !== null;
+}
+
+function updateSubmitButtonState() {
+  var btn = document.getElementById('btnEnviarSugerencia');
+  if (!btn) return;
+  
+  if (checkAllFieldsValid()) {
+    btn.disabled = false;
+  } else {
+    btn.disabled = true;
+  }
+}
+
+function formatPhoneNumber(value) {
+  // Remover todo excepto números
+  var cleaned = value.replace(/\D/g, '');
+  
+  // Limitar a 10 dígitos
+  cleaned = cleaned.substring(0, 10);
+  
+  // Formatear: (300) 123-4567
+  var formatted = '';
+  if (cleaned.length > 0) {
+    formatted = '(' + cleaned.substring(0, 3);
+    if (cleaned.length > 3) {
+      formatted += ') ' + cleaned.substring(3, 6);
+      if (cleaned.length > 6) {
+        formatted += '-' + cleaned.substring(6, 10);
+      }
+    } else {
+      formatted += ')';
+    }
+  }
+  
+  return formatted;
+}
+
+function initSugerenciaValidation() {
+  var fieldsToValidate = [
+    'sg-empresa',
+    'sg-representante',
+    'sg-emailEmpresa',
+    'sg-telefonoEmpresa',
+    'sg-nombre',
+    'sg-correo'
+  ];
+  
+  fieldsToValidate.forEach(function(fieldId) {
+    var field = document.getElementById(fieldId);
+    if (field) {
+      // Marcar como tocado al hacer focus y luego blur
+      field.addEventListener('blur', function() {
+        markFieldAsTouched(fieldId);
+        updateSugerenciaFieldState(fieldId, false);
+      });
+      
+      // Validar en tiempo real mientras escribe (si ya fue tocado)
+      field.addEventListener('input', function() {
+        // Formato especial para teléfono
+        if (fieldId === 'sg-telefonoEmpresa') {
+          var cursorPos = this.selectionStart;
+          var oldLength = this.value.length;
+          this.value = formatPhoneNumber(this.value);
+          var newLength = this.value.length;
+          
+          // Ajustar posición del cursor
+          if (newLength > oldLength) {
+            cursorPos += (newLength - oldLength);
+          }
+          this.setSelectionRange(cursorPos, cursorPos);
+        }
+        
+        updateSugerenciaFieldState(fieldId, false);
+      });
+    }
+  });
+  
+  // Radio buttons para modalidad
+  var radios = document.querySelectorAll('input[name="sg-modalidad"]');
+  radios.forEach(function(radio) {
+    radio.addEventListener('change', updateModalidadState);
+  });
+  
+  // Estado inicial de los botones
+  updateSubmitButtonState();
+  updateNextButtonState();
+}
+
+function validateSugerencia() {
+  var valid = true;
+  
+  // Marcar todos los campos como tocados
+  var allFields = [
+    'sg-empresa',
+    'sg-representante',
+    'sg-emailEmpresa',
+    'sg-telefonoEmpresa',
+    'sg-nombre',
+    'sg-correo'
+  ];
+  
+  allFields.forEach(function(fieldId) {
+    markFieldAsTouched(fieldId);
+    updateSugerenciaFieldState(fieldId, true); // true = forzar mostrar errores
+  });
+
+  // Validar modalidad (radio)
+  var modalidad = document.querySelector('input[name="sg-modalidad"]:checked');
+  var modalErr = document.getElementById('err-modalidad');
   if (!modalidad) {
     modalErr.classList.add('visible');
     valid = false;
@@ -2171,7 +2876,8 @@ function validateSugerencia() {
     modalErr.classList.remove('visible');
   }
 
-  return valid;
+  // Retornar si todos los campos son válidos
+  return checkAllFieldsValid();
 }
 
 function submitSugerencia() {
@@ -2234,6 +2940,10 @@ document.getElementById('btnEnviarSugerencia').addEventListener('click', submitS
 document.getElementById('sugerenciaModal').addEventListener('click', function(e) {
   if (e.target === this) closeSugerenciaModal();
 });
+
+// Listeners — wizard navigation
+document.getElementById('btnWizardNext').addEventListener('click', nextWizardStep);
+document.getElementById('btnWizardPrev').addEventListener('click', prevWizardStep);
 
 // ============================================================
 // MODAL — cerrar con click en overlay o tecla Escape

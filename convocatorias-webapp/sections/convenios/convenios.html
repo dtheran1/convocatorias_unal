@@ -81,26 +81,27 @@
 
     .section-title {
       text-align: center;
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: var(--text-secondary);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-primary);
       text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 2.5rem;
+      letter-spacing: 1.5px;
+      margin-bottom: 3rem;
       position: relative;
       z-index: 2;
+      padding-bottom: 1rem;
     }
 
     .section-title::after {
       content: '';
       position: absolute;
-      bottom: -0.75rem;
+      bottom: 0;
       left: 50%;
       transform: translateX(-50%);
-      width: 2.5rem;
-      height: 2px;
-      background: var(--gradient-primary);
-      border-radius: 1px;
+      width: 60px;
+      height: 4px;
+      background: var(--unal-green);
+      border-radius: 2px;
     }
 
     .carousel-wrapper {
@@ -308,6 +309,7 @@
       visibility: hidden;
       transition: all 0.3s ease;
       padding: 2rem;
+      overflow-y: auto;
     }
 
     .company-modal.show {
@@ -333,6 +335,24 @@
     .company-modal.show .modal-content {
       transform: scale(1) translateY(0);
       opacity: 1;
+    }
+    
+    .company-modal .modal-content::-webkit-scrollbar {
+      width: 8px;
+    }
+    
+    .company-modal .modal-content::-webkit-scrollbar-track {
+      background: var(--bg-primary);
+      border-radius: 4px;
+    }
+    
+    .company-modal .modal-content::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 4px;
+    }
+    
+    .company-modal .modal-content::-webkit-scrollbar-thumb:hover {
+      background: var(--text-muted);
     }
 
     .company-modal .modal-header {
@@ -558,8 +578,14 @@
       }
 
       .section-title { 
-        font-size: 1rem;
-        margin-bottom: 2rem; 
+        font-size: 1.25rem;
+        margin-bottom: 2.5rem;
+        letter-spacing: 1px;
+      }
+      
+      .section-title::after {
+        width: 50px;
+        height: 3px;
       }
 
       .carousel-wrapper {
@@ -2539,13 +2565,43 @@ function openModal(logoId) {
 
   var modal = document.getElementById('companyModal');
   modal.classList.add('show');
+  
+  // Guardar posición actual del scroll
+  var scrollY = window.scrollY;
+  
+  // Fijar la posición del body
+  document.body.style.position = 'fixed';
+  document.body.style.top = '-' + scrollY + 'px';
+  document.body.style.width = '100%';
   document.body.style.overflow = 'hidden';
+  
+  // Guardar la posición para restaurarla al cerrar
+  modal.dataset.scrollY = scrollY;
+  
+  // Enfocar el modal y hacer scroll al contenido
+  setTimeout(function() {
+    // Scroll al inicio del overlay del modal
+    modal.scrollTop = 0;
+    
+    // Scroll al inicio del contenido del modal
+    var modalContent = modal.querySelector('.modal-content');
+    if (modalContent) {
+      modalContent.scrollTop = 0;
+    }
+  }, 50);
 }
 
 function closeModal() {
   var modal = document.getElementById('companyModal');
   modal.classList.remove('show');
+  
+  // Restaurar el scroll del body
+  var scrollY = modal.dataset.scrollY || 0;
+  document.body.style.position = '';
+  document.body.style.top = '';
+  document.body.style.width = '';
   document.body.style.overflow = '';
+  window.scrollTo(0, parseInt(scrollY));
 }
 
 function setupModalEvents() {
@@ -2874,7 +2930,20 @@ function openSugerenciaModal() {
   document.getElementById('sugerenciaSuccess').style.display = 'none';
   document.getElementById('btnCancelSugerencia').textContent = 'Cancelar';
 
-  document.getElementById('sugerenciaModal').style.display = 'flex';
+  var modal = document.getElementById('sugerenciaModal');
+  modal.style.display = 'flex';
+  
+  // Guardar posición actual del scroll
+  var scrollY = window.scrollY;
+  
+  // Fijar la posición del body
+  document.body.style.position = 'fixed';
+  document.body.style.top = '-' + scrollY + 'px';
+  document.body.style.width = '100%';
+  document.body.style.overflow = 'hidden';
+  
+  // Guardar la posición para restaurarla al cerrar
+  modal.dataset.scrollY = scrollY;
   
   // Inicializar validación en tiempo real
   initSugerenciaValidation();
@@ -2884,11 +2953,11 @@ function openSugerenciaModal() {
   
   // Enfocar el modal y hacer scroll al contenido del formulario
   setTimeout(function() {
-    // Prevenir scroll del body
-    document.body.style.overflow = 'hidden';
+    // Scroll al inicio del overlay del modal
+    modal.scrollTop = 0;
     
     // Scroll al inicio del modal container
-    var modalContainer = document.querySelector('#sugerenciaModal .modal-container');
+    var modalContainer = modal.querySelector('.modal-container');
     if (modalContainer) {
       modalContainer.scrollTop = 0;
     }
@@ -2898,14 +2967,20 @@ function openSugerenciaModal() {
     if (firstField) {
       firstField.focus();
     }
-  }, 100);
+  }, 50);
 }
 
 function closeSugerenciaModal() {
-  document.getElementById('sugerenciaModal').style.display = 'none';
+  var modal = document.getElementById('sugerenciaModal');
+  modal.style.display = 'none';
   
-  // Restaurar scroll del body
+  // Restaurar el scroll del body
+  var scrollY = modal.dataset.scrollY || 0;
+  document.body.style.position = '';
+  document.body.style.top = '';
+  document.body.style.width = '';
   document.body.style.overflow = '';
+  window.scrollTo(0, parseInt(scrollY));
 }
 
 // ============================================================

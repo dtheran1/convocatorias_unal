@@ -96,10 +96,18 @@
       margin-left: 1.5rem;
       color: var(--text-secondary);
       font-size: 0.875rem;
+      list-style: none;
     }
 
     .info-box li {
       margin-bottom: 0.25rem;
+      cursor: pointer;
+      transition: color 0.2s, transform 0.2s;
+    }
+
+    .info-box li:hover {
+      color: var(--unal-green-dark);
+      transform: translateX(4px);
     }
 
     /* ========== FORM CARD ========== */
@@ -501,6 +509,145 @@
         gap: 0.75rem;
       }
     }
+
+    /* ========== MODAL ========== */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(30, 41, 59, 0.7);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      padding: 1rem;
+    }
+
+    .modal-overlay.visible {
+      display: flex;
+    }
+
+    .modal-content {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      max-width: 800px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+    }
+
+    .modal-header {
+      position: sticky;
+      top: 0;
+      background: white;
+      border-bottom: 2px solid var(--border);
+      padding: 1.5rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+      z-index: 10;
+    }
+
+    .modal-header-text {
+      flex: 1;
+    }
+
+    .modal-logo {
+      text-align: right;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      line-height: 1.2;
+    }
+
+    .modal-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.25rem;
+    }
+
+    .btn-close-modal {
+      background: var(--bg-primary);
+      border: none;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.2s;
+      flex-shrink: 0;
+    }
+
+    .btn-close-modal:hover {
+      background: var(--border);
+    }
+
+    .btn-close-modal .material-icons {
+      font-size: 1.5rem;
+      color: var(--text-secondary);
+    }
+
+    .modal-body {
+      padding: 2rem;
+    }
+
+    .modal-body p {
+      font-size: 0.95rem;
+      line-height: 1.8;
+      text-align: justify;
+      color: var(--text-primary);
+      margin-bottom: 1.25rem;
+    }
+
+    .modal-body p:last-child {
+      margin-bottom: 0;
+    }
+
+    @media (max-width: 768px) {
+      .modal-content {
+        max-height: 95vh;
+      }
+
+      .modal-header {
+        padding: 1.25rem 1.5rem;
+      }
+
+      .modal-title {
+        font-size: 1.25rem;
+      }
+
+      .modal-body {
+        padding: 1.5rem;
+      }
+
+      .modal-body p {
+        font-size: 0.9rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .modal-header {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .modal-logo {
+        text-align: left;
+        order: -1;
+        margin-bottom: 0.5rem;
+      }
+
+      .btn-close-modal {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+      }
+    }
   </style>
 </head>
 <body>
@@ -520,13 +667,35 @@
     <p><strong>El propósito es identificar oportunidades para nuestros estudiantes</strong>, en función de las necesidades de las dependencias y/o proyectos internos de la Universidad.</p>
     <p>Agradecemos a las dependencias de la Sede diligenciar este formulario con la información de los perfiles disponibles para acoger estudiantes en la modalidad de práctica y/o pasantía, de acuerdo con las siguientes áreas de formación:</p>
     <ul>
-      <li>🔹 L001 - Biología</li>
-      <li>🔹 L002 - Estadística</li>
-      <li>🔹 L003 - Geografía</li>
-      <li>🔹 L004 - Gestión Cultural y Comunicativa</li>
-      <li>🔹 L005 - Ingeniería Biológica</li>
-      <li>🔹 L006 - Ingeniería Mecatrónica</li>
+      <li data-programa="biologia">🔹 L001 - Biología</li>
+      <li data-programa="estadistica">🔹 L002 - Estadística</li>
+      <li data-programa="geografia">🔹 L003 - Geografía</li>
+      <li data-programa="gestion-cultural">🔹 L004 - Gestión Cultural y Comunicativa</li>
+      <li data-programa="ing-biologica">🔹 L005 - Ingeniería Biológica</li>
+      <li data-programa="ing-mecatronica">🔹 L006 - Ingeniería Mecatrónica</li>
     </ul>
+  </div>
+
+  <!-- MODAL PERFIL EGRESADO -->
+  <div class="modal-overlay" id="modalPerfil">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-header-text">
+          <div class="modal-logo">
+            Dirección Académica<br>
+            Vicerrectoría de Sede<br>
+            Sede de La Paz
+          </div>
+          <h2 class="modal-title" id="modalTitle">Perfil del egresado</h2>
+        </div>
+        <button type="button" class="btn-close-modal" id="btnCloseModal">
+          <span class="material-icons">close</span>
+        </button>
+      </div>
+      <div class="modal-body" id="modalBody">
+        <!-- Content will be injected here -->
+      </div>
+    </div>
   </div>
 
   <!-- ERROR ALERT -->
@@ -624,6 +793,64 @@ const PROGRAMAS = [
   'L005 - Ingeniería Biológica',
   'L006 - Ingeniería Mecatrónica'
 ];
+
+// ============================================================
+// PERFILES DE EGRESADOS DATA
+// ============================================================
+const PERFILES_EGRESADOS = {
+  'biologia': {
+    title: 'Perfil del egresado - Biología',
+    content: [
+      'Los biólogos egresados de la UNAL, sede De La Paz son profesionales con conocimientos y habilidades necesarias para:',
+      '- Describir los procesos, mecanismos, componentes moleculares y celulares que gobiernan el funcionamiento de la célula para regularlos o modificarlos con fines de investigación básica y aplicada.',
+      '- Conocer la organización jerárquica de la biodiversidad, sus interacciones y problemáticas, lo cual permite gestionar los retos de conservación de la naturaleza considerando los contextos sociales, políticos, económicos y culturales.',
+      '- Comprender los procesos de cambio asociados con la evolución de la vida y los mecanismos de transmisión genética para enfrentar los desafíos y promover el avance de las ciencias biológicas.',
+      '- Formular e implementar proyectos de investigación y plantear análisis que permitan contribuir a la toma de decisiones.',
+      '-Desempeñarse en agencias o entidades gubernamentales, privadas, y/o organizaciones ambientales sin ánimo de lucro, institutos de investigación, instituciones educativas de educación superior, en áreas relacionadas con la biología molecular y celular, la genética, la biodiversidad y conservación.',
+      'Lo anterior, enmarcados dentro de los principios de diálogo, equidad, honestidad, pertenencia, respeto, responsabilidad y solidaridad para trabajar en equipos interdisciplinares e interculturales, de forma independiente y en equipo, que pueden resolver problemas en ciencias biológicas básicas y aplicadas, o problemáticas que afectan al medio ambiente y la sociedad.'
+    ]
+  },
+  'estadistica': {
+    title: 'Perfil del egresado - Estadística',
+    content: [
+      'Los futuros egresados del programa de Estadística se destacan por su desarrollo integral como profesionales y ciudadanos. Son personas autónomas y proactivas, capaces de gestionar su aprendizaje de manera efectiva y continuar su crecimiento profesional de forma constante.',
+      'Poseen un agudo pensamiento crítico, que les permite abordar problemas multidisciplinarios e interdisciplinarios, contribuyendo activamente con soluciones innovadoras en diferentes sectores. Además de un sólido conocimiento técnico en estadística, los futuros egresados contarán con habilidades avanzadas en el manejo de herramientas y técnicas de análisis de datos e inteligencia artificial, lo que les permitirá contribuir significativamente en la toma de decisiones en diversos campos del conocimiento.',
+      'Sus competencias en estadística y análisis de datos se complementan con una fuerte conciencia social, manifestada en su compromiso con el bienestar de la comunidad y la aplicación ética de sus conocimientos, que lo impulsa a utilizar sus habilidades para contribuir al desarrollo sostenible y equitativo.',
+      'Su formación integral los prepara para desempeñarse con éxito en diversos roles, tales como analistas de datos, consultores estadísticos, planificadores de políticas públicas, investigadores y profesionales en sectores que abarcan la investigación, la industria, la salud, la educación y el sector público.'
+    ]
+  },
+  'geografia': {
+    title: 'Perfil del egresado – Geografía',
+    content: [
+      'Las geógrafas y los geógrafos egresados del programa de Geografía de la sede la Paz tendrán una mirada amplia y humanística sobre el papel de laGeografía en la transformación de las condiciones inequitativas de la producción socioespacial, teniendo sólidas bases de formación ciudadana y ética que marcarán su devenir profesional.',
+      'Contarán con habilidades y destrezas para realizar análisis y diagnósticos sobre las dinámicas territoriales y las transformaciones socioespaciales con un sentido crítico y articulado con las dimensiones ambientales, sociales, políticas y económicas de los territorios.',
+      'Así mismo, tendrán competencias fuertemente desarrolladas para el monitoreo, la interpretación y el análisis del medio físico, del ordenamiento territorial, de los impactos ambientales, habilidades en el manejo de las tecnologías de información geográfica, habilidades para el seguimiento y análisis de procesos sociales urbano - rurales a nivel local, regional, nacional.'
+    ]
+  },
+  'gestion-cultural': {
+    title: 'Perfil del egresado – Gestión Cultural y Comunicativa',
+    content: [
+      'Las personas egresadas del pregrado de Gestión Cultural y Comunicativa formadas por la Universidad Nacional de Colombia, Sede de La Paz, interrogan, analizan, problematizan e interpretan los contextos socioculturales de las poblaciones, comunidades, organizaciones e instituciones en sus territorios, para aportar creativamente al diseño de propuestas que dinamicen, acompañen y transformen dinámicas socioculturales orientadas a la construcción de sociedades más solidarias, expresivas, participativas, diversas y justas. Las personas egresadas están cualificadas para aportar desde su campo de formación a la demanda de los sectores cultural, social, comunicativo, educativo, ambiental, ya sea en el ámbito de carácter público, privado o mixto.',
+      'Las y los gestores culturales y comunicativos de este programa demuestran competencias generales y específicas en áreas de conocimiento afines a la gestión cultural, la comunicación y las artes. Durante su formación se apropian de diversas aptitudes investigativas para comprender contextos socioculturales específicos desde enfoques territoriales, comunitarios, diferenciales, interculturales y de innovación social. Reconocen, valoran y relacionan procesos creativos y procesos comunicativos con las dinámicas socioculturales presentes en los territorios para la gestión de procesos e interpretar desde los diferentes aspectos multidimensionales del desarrollo humano y sociocultural en el contexto de las nuevas tecnologías.',
+      'Las y los egresados se desempeñan como agentes de cambio desde las funciones de promotores, organizadores y gestores, que conocen y aplican herramientas pedagógicas, administrativas y comunicativas para interactuar con las comunidades, actores y agentes de diverso tipo. Todo ello se fundamenta en los principios del respeto, el diálogo, la responsabilidad, la equidad, la solidaridad, la honestidad y la pertenencia.'
+    ]
+  },
+  'ing-biologica': {
+    title: 'Perfil del egresado - Ingeniería Biológica',
+    content: [
+      'Las personas egresadas del pregrado de Ingeniería Biológica de la Universidad Nacional de Colombia, Sede La Paz, serán profesionales integrales y multidisciplinarios, con sólida formación ética y humanística, intelectual, investigativa, técnica, económica y en sostenibilidad ambiental. Estarán preparados para participar de manera multi e interdisciplinaria en los campos de la ingeniería de procesos y la biotecnología, aplicados a diversos sectores como la industria alimentaria, química, farmacéutica, cosmética, agrícola, pecuaria y biotecnológica.',
+      'Este profesional es capaz de aplicar principios y técnicas de las ciencias de la vida, la biología, la ingeniería y la tecnología para diseñar, desarrollar y mejorar procesos y productos que respondan a las necesidades de la sociedad y el entorno. Posee competencias en el desarrollo y optimización de procesos biológicos a diferentes escalas, utilizando células o sus componentes para la generación de productos y servicios. Además, está capacitado para integrar conocimientos científicos, tecnológicos y habilidades administrativas en el diseño de soluciones productivas que respondan a los desafíos del sector agroindustrial y biotecnológico.',
+      'Su formación incluye el manejo de herramientas informáticas avanzadas para el modelado, simulación, optimización y evaluación de procesos biológicos, lo que le permite proponer e implementar alternativas tecnológicas ambientalmente responsables. Entre estas se destacan la producción de biomateriales para bioimpresión 3D, nanomateriales para la administración de fármacos, y tecnologías en energía, microelectrónica y disposición de residuos.'
+    ]
+  },
+  'ing-mecatronica': {
+    title: 'Perfil del egresado - Ingeniería Mecatrónica',
+    content: [
+      'El egresado del programa de Ingeniería Mecatrónica de la Universidad Nacional de Colombia, sede La Paz, es un profesional altamente capacitado para desempeñar con ética, profesionalismo y responsabilidad actividades en electrónica, mecánica, ciencia de datos, inteligencia artificial y gestión empresarial. Lo anterior le dará la capacidad de diseñar y modelar sistemas de control, diseñar y planear e implementar procesos de manufactura, diseñar e implementar sistemas automatizados y de control industrial, analizar datos, implementar sistemas de inteligencia y visión artificial, diseñar y construir dispositivos mecánicos y electrónicos, programar y automatizar sistemas neumáticos, hidráulicos y/o de controladores lógicos programables, diseñar, construir y programar robots, desarrollar software, diseñar y construir sistemas de agricultura inteligente.',
+      'El egresado se destaca por su compromiso con el desarrollo sostenible y su habilidad para el aprendizaje continuo, lo que le permite adaptarse eficientemente a las tecnologías emergentes. A partir de la identificación de necesidades regionales y globales, aplica sus conocimientos y habilidades en la creación de proyectos que buscan soluciones prácticas y sostenibles. Su capacidad para trabajar de manera efectiva en equipos multidisciplinarios le permite colaborar en la búsqueda de soluciones integrales que beneficien a la sociedad y al medio ambiente. Además, el egresado del programa está preparado para liderar proyectos de alto impacto y resolver desafíos socioeconómicos regionales. Por todo lo anterior, el egresado del programa de Ingeniería Mecatrónica es un líder en innovación y tecnología, comprometido con el desarrollo sostenible y el bienestar social, preparado para enfrentar los desafíos actuales y futuros del campo de la mecatrónica con integridad, creatividad y excelencia profesional.'
+    ]
+  }
+};
 
 // ============================================================
 // PERFIL TEMPLATE
@@ -1001,6 +1228,30 @@ async function handleSubmit(e) {
 }
 
 // ============================================================
+// MODAL FUNCTIONS
+// ============================================================
+function openModal(programaKey) {
+  const perfil = PERFILES_EGRESADOS[programaKey];
+  if (!perfil) return;
+  
+  const modal = document.getElementById('modalPerfil');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalBody = document.getElementById('modalBody');
+  
+  modalTitle.textContent = perfil.title;
+  modalBody.innerHTML = perfil.content.map(p => `<p>${p}</p>`).join('');
+  
+  modal.classList.add('visible');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  const modal = document.getElementById('modalPerfil');
+  modal.classList.remove('visible');
+  document.body.style.overflow = '';
+}
+
+// ============================================================
 // EVENT LISTENERS
 // ============================================================
 document.getElementById('btnAddPerfil').addEventListener('click', addPerfil);
@@ -1030,6 +1281,29 @@ document.querySelectorAll('.form-input, .form-textarea, .form-select').forEach(f
 window.addEventListener('DOMContentLoaded', function() {
   // Add first perfil automatically
   addPerfil();
+  
+  // Add click listeners to programa list items
+  document.querySelectorAll('.info-box li[data-programa]').forEach(item => {
+    item.addEventListener('click', function() {
+      const programaKey = this.getAttribute('data-programa');
+      openModal(programaKey);
+    });
+  });
+  
+  // Modal close handlers
+  document.getElementById('btnCloseModal').addEventListener('click', closeModal);
+  document.getElementById('modalPerfil').addEventListener('click', function(e) {
+    if (e.target === this) {
+      closeModal();
+    }
+  });
+  
+  // Close modal on ESC key
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      closeModal();
+    }
+  });
   
   // Auto-resize iframe
   function adjustHeight() {

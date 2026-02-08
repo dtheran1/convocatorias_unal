@@ -1,0 +1,25 @@
+# Clasp ignore file
+# Archivos que NO se subirán a Google Apps Script
+
+# Documentación
+README.md
+
+# Archivos de respaldo
+*.backup
+*.bak
+
+# Git
+.git
+.gitignore
+
+# Node
+node_modules/
+package.json
+package-lock.json
+
+# Archivos temporales
+*.tmp
+*.temp
+
+# Código.js es una copia de Code.gs (solo necesitamos Code.gs en Apps Script)
+Código.js

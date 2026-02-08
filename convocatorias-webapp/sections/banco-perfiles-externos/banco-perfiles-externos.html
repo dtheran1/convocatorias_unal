@@ -1,0 +1,2130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Banco de Perfiles Externos - UNAL Sede de La Paz</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+    :root {
+      --unal-green: #4CAF50;
+      --unal-green-dark: #388E3C;
+      --unal-green-light: #C8E6C9;
+      --unal-green-bg: #f0f9f0;
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --secondary: #64748b;
+      --success: #22c55e;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --bg-primary: #f8fafc;
+      --bg-card: #ffffff;
+      --text-primary: #1e293b;
+      --text-secondary: #64748b;
+      --text-muted: #94a3b8;
+      --border: #e2e8f0;
+      --shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+      --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+      --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+      --radius: 12px;
+      --radius-sm: 8px;
+      --radius-lg: 16px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      padding: 2rem 1rem;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    /* ========== HEADER ========== */
+    .header {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+      padding: 2.5rem 2rem;
+      border-radius: var(--radius-lg);
+      margin-bottom: 2rem;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .header h1 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      line-height: 1.3;
+    }
+
+    .header p {
+      opacity: 0.95;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    /* ========== INFO BOX ========== */
+    .info-box {
+      background: #eff6ff;
+      border-left: 4px solid var(--primary);
+      padding: 1.25rem;
+      border-radius: 0 var(--radius) var(--radius) 0;
+      margin-bottom: 2rem;
+    }
+
+    .info-box h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--primary-dark);
+      margin-bottom: 0.75rem;
+    }
+
+    .info-box p {
+      font-size: 0.9rem;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .info-box ul {
+      margin-left: 1.5rem;
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+      list-style: none;
+    }
+
+    .info-box li {
+      margin-bottom: 0.25rem;
+      cursor: pointer;
+      transition: color 0.2s, transform 0.2s;
+    }
+
+    .info-box li:hover {
+      color: var(--primary-dark);
+      transform: translateX(4px);
+    }
+
+    /* ========== DEFINITION BOX ========== */
+    .definition-box {
+      background: var(--unal-green-bg);
+      border-left: 4px solid var(--unal-green);
+      padding: 1.25rem;
+      border-radius: 0 var(--radius) var(--radius) 0;
+      margin-bottom: 2rem;
+    }
+
+    .definition-box h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--unal-green-dark);
+      margin-bottom: 1rem;
+    }
+
+    .definition-item {
+      margin-bottom: 1rem;
+    }
+
+    .definition-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .definition-item strong {
+      color: var(--unal-green-dark);
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+
+    .definition-item p {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* ========== FORM CARD ========== */
+    .form-card {
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-md);
+      padding: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .form-section {
+      margin-bottom: 2rem;
+    }
+
+    .form-section:last-child {
+      margin-bottom: 0;
+    }
+
+    .section-title {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .form-group {
+      margin-bottom: 1.25rem;
+      position: relative;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.4rem;
+    }
+
+    .field-wrapper {
+      position: relative;
+    }
+
+    .field-icon {
+      position: absolute;
+      right: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--success);
+      opacity: 0;
+      transition: opacity 0.2s;
+      pointer-events: none;
+    }
+
+    .field-icon.visible {
+      opacity: 1;
+    }
+
+    .field-icon .material-icons {
+      font-size: 1.25rem;
+    }
+
+    .required {
+      color: var(--danger);
+      margin-left: 0.2rem;
+    }
+
+    .form-input,
+    .form-textarea,
+    .form-select {
+      width: 100%;
+      padding: 0.75rem;
+      border: 2px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-size: 0.9rem;
+      font-family: inherit;
+      color: var(--text-primary);
+      background: var(--bg-card);
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .form-input:focus,
+    .form-textarea:focus,
+    .form-select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+
+    .form-input.valid,
+    .form-textarea.valid,
+    .form-select.valid {
+      border-color: var(--success);
+      padding-right: 2.5rem;
+    }
+
+    .form-textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .form-error {
+      color: var(--danger);
+      font-size: 0.8rem;
+      margin-top: 0.25rem;
+      display: none;
+    }
+
+    .form-error.visible {
+      display: block;
+    }
+
+    .form-input.error,
+    .form-textarea.error,
+    .form-select.error {
+      border-color: var(--danger);
+    }
+
+    /* ========== CHECKBOX GROUP ========== */
+    .checkbox-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.875rem;
+      color: var(--text-primary);
+      cursor: pointer;
+    }
+
+    .checkbox-label input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--primary);
+      cursor: pointer;
+    }
+
+    /* ========== RADIO GROUP ========== */
+    .radio-group {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .radio-label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.875rem;
+      color: var(--text-primary);
+      cursor: pointer;
+    }
+
+    .radio-label input[type="radio"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--primary);
+      cursor: pointer;
+    }
+
+    /* ========== PERFIL CARD / ACCORDION ========== */
+    .perfil-card {
+      background: var(--bg-card);
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      margin-bottom: 1rem;
+      position: relative;
+      overflow: hidden;
+      transition: box-shadow 0.2s;
+    }
+
+    .perfil-card:hover {
+      box-shadow: var(--shadow-md);
+    }
+
+    .perfil-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem 1.5rem;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.2s;
+    }
+
+    .perfil-header:hover {
+      background: var(--bg-primary);
+    }
+
+    .perfil-header-left {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex: 1;
+    }
+
+    .perfil-header-right {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .perfil-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      background: rgba(37, 99, 235, 0.1);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .perfil-toggle .material-icons {
+      font-size: 1.5rem;
+      color: var(--primary);
+      transition: transform 0.3s;
+    }
+
+    .perfil-card.collapsed .perfil-toggle .material-icons {
+      transform: rotate(-90deg);
+    }
+
+    .perfil-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      flex: 1;
+    }
+
+    .perfil-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-out;
+    }
+
+    .perfil-card.expanded .perfil-body {
+      max-height: 5000px;
+      transition: max-height 0.5s ease-in;
+    }
+
+    .perfil-body-inner {
+      padding: 0 1.5rem 1.5rem;
+    }
+
+    .btn-remove-perfil {
+      background: var(--danger);
+      color: white;
+      border: none;
+      padding: 0.4rem 0.8rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      transition: background 0.2s;
+      flex-shrink: 0;
+    }
+
+    .btn-remove-perfil:hover {
+      background: #dc2626;
+    }
+
+    .btn-remove-perfil .material-icons {
+      font-size: 1rem;
+    }
+
+    /* ========== BUTTONS ========== */
+    .btn {
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-size: 0.9rem;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      touch-action: manipulation;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+    }
+
+    .btn-secondary {
+      background: var(--bg-card);
+      color: var(--text-secondary);
+      border: 2px solid var(--border);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .btn .material-icons {
+      font-size: 1.2rem;
+    }
+
+    .form-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: flex-end;
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 2px solid var(--border);
+    }
+
+    .btn-add-perfil {
+      width: 100%;
+      justify-content: center;
+      margin-top: 1rem;
+    }
+
+    /* ========== SUCCESS MESSAGE ========== */
+    .success-message {
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-md);
+      padding: 3rem 2rem;
+      text-align: center;
+      display: none;
+    }
+
+    .success-message.visible {
+      display: block;
+    }
+
+    .success-message .material-icons {
+      font-size: 4rem;
+      color: var(--success);
+      margin-bottom: 1rem;
+    }
+
+    .success-message h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.75rem;
+    }
+
+    .success-message p {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    /* ========== ERROR ALERT ========== */
+    .error-alert {
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      border-radius: var(--radius-sm);
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      display: none;
+    }
+
+    .error-alert.visible {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+
+    .error-alert .material-icons {
+      color: var(--danger);
+      flex-shrink: 0;
+    }
+
+    .error-alert p {
+      font-size: 0.875rem;
+      color: #dc2626;
+      margin: 0;
+    }
+
+    /* ========== LOADING OVERLAY ========== */
+    .loading-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(30, 41, 59, 0.8);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .loading-overlay.visible {
+      display: flex;
+    }
+
+    .loading-content {
+      background: var(--bg-card);
+      padding: 2rem;
+      border-radius: var(--radius);
+      text-align: center;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .loading-spinner {
+      width: 50px;
+      height: 50px;
+      border: 4px solid var(--border);
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 1rem;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .loading-content p {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+    }
+
+    /* ========== MODAL ========== */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(30, 41, 59, 0.7);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      padding: 1rem;
+    }
+
+    .modal-overlay.visible {
+      display: flex;
+    }
+
+    .modal-content {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      max-width: 800px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+    }
+
+    .modal-header {
+      position: sticky;
+      top: 0;
+      background: white;
+      border-bottom: 2px solid var(--border);
+      padding: 1.5rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+      z-index: 10;
+    }
+
+    .modal-header-text {
+      flex: 1;
+    }
+
+    .modal-logo {
+      text-align: right;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      line-height: 1.2;
+    }
+
+    .modal-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.25rem;
+    }
+
+    .btn-close-modal {
+      background: var(--bg-primary);
+      border: none;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.2s;
+      flex-shrink: 0;
+    }
+
+    .btn-close-modal:hover {
+      background: var(--border);
+    }
+
+    .btn-close-modal .material-icons {
+      font-size: 1.5rem;
+      color: var(--text-secondary);
+    }
+
+    .modal-body {
+      padding: 2rem;
+    }
+
+    .modal-body p {
+      font-size: 0.95rem;
+      line-height: 1.8;
+      text-align: justify;
+      color: var(--text-primary);
+      margin-bottom: 1.25rem;
+    }
+
+    .modal-body p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* ========== CONFIRM MODAL ========== */
+    .confirm-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(30, 41, 59, 0.8);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 3000;
+      padding: 1rem;
+    }
+
+    .confirm-overlay.visible {
+      display: flex;
+    }
+
+    .confirm-content {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      max-width: 400px;
+      width: 100%;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .confirm-icon {
+      width: 60px;
+      height: 60px;
+      margin: 0 auto 1.5rem;
+      background: #fef2f2;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .confirm-icon .material-icons {
+      font-size: 2rem;
+      color: var(--danger);
+    }
+
+    .confirm-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.75rem;
+    }
+
+    .confirm-message {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+
+    .confirm-actions {
+      display: flex;
+      gap: 0.75rem;
+      justify-content: center;
+    }
+
+    .btn-confirm {
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-size: 0.9rem;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-confirm-primary {
+      background: var(--danger);
+      color: white;
+    }
+
+    .btn-confirm-primary:hover {
+      background: #dc2626;
+    }
+
+    .btn-confirm-secondary {
+      background: var(--bg-primary);
+      color: var(--text-secondary);
+      border: 2px solid var(--border);
+    }
+
+    .btn-confirm-secondary:hover {
+      border-color: var(--text-secondary);
+      color: var(--text-primary);
+    }
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 768px) {
+      body {
+        padding: 1rem 0.5rem;
+      }
+
+      .header {
+        padding: 2rem 1.5rem;
+      }
+
+      .header h1 {
+        font-size: 1.4rem;
+      }
+
+      .form-card {
+        padding: 1.5rem;
+      }
+
+      .form-actions {
+        flex-direction: column;
+      }
+
+      .btn {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .radio-group {
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+
+      .perfil-header {
+        padding: 1rem 1.25rem;
+      }
+
+      .perfil-body-inner {
+        padding: 0 1.25rem 1.25rem;
+      }
+
+      .modal-content {
+        max-height: 95vh;
+      }
+
+      .modal-header {
+        padding: 1.25rem 1.5rem;
+      }
+
+      .modal-title {
+        font-size: 1.25rem;
+      }
+
+      .modal-body {
+        padding: 1.5rem;
+      }
+
+      .modal-body p {
+        font-size: 0.9rem;
+      }
+
+      .confirm-content {
+        padding: 1.5rem;
+      }
+
+      .confirm-actions {
+        flex-direction: column-reverse;
+      }
+
+      .btn-confirm {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .header h1 {
+        font-size: 1.25rem;
+      }
+
+      .form-card {
+        padding: 1.25rem;
+      }
+
+      .perfil-header {
+        padding: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .perfil-header-left {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .perfil-title {
+        font-size: 0.9rem;
+      }
+
+      .btn-remove-perfil {
+        padding: 0.35rem 0.7rem;
+        font-size: 0.75rem;
+      }
+
+      .btn-remove-perfil .material-icons {
+        font-size: 0.9rem;
+      }
+
+      .perfil-header-right {
+        gap: 0.5rem;
+      }
+
+      .perfil-header-right .btn span:not(.material-icons) {
+        display: none;
+      }
+
+      .perfil-header-right .btn {
+        padding: 0.4rem;
+        min-width: 32px;
+        height: 32px;
+        justify-content: center;
+      }
+
+      .modal-header {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .modal-logo {
+        text-align: left;
+        order: -1;
+        margin-bottom: 0.5rem;
+      }
+
+      .btn-close-modal {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  
+  <!-- HEADER -->
+  <div class="header">
+    <h1>Formulario para Banco de Perfiles de Prácticas y Pasantías</h1>
+    <p>Universidad Nacional de Colombia – Sede de La Paz</p>
+  </div>
+
+  <!-- INFO BOX -->
+  <div class="info-box">
+    <h3>Entidades Externas Aliadas</h3>
+    <p>La Universidad Nacional de Colombia – Sede de La Paz, a través de su Escuela de Pregrados, se encuentra estructurando un banco de perfiles para fortalecer la articulación entre los programas académicos y las entidades aliadas con las cuales existen convenios suscritos para el desarrollo de prácticas y pasantías.</p>
+    <p><strong>El propósito es identificar oportunidades para nuestros estudiantes</strong>, en función de las necesidades reales de las entidades y empresas del territorio.</p>
+    <p>Agradecemos diligenciar este formulario con la información de los perfiles disponibles en su entidad para acoger estudiantes en la modalidad de práctica y/o pasantía, de acuerdo con las siguientes áreas de formación:</p>
+    <ul>
+      <li data-programa="biologia">🔹 L001 - Biología</li>
+      <li data-programa="estadistica">🔹 L002 - Estadística</li>
+      <li data-programa="geografia">🔹 L003 - Geografía</li>
+      <li data-programa="gestion-cultural">🔹 L004 - Gestión Cultural y Comunicativa</li>
+      <li data-programa="ing-biologica">🔹 L005 - Ingeniería Biológica</li>
+      <li data-programa="ing-mecatronica">🔹 L006 - Ingeniería Mecatrónica</li>
+    </ul>
+  </div>
+
+  <!-- DEFINITION BOX -->
+  <div class="definition-box">
+    <h3>Definiciones</h3>
+    <div class="definition-item">
+      <strong>Práctica:</strong>
+      <p>Esta modalidad permite al estudiante vincularse por primera vez al contexto laboral enfocado a su área académica, con el objetivo de conocer las técnicas, los procesos y métodos propios de la Empresa, como también la oportunidad de aplicar los conocimientos y las habilidades adquiridas en su proceso de formación.</p>
+    </div>
+    <div class="definition-item">
+      <strong>Pasantía:</strong>
+      <p>Opción de trabajo de grado. El estudiante aplicará los métodos de investigación, de evaluación y análisis frente a situaciones específicas en la Empresa, con el propósito de presentar un diagnóstico del estudio realizado y a su vez, aportar propuestas de mejora o solución de dichas situaciones.</p>
+    </div>
+  </div>
+
+  <!-- MODAL PERFIL EGRESADO -->
+  <div class="modal-overlay" id="modalPerfil">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-header-text">
+          <div class="modal-logo">
+            Dirección Académica<br>
+            Vicerrectoría de Sede<br>
+            Sede de La Paz
+          </div>
+          <h2 class="modal-title" id="modalTitle">Perfil del egresado</h2>
+        </div>
+        <button type="button" class="btn-close-modal" id="btnCloseModal">
+          <span class="material-icons">close</span>
+        </button>
+      </div>
+      <div class="modal-body" id="modalBody">
+        <!-- Content will be injected here -->
+      </div>
+    </div>
+  </div>
+
+  <!-- CONFIRM MODAL -->
+  <div class="confirm-overlay" id="confirmModal">
+    <div class="confirm-content">
+      <div class="confirm-icon" id="confirmIcon">
+        <span class="material-icons">warning</span>
+      </div>
+      <h3 class="confirm-title" id="confirmTitle">¿Limpiar formulario?</h3>
+      <p class="confirm-message" id="confirmMessage">¿Estás seguro de que deseas limpiar el formulario? Se perderán todos los datos ingresados.</p>
+      <div class="confirm-actions">
+        <button type="button" class="btn-confirm btn-confirm-secondary" id="btnCancelConfirm">
+          Cancelar
+        </button>
+        <button type="button" class="btn-confirm btn-confirm-primary" id="btnAcceptConfirm">
+          Aceptar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ERROR ALERT -->
+  <div class="error-alert" id="errorAlert">
+    <span class="material-icons">error</span>
+    <p id="errorMessage"></p>
+  </div>
+
+  <!-- MAIN FORM -->
+  <div id="mainForm">
+    <form id="bancoPerfilesExternosForm">
+      
+      <!-- DATOS DE LA ENTIDAD EXTERNA -->
+      <div class="form-card">
+        <div class="form-section">
+          <div class="section-title">Información de la Entidad</div>
+          
+          <div class="form-group">
+            <label class="form-label" for="nombreEntidad">
+              Nombre de la entidad <span class="required">*</span>
+            </label>
+            <input type="text" class="form-input" id="nombreEntidad" required>
+            <div class="form-error" id="error-nombreEntidad">Este campo es obligatorio.</div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="informacionEntidad">
+              Información de la entidad <span class="required">*</span>
+            </label>
+            <div class="field-wrapper">
+              <textarea class="form-textarea" id="informacionEntidad" required placeholder="Descripción breve de la entidad, su misión, actividades principales, etc."></textarea>
+              <div class="field-icon" id="icon-informacionEntidad">
+                <span class="material-icons">check_circle</span>
+              </div>
+            </div>
+            <div class="form-error" id="error-informacionEntidad">Este campo es obligatorio.</div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="tipoEntidad">
+              Tipo de entidad <span class="required">*</span>
+            </label>
+            <div class="radio-group">
+              <label class="radio-label">
+                <input type="radio" name="tipoEntidad" value="Pública" required>
+                Pública
+              </label>
+              <label class="radio-label">
+                <input type="radio" name="tipoEntidad" value="Privada">
+                Privada
+              </label>
+              <label class="radio-label">
+                <input type="radio" name="tipoEntidad" value="ONG">
+                ONG
+              </label>
+              <label class="radio-label">
+                <input type="radio" name="tipoEntidad" value="Otra">
+                Otra
+              </label>
+            </div>
+            <div class="form-error" id="error-tipoEntidad">Selecciona un tipo de entidad.</div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="municipioDepartamento">
+              Municipio y Departamento <span class="required">*</span>
+            </label>
+            <input type="text" class="form-input" id="municipioDepartamento" required placeholder="Ejemplo: La Paz, Cesar">
+            <div class="form-error" id="error-municipioDepartamento">Este campo es obligatorio.</div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="nombreContacto">
+              Nombre del contacto institucional <span class="required">*</span>
+            </label>
+            <input type="text" class="form-input" id="nombreContacto" required>
+            <div class="form-error" id="error-nombreContacto">Este campo es obligatorio.</div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="cargoContacto">
+              Cargo <span class="required">*</span>
+            </label>
+            <input type="text" class="form-input" id="cargoContacto" required>
+            <div class="form-error" id="error-cargoContacto">Este campo es obligatorio.</div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="correoContacto">
+              Correo electrónico de contacto <span class="required">*</span>
+            </label>
+            <input type="email" class="form-input" id="correoContacto" required>
+            <div class="form-error" id="error-correoContacto">Ingresa un correo válido.</div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="telefonoContacto">
+              Teléfono del contacto
+            </label>
+            <input type="tel" class="form-input" id="telefonoContacto">
+          </div>
+        </div>
+      </div>
+
+      <!-- PERFILES CONTAINER -->
+      <div id="perfilesContainer"></div>
+
+      <!-- ADD PERFIL BUTTON -->
+      <button type="button" class="btn btn-secondary btn-add-perfil" id="btnAddPerfil">
+        <span class="material-icons">add_circle</span>
+        Agregar otro perfil
+      </button>
+
+      <!-- FORM ACTIONS -->
+      <div class="form-actions">
+        <button type="button" class="btn btn-secondary" id="btnReset">
+          <span class="material-icons">restart_alt</span>
+          Limpiar formulario
+        </button>
+        <button type="submit" class="btn btn-primary" id="btnSubmit">
+          <span class="material-icons">send</span>
+          Enviar formulario
+        </button>
+      </div>
+
+    </form>
+  </div>
+
+  <!-- SUCCESS MESSAGE -->
+  <div class="success-message" id="successMessage">
+    <span class="material-icons">check_circle</span>
+    <h2>¡Formulario enviado exitosamente!</h2>
+    <p>Gracias por su colaboración. Hemos recibido la información del perfil y será procesada por nuestro equipo.</p>
+  </div>
+
+</div>
+
+<!-- LOADING OVERLAY -->
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="loading-content">
+    <div class="loading-spinner"></div>
+    <p>Enviando formulario...</p>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// PERFILES DE EGRESADOS DATA
+// ============================================================
+const PERFILES_EGRESADOS = {
+  'biologia': {
+    title: 'Perfil del egresado - Biología',
+    content: [
+      'Los biólogos egresados de la UNAL, sede De La Paz son profesionales con conocimientos y habilidades necesarias para:',
+      '- Describir los procesos, mecanismos, componentes moleculares y celulares que gobiernan el funcionamiento de la célula para regularlos o modificarlos con fines de investigación básica y aplicada.',
+      '- Conocer la organización jerárquica de la biodiversidad, sus interacciones y problemáticas, lo cual permite gestionar los retos de conservación de la naturaleza considerando los contextos sociales, políticos, económicos y culturales.',
+      '- Comprender los procesos de cambio asociados con la evolución de la vida y los mecanismos de transmisión genética para enfrentar los desafíos y promover el avance de las ciencias biológicas.',
+      '- Formular e implementar proyectos de investigación y plantear análisis que permitan contribuir a la toma de decisiones.',
+      '-Desempeñarse en agencias o entidades gubernamentales, privadas, y/o organizaciones ambientales sin ánimo de lucro, institutos de investigación, instituciones educativas de educación superior, en áreas relacionadas con la biología molecular y celular, la genética, la biodiversidad y conservación.',
+      'Lo anterior, enmarcados dentro de los principios de diálogo, equidad, honestidad, pertenencia, respeto, responsabilidad y solidaridad para trabajar en equipos interdisciplinares e interculturales, de forma independiente y en equipo, que pueden resolver problemas en ciencias biológicas básicas y aplicadas, o problemáticas que afectan al medio ambiente y la sociedad.'
+    ]
+  },
+  'estadistica': {
+    title: 'Perfil del egresado - Estadística',
+    content: [
+      'Los futuros egresados del programa de Estadística se destacan por su desarrollo integral como profesionales y ciudadanos. Son personas autónomas y proactivas, capaces de gestionar su aprendizaje de manera efectiva y continuar su crecimiento profesional de forma constante.',
+      'Poseen un agudo pensamiento crítico, que les permite abordar problemas multidisciplinarios e interdisciplinarios, contribuyendo activamente con soluciones innovadoras en diferentes sectores. Además de un sólido conocimiento técnico en estadística, los futuros egresados contarán con habilidades avanzadas en el manejo de herramientas y técnicas de análisis de datos e inteligencia artificial, lo que les permitirá contribuir significativamente en la toma de decisiones en diversos campos del conocimiento.',
+      'Sus competencias en estadística y análisis de datos se complementan con una fuerte conciencia social, manifestada en su compromiso con el bienestar de la comunidad y la aplicación ética de sus conocimientos, que lo impulsa a utilizar sus habilidades para contribuir al desarrollo sostenible y equitativo.',
+      'Su formación integral los prepara para desempeñarse con éxito en diversos roles, tales como analistas de datos, consultores estadísticos, planificadores de políticas públicas, investigadores y profesionales en sectores que abarcan la investigación, la industria, la salud, la educación y el sector público.'
+    ]
+  },
+  'geografia': {
+    title: 'Perfil del egresado – Geografía',
+    content: [
+      'Las geógrafas y los geógrafos egresados del programa de Geografía de la sede la Paz tendrán una mirada amplia y humanística sobre el papel de laGeografía en la transformación de las condiciones inequitativas de la producción socioespacial, teniendo sólidas bases de formación ciudadana y ética que marcarán su devenir profesional.',
+      'Contarán con habilidades y destrezas para realizar análisis y diagnósticos sobre las dinámicas territoriales y las transformaciones socioespaciales con un sentido crítico y articulado con las dimensiones ambientales, sociales, políticas y económicas de los territorios.',
+      'Así mismo, tendrán competencias fuertemente desarrolladas para el monitoreo, la interpretación y el análisis del medio físico, del ordenamiento territorial, de los impactos ambientales, habilidades en el manejo de las tecnologías de información geográfica, habilidades para el seguimiento y análisis de procesos sociales urbano - rurales a nivel local, regional, nacional.'
+    ]
+  },
+  'gestion-cultural': {
+    title: 'Perfil del egresado – Gestión Cultural y Comunicativa',
+    content: [
+      'Las personas egresadas del pregrado de Gestión Cultural y Comunicativa formadas por la Universidad Nacional de Colombia, Sede de La Paz, interrogan, analizan, problematizan e interpretan los contextos socioculturales de las poblaciones, comunidades, organizaciones e instituciones en sus territorios, para aportar creativamente al diseño de propuestas que dinamicen, acompañen y transformen dinámicas socioculturales orientadas a la construcción de sociedades más solidarias, expresivas, participativas, diversas y justas. Las personas egresadas están cualificadas para aportar desde su campo de formación a la demanda de los sectores cultural, social, comunicativo, educativo, ambiental, ya sea en el ámbito de carácter público, privado o mixto.',
+      'Las y los gestores culturales y comunicativos de este programa demuestran competencias generales y específicas en áreas de conocimiento afines a la gestión cultural, la comunicación y las artes. Durante su formación se apropian de diversas aptitudes investigativas para comprender contextos socioculturales específicos desde enfoques territoriales, comunitarios, diferenciales, interculturales y de innovación social. Reconocen, valoran y relacionan procesos creativos y procesos comunicativos con las dinámicas socioculturales presentes en los territorios para la gestión de procesos e interpretar desde los diferentes aspectos multidimensionales del desarrollo humano y sociocultural en el contexto de las nuevas tecnologías.',
+      'Las y los egresados se desempeñan como agentes de cambio desde las funciones de promotores, organizadores y gestores, que conocen y aplican herramientas pedagógicas, administrativas y comunicativas para interactuar con las comunidades, actores y agentes de diverso tipo. Todo ello se fundamenta en los principios del respeto, el diálogo, la responsabilidad, la equidad, la solidaridad, la honestidad y la pertenencia.'
+    ]
+  },
+  'ing-biologica': {
+    title: 'Perfil del egresado - Ingeniería Biológica',
+    content: [
+      'Las personas egresadas del pregrado de Ingeniería Biológica de la Universidad Nacional de Colombia, Sede La Paz, serán profesionales integrales y multidisciplinarios, con sólida formación ética y humanística, intelectual, investigativa, técnica, económica y en sostenibilidad ambiental. Estarán preparados para participar de manera multi e interdisciplinaria en los campos de la ingeniería de procesos y la biotecnología, aplicados a diversos sectores como la industria alimentaria, química, farmacéutica, cosmética, agrícola, pecuaria y biotecnológica.',
+      'Este profesional es capaz de aplicar principios y técnicas de las ciencias de la vida, la biología, la ingeniería y la tecnología para diseñar, desarrollar y mejorar procesos y productos que respondan a las necesidades de la sociedad y el entorno. Posee competencias en el desarrollo y optimización de procesos biológicos a diferentes escalas, utilizando células o sus componentes para la generación de productos y servicios. Además, está capacitado para integrar conocimientos científicos, tecnológicos y habilidades administrativas en el diseño de soluciones productivas que respondan a los desafíos del sector agroindustrial y biotecnológico.',
+      'Su formación incluye el manejo de herramientas informáticas avanzadas para el modelado, simulación, optimización y evaluación de procesos biológicos, lo que le permite proponer e implementar alternativas tecnológicas ambientalmente responsables. Entre estas se destacan la producción de biomateriales para bioimpresión 3D, nanomateriales para la administración de fármacos, y tecnologías en energía, microelectrónica y disposición de residuos.'
+    ]
+  },
+  'ing-mecatronica': {
+    title: 'Perfil del egresado - Ingeniería Mecatrónica',
+    content: [
+      'El egresado del programa de Ingeniería Mecatrónica de la Universidad Nacional de Colombia, sede La Paz, es un profesional altamente capacitado para desempeñar con ética, profesionalismo y responsabilidad actividades en electrónica, mecánica, ciencia de datos, inteligencia artificial y gestión empresarial. Lo anterior le dará la capacidad de diseñar y modelar sistemas de control, diseñar y planear e implementar procesos de manufactura, diseñar e implementar sistemas automatizados y de control industrial, analizar datos, implementar sistemas de inteligencia y visión artificial, diseñar y construir dispositivos mecánicos y electrónicos, programar y automatizar sistemas neumáticos, hidráulicos y/o de controladores lógicos programables, diseñar, construir y programar robots, desarrollar software, diseñar y construir sistemas de agricultura inteligente.',
+      'El egresado se destaca por su compromiso con el desarrollo sostenible y su habilidad para el aprendizaje continuo, lo que le permite adaptarse eficientemente a las tecnologías emergentes. A partir de la identificación de necesidades regionales y globales, aplica sus conocimientos y habilidades en la creación de proyectos que buscan soluciones prácticas y sostenibles. Su capacidad para trabajar de manera efectiva en equipos multidisciplinarios le permite colaborar en la búsqueda de soluciones integrales que beneficien a la sociedad y al medio ambiente. Además, el egresado del programa está preparado para liderar proyectos de alto impacto y resolver desafíos socioeconómicos regionales. Por todo lo anterior, el egresado del programa de Ingeniería Mecatrónica es un líder en innovación y tecnología, comprometido con el desarrollo sostenible y el bienestar social, preparado para enfrentar los desafíos actuales y futuros del campo de la mecatrónica con integridad, creatividad y excelencia profesional.'
+    ]
+  }
+};
+
+// ============================================================
+// MODAL FUNCTIONS
+// ============================================================
+function openModal(programaKey) {
+  const perfil = PERFILES_EGRESADOS[programaKey];
+  if (!perfil) return;
+  
+  const modal = document.getElementById('modalPerfil');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalBody = document.getElementById('modalBody');
+  
+  modalTitle.textContent = perfil.title;
+  
+  modalBody.innerHTML = perfil.content.map(p => `<p>${escapeHtml(p)}</p>`).join('');
+  
+  modal.classList.add('visible');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  const modal = document.getElementById('modalPerfil');
+  modal.classList.remove('visible');
+  document.body.style.overflow = '';
+}
+
+// ============================================================
+// CONFIRM MODAL FUNCTIONS
+// ============================================================
+function showConfirmModal(title, message, onConfirm) {
+  const modal = document.getElementById('confirmModal');
+  const modalTitle = document.getElementById('confirmTitle');
+  const modalMessage = document.getElementById('confirmMessage');
+  const btnAccept = document.getElementById('btnAcceptConfirm');
+  const btnCancel = document.getElementById('btnCancelConfirm');
+  
+  modalTitle.textContent = title;
+  modalMessage.textContent = message;
+  
+  modal.classList.add('visible');
+  document.body.style.overflow = 'hidden';
+  
+  // Remove previous listeners
+  const newBtnAccept = btnAccept.cloneNode(true);
+  btnAccept.parentNode.replaceChild(newBtnAccept, btnAccept);
+  const newBtnCancel = btnCancel.cloneNode(true);
+  btnCancel.parentNode.replaceChild(newBtnCancel, btnCancel);
+  
+  // Add new listeners
+  newBtnAccept.addEventListener('click', function() {
+    closeConfirmModal();
+    if (onConfirm) onConfirm();
+  });
+  
+  newBtnCancel.addEventListener('click', closeConfirmModal);
+}
+
+function closeConfirmModal() {
+  const modal = document.getElementById('confirmModal');
+  modal.classList.remove('visible');
+  document.body.style.overflow = '';
+}
+
+// ============================================================
+// GLOBAL STATE
+// ============================================================
+let perfilCount = 0;
+const PROGRAMAS = [
+  'L001 - Biología',
+  'L002 - Estadística',
+  'L003 - Geografía',
+  'L004 - Gestión Cultural y Comunicativa',
+  'L005 - Ingeniería Biológica',
+  'L006 - Ingeniería Mecatrónica'
+];
+
+// ============================================================
+// PERFIL TEMPLATE
+// ============================================================
+function createPerfilCard(index) {
+  const card = document.createElement('div');
+  card.className = 'perfil-card expanded';
+  card.id = `perfil-${index}`;
+  card.dataset.perfilIndex = index;
+  
+  card.innerHTML = `
+    <div class="perfil-header" onclick="togglePerfil(${index})">
+      <div class="perfil-header-left">
+        <div class="perfil-toggle">
+          <span class="material-icons">expand_more</span>
+        </div>
+        <div class="perfil-title">
+          Perfil #${index + 1}
+        </div>
+      </div>
+      <div class="perfil-header-right">
+        <button type="button" class="btn btn-secondary" style="padding: 0.4rem 0.8rem; font-size: 0.8rem;" onclick="event.stopPropagation(); duplicatePerfil(${index})">
+          <span class="material-icons" style="font-size: 1rem;">content_copy</span>
+          <span>Duplicar</span>
+        </button>
+        <button type="button" class="btn-remove-perfil" data-perfil-index="${index}" onclick="event.stopPropagation(); removePerfil(${index})">
+          <span class="material-icons">delete</span>
+          <span>Eliminar</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="perfil-body">
+      <div class="perfil-body-inner">
+        <div class="form-card">
+          <div class="form-section">
+            <div class="form-group">
+              <label class="form-label" for="tipoModalidad-${index}">
+                Tipo de modalidad a vincular <span class="required">*</span>
+              </label>
+              <div class="radio-group">
+                <label class="radio-label">
+                  <input type="radio" name="tipoModalidad-${index}" value="Prácticas" required>
+                  Prácticas
+                </label>
+                <label class="radio-label">
+                  <input type="radio" name="tipoModalidad-${index}" value="Pasantías">
+                  Pasantías
+                </label>
+              </div>
+              <div class="form-error" id="error-tipoModalidad-${index}">Selecciona una modalidad.</div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="descripcionPerfil-${index}">
+                Descripción general del perfil de acuerdo al tipo de modalidad (Práctica y/o Pasantía) <span class="required">*</span>
+              </label>
+              <div class="field-wrapper">
+                <textarea class="form-textarea" id="descripcionPerfil-${index}" required></textarea>
+                <div class="field-icon" id="icon-descripcionPerfil-${index}">
+                  <span class="material-icons">check_circle</span>
+                </div>
+              </div>
+              <div class="form-error" id="error-descripcionPerfil-${index}">Este campo es obligatorio.</div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="dependenciaArea-${index}">
+                Dependencia o área específica de la entidad donde se desarrollará la Práctica y/o Pasantía <span class="required">*</span>
+              </label>
+              <div class="field-wrapper">
+                <input type="text" class="form-input" id="dependenciaArea-${index}" required>
+                <div class="field-icon" id="icon-dependenciaArea-${index}">
+                  <span class="material-icons">check_circle</span>
+                </div>
+              </div>
+              <div class="form-error" id="error-dependenciaArea-${index}">Este campo es obligatorio.</div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="cantidadEstudiantes-${index}">
+                Cantidad de estudiantes requeridos/as para este perfil <span class="required">*</span>
+              </label>
+              <input type="number" class="form-input" id="cantidadEstudiantes-${index}" min="1" required>
+              <div class="form-error" id="error-cantidadEstudiantes-${index}">Ingresa un número válido.</div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="duracionEstimada-${index}">
+                Duración estimada de la Práctica y/o Pasantía <span class="required">*</span>
+              </label>
+              <input type="text" class="form-input" id="duracionEstimada-${index}" required placeholder="Ejemplo: 6 meses, 1 año, etc.">
+              <div class="form-error" id="error-duracionEstimada-${index}">Este campo es obligatorio.</div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="modalidadTrabajo-${index}">
+                Modalidad <span class="required">*</span>
+              </label>
+              <div class="radio-group">
+                <label class="radio-label">
+                  <input type="radio" name="modalidadTrabajo-${index}" value="Presencial" required>
+                  Presencial
+                </label>
+                <label class="radio-label">
+                  <input type="radio" name="modalidadTrabajo-${index}" value="Virtual">
+                  Virtual
+                </label>
+                <label class="radio-label">
+                  <input type="radio" name="modalidadTrabajo-${index}" value="Hibrida">
+                  Hibrida
+                </label>
+              </div>
+              <div class="form-error" id="error-modalidadTrabajo-${index}">Selecciona una modalidad.</div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                Programas académicos para los cuales se considera pertinente este perfil <span class="required">*</span>
+              </label>
+              <div class="checkbox-group" id="programas-${index}">
+                ${PROGRAMAS.map(prog => `
+                  <label class="checkbox-label">
+                    <input type="checkbox" name="programas-${index}" value="${prog}">
+                    ${prog}
+                  </label>
+                `).join('')}
+              </div>
+              <div class="form-error" id="error-programas-${index}">Selecciona al menos un programa.</div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="competenciasEspecificas-${index}">
+                Competencias específicas o conocimientos deseados <span class="required">*</span>
+              </label>
+              <div class="field-wrapper">
+                <textarea class="form-textarea" id="competenciasEspecificas-${index}" required></textarea>
+                <div class="field-icon" id="icon-competenciasEspecificas-${index}">
+                  <span class="material-icons">check_circle</span>
+                </div>
+              </div>
+              <div class="form-error" id="error-competenciasEspecificas-${index}">Este campo es obligatorio.</div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="apoyoEstudiante-${index}">
+                ¿La entidad ofrece algún tipo de apoyo al estudiante en Práctica y/o Pasantía? <span class="required">*</span>
+              </label>
+              <div class="radio-group">
+                <label class="radio-label">
+                  <input type="radio" name="apoyoEstudiante-${index}" value="SI" required onchange="toggleApoyoDetalle(${index})">
+                  SI
+                </label>
+                <label class="radio-label">
+                  <input type="radio" name="apoyoEstudiante-${index}" value="NO" onchange="toggleApoyoDetalle(${index})">
+                  NO
+                </label>
+              </div>
+              <div class="form-error" id="error-apoyoEstudiante-${index}">Selecciona una opción.</div>
+            </div>
+
+            <div class="form-group" id="apoyoDetalle-container-${index}" style="display: none;">
+              <label class="form-label" for="tipoApoyo-${index}">
+                La entidad ofrece algún tipo de apoyo al estudiante en Práctica y/o Pasantía, seleccione el tipo de apoyo <span class="required">*</span>
+              </label>
+              <div class="checkbox-group">
+                <label class="checkbox-label">
+                  <input type="checkbox" name="tipoApoyo-${index}" value="Auxilio económico">
+                  Auxilio económico
+                </label>
+                <label class="checkbox-label">
+                  <input type="checkbox" name="tipoApoyo-${index}" value="Alimentación">
+                  Alimentación
+                </label>
+                <label class="checkbox-label">
+                  <input type="checkbox" name="tipoApoyo-${index}" value="Transporte">
+                  Transporte
+                </label>
+                <label class="checkbox-label">
+                  <input type="checkbox" name="tipoApoyo-${index}" value="Otro" onchange="toggleOtroApoyo(${index})">
+                  Otro
+                </label>
+              </div>
+              <div class="form-error" id="error-tipoApoyo-${index}">Selecciona al menos un tipo de apoyo.</div>
+              
+              <div class="form-group" id="otroApoyo-container-${index}" style="display: none; margin-top: 1rem;">
+                <label class="form-label" for="otroApoyoTexto-${index}">
+                  Especifique el tipo de apoyo <span class="required">*</span>
+                </label>
+                <div class="field-wrapper">
+                  <textarea 
+                    class="form-textarea" 
+                    id="otroApoyoTexto-${index}" 
+                    placeholder="Describe el tipo de apoyo que ofrece la entidad"
+                  ></textarea>
+                  <div class="field-icon" id="icon-otroApoyoTexto-${index}">
+                    <span class="material-icons">check_circle</span>
+                  </div>
+                </div>
+                <div class="form-error" id="error-otroApoyoTexto-${index}">Este campo es obligatorio cuando seleccionas "Otro".</div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="observaciones-${index}">
+                Observaciones adicionales o sugerencias
+              </label>
+              <div class="field-wrapper">
+                <textarea 
+                  class="form-textarea" 
+                  id="observaciones-${index}" 
+                  placeholder="Espacio libre para comentarios relacionados con la Práctica y/o Pasantía, sugerencias al proceso de vinculación, condiciones específicas, etc."
+                ></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+  
+  return card;
+}
+
+// ============================================================
+// APOYO DETALLE TOGGLE
+// ============================================================
+function toggleApoyoDetalle(index) {
+  const selectedValue = document.querySelector(`input[name="apoyoEstudiante-${index}"]:checked`)?.value;
+  const detalleContainer = document.getElementById(`apoyoDetalle-container-${index}`);
+  const tipoApoyoCheckboxes = document.querySelectorAll(`input[name="tipoApoyo-${index}"]`);
+  const errorDiv = document.getElementById(`error-tipoApoyo-${index}`);
+  
+  if (selectedValue === 'SI') {
+    detalleContainer.style.display = 'block';
+    tipoApoyoCheckboxes.forEach(cb => cb.required = true);
+  } else {
+    detalleContainer.style.display = 'none';
+    tipoApoyoCheckboxes.forEach(cb => {
+      cb.required = false;
+      cb.checked = false;
+    });
+    // Ocultar campo "Otro" si estaba visible
+    const otroContainer = document.getElementById(`otroApoyo-container-${index}`);
+    if (otroContainer) {
+      otroContainer.style.display = 'none';
+      const otroTexto = document.getElementById(`otroApoyoTexto-${index}`);
+      if (otroTexto) otroTexto.value = '';
+    }
+    if (errorDiv) {
+      errorDiv.classList.remove('visible');
+    }
+  }
+}
+
+// ============================================================
+// OTRO APOYO TOGGLE
+// ============================================================
+function toggleOtroApoyo(index) {
+  const otroCheckbox = document.querySelector(`input[name="tipoApoyo-${index}"][value="Otro"]`);
+  const otroContainer = document.getElementById(`otroApoyo-container-${index}`);
+  const otroTexto = document.getElementById(`otroApoyoTexto-${index}`);
+  const errorDiv = document.getElementById(`error-otroApoyoTexto-${index}`);
+  
+  if (otroCheckbox && otroCheckbox.checked) {
+    otroContainer.style.display = 'block';
+    if (otroTexto) otroTexto.required = true;
+  } else {
+    otroContainer.style.display = 'none';
+    if (otroTexto) {
+      otroTexto.required = false;
+      otroTexto.value = '';
+    }
+    if (errorDiv) {
+      errorDiv.classList.remove('visible');
+    }
+  }
+}
+
+// ============================================================
+// ACCORDION TOGGLE
+// ============================================================
+function togglePerfil(index) {
+  const card = document.getElementById(`perfil-${index}`);
+  if (!card) return;
+  
+  if (card.classList.contains('expanded')) {
+    card.classList.remove('expanded');
+    card.classList.add('collapsed');
+  } else {
+    card.classList.remove('collapsed');
+    card.classList.add('expanded');
+  }
+}
+
+// ============================================================
+// ADD/REMOVE PERFILES
+// ============================================================
+function addPerfil() {
+  const container = document.getElementById('perfilesContainer');
+  const card = createPerfilCard(perfilCount);
+  container.appendChild(card);
+  perfilCount++;
+  updatePerfilNumbers();
+  updateRemoveButtons();
+}
+
+function removePerfil(index) {
+  const cards = document.querySelectorAll('.perfil-card');
+  
+  // Validación: debe haber al menos 1 perfil
+  if (cards.length <= 1) {
+    showError('Debes mantener al menos un perfil en el formulario.');
+    return;
+  }
+  
+  // Mostrar modal de confirmación
+  showConfirmModal(
+    '¿Eliminar este perfil?',
+    '¿Estás seguro de que deseas eliminar este perfil? Esta acción no se puede deshacer.',
+    function() {
+      const card = document.getElementById(`perfil-${index}`);
+      if (card) {
+        card.remove();
+        updatePerfilNumbers();
+        updateRemoveButtons();
+      }
+    }
+  );
+}
+
+function duplicatePerfil(sourceIndex) {
+  // Get source perfil data
+  const sourceCard = document.getElementById(`perfil-${sourceIndex}`);
+  if (!sourceCard) return;
+  
+  // Collect data from source perfil
+  const sourceData = {
+    tipoModalidad: document.querySelector(`input[name="tipoModalidad-${sourceIndex}"]:checked`)?.value || '',
+    descripcionPerfil: document.getElementById(`descripcionPerfil-${sourceIndex}`)?.value || '',
+    dependenciaArea: document.getElementById(`dependenciaArea-${sourceIndex}`)?.value || '',
+    cantidadEstudiantes: document.getElementById(`cantidadEstudiantes-${sourceIndex}`)?.value || '',
+    duracionEstimada: document.getElementById(`duracionEstimada-${sourceIndex}`)?.value || '',
+    modalidadTrabajo: document.querySelector(`input[name="modalidadTrabajo-${sourceIndex}"]:checked`)?.value || '',
+    programas: Array.from(document.querySelectorAll(`input[name="programas-${sourceIndex}"]:checked`)).map(cb => cb.value),
+    competenciasEspecificas: document.getElementById(`competenciasEspecificas-${sourceIndex}`)?.value || '',
+    apoyoEstudiante: document.querySelector(`input[name="apoyoEstudiante-${sourceIndex}"]:checked`)?.value || '',
+    tipoApoyo: Array.from(document.querySelectorAll(`input[name="tipoApoyo-${sourceIndex}"]:checked`)).map(cb => cb.value),
+    otroApoyoTexto: document.getElementById(`otroApoyoTexto-${sourceIndex}`)?.value || '',
+    observaciones: document.getElementById(`observaciones-${sourceIndex}`)?.value || ''
+  };
+  
+  // Create new perfil
+  const container = document.getElementById('perfilesContainer');
+  const newCard = createPerfilCard(perfilCount);
+  container.appendChild(newCard);
+  const newIndex = perfilCount;
+  perfilCount++;
+  
+  // Populate new perfil with source data
+  setTimeout(() => {
+    // Text fields
+    if (sourceData.descripcionPerfil) document.getElementById(`descripcionPerfil-${newIndex}`).value = sourceData.descripcionPerfil;
+    if (sourceData.dependenciaArea) document.getElementById(`dependenciaArea-${newIndex}`).value = sourceData.dependenciaArea;
+    if (sourceData.cantidadEstudiantes) document.getElementById(`cantidadEstudiantes-${newIndex}`).value = sourceData.cantidadEstudiantes;
+    if (sourceData.duracionEstimada) document.getElementById(`duracionEstimada-${newIndex}`).value = sourceData.duracionEstimada;
+    if (sourceData.competenciasEspecificas) document.getElementById(`competenciasEspecificas-${newIndex}`).value = sourceData.competenciasEspecificas;
+    if (sourceData.observaciones) document.getElementById(`observaciones-${newIndex}`).value = sourceData.observaciones;
+    
+    // Radio buttons
+    if (sourceData.tipoModalidad) {
+      const tipoRadio = document.querySelector(`input[name="tipoModalidad-${newIndex}"][value="${sourceData.tipoModalidad}"]`);
+      if (tipoRadio) tipoRadio.checked = true;
+    }
+    if (sourceData.modalidadTrabajo) {
+      const modalidadRadio = document.querySelector(`input[name="modalidadTrabajo-${newIndex}"][value="${sourceData.modalidadTrabajo}"]`);
+      if (modalidadRadio) modalidadRadio.checked = true;
+    }
+    if (sourceData.apoyoEstudiante) {
+      const apoyoRadio = document.querySelector(`input[name="apoyoEstudiante-${newIndex}"][value="${sourceData.apoyoEstudiante}"]`);
+      if (apoyoRadio) {
+        apoyoRadio.checked = true;
+        toggleApoyoDetalle(newIndex);
+      }
+    }
+    
+    // Checkboxes - programas
+    sourceData.programas.forEach(prog => {
+      const checkbox = document.querySelector(`input[name="programas-${newIndex}"][value="${prog}"]`);
+      if (checkbox) checkbox.checked = true;
+    });
+    
+    // Checkboxes - tipo apoyo
+    if (sourceData.tipoApoyo) {
+      sourceData.tipoApoyo.forEach(tipo => {
+        const checkbox = document.querySelector(`input[name="tipoApoyo-${newIndex}"][value="${tipo}"]`);
+        if (checkbox) {
+          checkbox.checked = true;
+          // Si es "Otro", mostrar el campo de texto y copiar el valor
+          if (tipo === 'Otro') {
+            toggleOtroApoyo(newIndex);
+            if (sourceData.otroApoyoTexto) {
+              setTimeout(() => {
+                document.getElementById(`otroApoyoTexto-${newIndex}`).value = sourceData.otroApoyoTexto;
+              }, 100);
+            }
+          }
+        }
+      });
+    }
+  }, 50);
+  
+  updatePerfilNumbers();
+  updateRemoveButtons();
+}
+
+function updatePerfilNumbers() {
+  const cards = document.querySelectorAll('.perfil-card');
+  cards.forEach((card, index) => {
+    const title = card.querySelector('.perfil-title');
+    if (title) {
+      title.textContent = `Perfil #${index + 1}`;
+    }
+  });
+}
+
+function updateRemoveButtons() {
+  const cards = document.querySelectorAll('.perfil-card');
+  const removeButtons = document.querySelectorAll('.btn-remove-perfil');
+  
+  removeButtons.forEach(btn => {
+    if (cards.length <= 1) {
+      btn.disabled = true;
+      btn.style.opacity = '0.5';
+      btn.style.cursor = 'not-allowed';
+    } else {
+      btn.disabled = false;
+      btn.style.opacity = '1';
+      btn.style.cursor = 'pointer';
+    }
+  });
+}
+
+// ============================================================
+// UTILITY FUNCTIONS
+// ============================================================
+function escapeHtml(text) {
+  if (!text) return '';
+  const map = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#039;'
+  };
+  return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+}
+
+function showError(message) {
+  const errorAlert = document.getElementById('errorAlert');
+  const errorMessage = document.getElementById('errorMessage');
+  errorMessage.textContent = message;
+  errorAlert.classList.add('visible');
+  
+  setTimeout(() => {
+    errorAlert.classList.remove('visible');
+  }, 5000);
+}
+
+function hideError() {
+  const errorAlert = document.getElementById('errorAlert');
+  errorAlert.classList.remove('visible');
+}
+
+function showLoading() {
+  document.getElementById('loadingOverlay').classList.add('visible');
+}
+
+function hideLoading() {
+  document.getElementById('loadingOverlay').classList.remove('visible');
+}
+
+function showSuccess() {
+  document.getElementById('mainForm').style.display = 'none';
+  document.getElementById('successMessage').classList.add('visible');
+}
+
+// ============================================================
+// VALIDATION
+// ============================================================
+function validateField(field) {
+  const errorDiv = document.getElementById(`error-${field.id}`);
+  let isValid = true;
+  
+  if (field.type === 'checkbox') {
+    const checkboxes = document.querySelectorAll(`input[name="${field.name}"]:checked`);
+    isValid = checkboxes.length > 0;
+  } else if (field.type === 'radio') {
+    const radios = document.querySelectorAll(`input[name="${field.name}"]:checked`);
+    isValid = radios.length > 0;
+  } else if (field.type === 'email') {
+    isValid = field.value.trim() !== '' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(field.value);
+  } else if (field.type === 'number') {
+    isValid = field.value.trim() !== '' && parseInt(field.value) > 0;
+  } else {
+    isValid = field.value.trim() !== '';
+  }
+  
+  if (errorDiv) {
+    if (isValid) {
+      errorDiv.classList.remove('visible');
+      field.classList.remove('error');
+      field.classList.add('valid');
+      
+      const icon = document.getElementById(`icon-${field.id}`);
+      if (icon) {
+        icon.classList.add('visible');
+      }
+    } else {
+      errorDiv.classList.add('visible');
+      field.classList.add('error');
+      field.classList.remove('valid');
+      
+      const icon = document.getElementById(`icon-${field.id}`);
+      if (icon) {
+        icon.classList.remove('visible');
+      }
+    }
+  }
+  
+  return isValid;
+}
+
+function validateForm() {
+  let isValid = true;
+  
+  // Validar campos de entidad
+  const textFields = [
+    'nombreEntidad', 'informacionEntidad', 'municipioDepartamento', 'nombreContacto',
+    'cargoContacto', 'correoContacto'
+  ];
+  
+  textFields.forEach(fieldId => {
+    const field = document.getElementById(fieldId);
+    if (field && !validateField(field)) {
+      isValid = false;
+    }
+  });
+  
+  // Validar radio buttons de entidad
+  const radioGroups = ['tipoEntidad'];
+  radioGroups.forEach(groupName => {
+    const checked = document.querySelector(`input[name="${groupName}"]:checked`);
+    const errorDiv = document.getElementById(`error-${groupName}`);
+    if (!checked) {
+      isValid = false;
+      if (errorDiv) errorDiv.classList.add('visible');
+    } else {
+      if (errorDiv) errorDiv.classList.remove('visible');
+    }
+  });
+  
+  // Validar que haya al menos un perfil
+  const perfiles = document.querySelectorAll('.perfil-card');
+  if (perfiles.length === 0) {
+    isValid = false;
+    showError('Debes agregar al menos un perfil.');
+    return false;
+  }
+  
+  // Validar cada perfil
+  perfiles.forEach((perfil, index) => {
+    const perfilIndex = perfil.dataset.perfilIndex;
+    
+    // Campos de texto del perfil
+    const perfilTextFields = [
+      `descripcionPerfil-${perfilIndex}`,
+      `dependenciaArea-${perfilIndex}`,
+      `cantidadEstudiantes-${perfilIndex}`,
+      `duracionEstimada-${perfilIndex}`,
+      `competenciasEspecificas-${perfilIndex}`
+    ];
+    
+    perfilTextFields.forEach(fieldId => {
+      const field = document.getElementById(fieldId);
+      if (field && !validateField(field)) {
+        isValid = false;
+      }
+    });
+    
+    // Radio buttons del perfil
+    const perfilRadioGroups = [
+      `tipoModalidad-${perfilIndex}`,
+      `modalidadTrabajo-${perfilIndex}`,
+      `apoyoEstudiante-${perfilIndex}`
+    ];
+    
+    perfilRadioGroups.forEach(groupName => {
+      const checked = document.querySelector(`input[name="${groupName}"]:checked`);
+      const errorDiv = document.getElementById(`error-${groupName}`);
+      if (!checked) {
+        isValid = false;
+        if (errorDiv) errorDiv.classList.add('visible');
+      } else {
+        if (errorDiv) errorDiv.classList.remove('visible');
+      }
+    });
+    
+    // Validar programas (checkboxes)
+    const programasChecked = document.querySelectorAll(`input[name="programas-${perfilIndex}"]:checked`);
+    const errorProgramas = document.getElementById(`error-programas-${perfilIndex}`);
+    if (programasChecked.length === 0) {
+      isValid = false;
+      if (errorProgramas) errorProgramas.classList.add('visible');
+    } else {
+      if (errorProgramas) errorProgramas.classList.remove('visible');
+    }
+    
+    // Validar tipo de apoyo si "SI" está seleccionado
+    const apoyoSi = document.querySelector(`input[name="apoyoEstudiante-${perfilIndex}"][value="SI"]:checked`);
+    if (apoyoSi) {
+      const tipoApoyoChecked = document.querySelectorAll(`input[name="tipoApoyo-${perfilIndex}"]:checked`);
+      const errorTipoApoyo = document.getElementById(`error-tipoApoyo-${perfilIndex}`);
+      if (tipoApoyoChecked.length === 0) {
+        isValid = false;
+        if (errorTipoApoyo) errorTipoApoyo.classList.add('visible');
+      } else {
+        if (errorTipoApoyo) errorTipoApoyo.classList.remove('visible');
+        
+        // Validar campo de texto "Otro" si está seleccionado
+        const otroChecked = document.querySelector(`input[name="tipoApoyo-${perfilIndex}"][value="Otro"]:checked`);
+        if (otroChecked) {
+          const otroTexto = document.getElementById(`otroApoyoTexto-${perfilIndex}`);
+          const errorOtro = document.getElementById(`error-otroApoyoTexto-${perfilIndex}`);
+          if (!otroTexto || !otroTexto.value.trim()) {
+            isValid = false;
+            if (errorOtro) errorOtro.classList.add('visible');
+          } else {
+            if (errorOtro) errorOtro.classList.remove('visible');
+          }
+        }
+      }
+    }
+  });
+  
+  return isValid;
+}
+
+// ============================================================
+// FORM SUBMISSION
+// ============================================================
+function submitForm(e) {
+  e.preventDefault();
+  hideError();
+  
+  if (!validateForm()) {
+    showError('Por favor completa todos los campos obligatorios correctamente.');
+    return;
+  }
+  
+  // Recopilar datos de la entidad
+  const formData = {
+    nombreEntidad: document.getElementById('nombreEntidad').value.trim(),
+    informacionEntidad: document.getElementById('informacionEntidad').value.trim(),
+    tipoEntidad: document.querySelector('input[name="tipoEntidad"]:checked')?.value || '',
+    municipioDepartamento: document.getElementById('municipioDepartamento').value.trim(),
+    nombreContacto: document.getElementById('nombreContacto').value.trim(),
+    cargoContacto: document.getElementById('cargoContacto').value.trim(),
+    correoContacto: document.getElementById('correoContacto').value.trim(),
+    telefonoContacto: document.getElementById('telefonoContacto').value.trim(),
+    perfiles: []
+  };
+  
+  // Recopilar datos de cada perfil
+  const perfiles = document.querySelectorAll('.perfil-card');
+  perfiles.forEach(perfil => {
+    const index = perfil.dataset.perfilIndex;
+    
+    // Recopilar tipo de apoyo
+    const tipoApoyoValues = Array.from(document.querySelectorAll(`input[name="tipoApoyo-${index}"]:checked`)).map(cb => cb.value);
+    const otroApoyoTexto = document.getElementById(`otroApoyoTexto-${index}`)?.value.trim();
+    
+    // Si "Otro" está seleccionado y tiene texto, reemplazarlo con el texto específico
+    const tipoApoyoFinal = tipoApoyoValues.map(value => {
+      if (value === 'Otro' && otroApoyoTexto) {
+        return `Otro: ${otroApoyoTexto}`;
+      }
+      return value;
+    });
+    
+    const perfilData = {
+      tipoModalidad: document.querySelector(`input[name="tipoModalidad-${index}"]:checked`)?.value || '',
+      descripcionPerfil: document.getElementById(`descripcionPerfil-${index}`)?.value.trim() || '',
+      dependenciaArea: document.getElementById(`dependenciaArea-${index}`)?.value.trim() || '',
+      cantidadEstudiantes: document.getElementById(`cantidadEstudiantes-${index}`)?.value.trim() || '',
+      duracionEstimada: document.getElementById(`duracionEstimada-${index}`)?.value.trim() || '',
+      modalidadTrabajo: document.querySelector(`input[name="modalidadTrabajo-${index}"]:checked`)?.value || '',
+      programas: Array.from(document.querySelectorAll(`input[name="programas-${index}"]:checked`)).map(cb => cb.value),
+      competenciasEspecificas: document.getElementById(`competenciasEspecificas-${index}`)?.value.trim() || '',
+      apoyoEstudiante: document.querySelector(`input[name="apoyoEstudiante-${index}"]:checked`)?.value || '',
+      tipoApoyo: tipoApoyoFinal,
+      observaciones: document.getElementById(`observaciones-${index}`)?.value.trim() || ''
+    };
+    
+    formData.perfiles.push(perfilData);
+  });
+  
+  showLoading();
+  
+  // Enviar a backend
+  if (typeof google !== 'undefined' && google.script && google.script.run) {
+    google.script.run
+      .withSuccessHandler(handleSuccess)
+      .withFailureHandler(handleError)
+      .submitBancoPerfilesExternos(formData);
+  } else {
+    // Mock para desarrollo local
+    setTimeout(() => {
+      hideLoading();
+      showSuccess();
+      console.log('Datos del formulario (modo desarrollo):', formData);
+    }, 1500);
+  }
+}
+
+function handleSuccess(response) {
+  hideLoading();
+  
+  if (response.success) {
+    showSuccess();
+  } else {
+    showError(response.error || 'Error al enviar el formulario');
+  }
+}
+
+function handleError(error) {
+  hideLoading();
+  showError('Error de conexión: ' + error.message);
+}
+
+// ============================================================
+// EVENT LISTENERS
+// ============================================================
+document.addEventListener('DOMContentLoaded', function() {
+  const form = document.getElementById('bancoPerfilesExternosForm');
+  const btnReset = document.getElementById('btnReset');
+  const btnCloseModal = document.getElementById('btnCloseModal');
+  const modalOverlay = document.getElementById('modalPerfil');
+  
+  // Form submit
+  form.addEventListener('submit', submitForm);
+  
+  // Reset button
+  btnReset.addEventListener('click', function() {
+    showConfirmModal(
+      '¿Limpiar formulario?',
+      '¿Estás seguro de que deseas limpiar el formulario? Se perderán todos los datos ingresados.',
+      function() {
+        form.reset();
+        
+        // Limpiar estilos de validación
+        document.querySelectorAll('.form-input, .form-textarea, .form-select').forEach(field => {
+          field.classList.remove('valid', 'error');
+        });
+        
+        document.querySelectorAll('.field-icon').forEach(icon => {
+          icon.classList.remove('visible');
+        });
+        
+        document.querySelectorAll('.form-error').forEach(error => {
+          error.classList.remove('visible');
+        });
+        
+        hideError();
+        
+        // Limpiar todos los perfiles y crear uno nuevo
+        const container = document.getElementById('perfilesContainer');
+        container.innerHTML = '';
+        perfilCount = 0;
+        addPerfil();
+      }
+    );
+  });
+  
+  // Add perfil button
+  const btnAddPerfil = document.getElementById('btnAddPerfil');
+  btnAddPerfil.addEventListener('click', addPerfil);
+  
+  // Modal close button
+  btnCloseModal.addEventListener('click', closeModal);
+  
+  // Modal overlay click (close)
+  modalOverlay.addEventListener('click', function(e) {
+    if (e.target === modalOverlay) {
+      closeModal();
+    }
+  });
+  
+  // Escape key closes modals
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      if (modalOverlay.classList.contains('visible')) {
+        closeModal();
+      }
+      const confirmModal = document.getElementById('confirmModal');
+      if (confirmModal.classList.contains('visible')) {
+        closeConfirmModal();
+      }
+    }
+  });
+  
+  // Programa links en info box
+  document.querySelectorAll('.info-box li[data-programa]').forEach(li => {
+    li.addEventListener('click', function() {
+      const programaKey = this.getAttribute('data-programa');
+      openModal(programaKey);
+    });
+  });
+  
+  // Validación en tiempo real
+  const textFields = document.querySelectorAll('.form-input, .form-textarea');
+  textFields.forEach(field => {
+    field.addEventListener('blur', function() {
+      if (this.hasAttribute('required') || this.value.trim() !== '') {
+        validateField(this);
+      }
+    });
+    
+    field.addEventListener('input', function() {
+      if (this.classList.contains('error') || this.classList.contains('valid')) {
+        validateField(this);
+      }
+    });
+  });
+  
+  // Comunicar altura al iframe padre
+  function updateHeight() {
+    const height = document.body.scrollHeight;
+    window.parent.postMessage({ type: 'setHeight', height: height }, '*');
+  }
+  
+  updateHeight();
+  window.addEventListener('load', updateHeight);
+  window.addEventListener('resize', updateHeight);
+  
+  // Observar cambios en el DOM
+  const observer = new MutationObserver(updateHeight);
+  observer.observe(document.body, { childList: true, subtree: true, attributes: true });
+  
+  // Inicializar con un perfil
+  addPerfil();
+});
+</script>
+
+</body>
+</html>

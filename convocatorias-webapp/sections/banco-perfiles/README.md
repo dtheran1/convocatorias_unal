@@ -92,7 +92,6 @@ El sistema creará automáticamente una hoja llamada **"Banco de Perfiles"** con
 | Modalidad Trabajo | Presencial, Virtual o Híbrida |
 | Programas Académicos | Lista de programas pertinentes |
 | Competencias Específicas | Conocimientos técnicos requeridos |
-| Habilidades Valoradas | Soft skills y actitudes |
 | Apoyo Estudiante | SI, NO u Otro |
 | Observaciones | Información adicional |
 

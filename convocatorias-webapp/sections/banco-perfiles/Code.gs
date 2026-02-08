@@ -132,8 +132,8 @@ function initializeSheet(sheetId) {
     'Modalidad Trabajo',
     'Programas Académicos',
     'Competencias Específicas',
-    'Habilidades Valoradas',
     'Apoyo Estudiante',
+    'Detalle Apoyo',
     'Observaciones'
   ];
   
@@ -253,8 +253,8 @@ function saveToSheet(formData) {
       perfil.modalidadTrabajo,
       perfil.programas.join(', '),
       perfil.competenciasEspecificas,
-      perfil.habilidadesValoradas,
       perfil.apoyoEstudiante,
+      perfil.apoyoDetalle || '',
       perfil.observaciones || ''
     ];
     rows.push(row);
@@ -337,13 +337,15 @@ function buildEmailTemplate(formData, rowsAdded) {
             <td style="padding: 0.5rem 0;">${escapeHtml(perfil.competenciasEspecificas)}</td>
           </tr>
           <tr>
-            <td style="padding: 0.5rem 0; font-weight: 600; color: #64748b;">Habilidades Valoradas:</td>
-            <td style="padding: 0.5rem 0;">${escapeHtml(perfil.habilidadesValoradas)}</td>
-          </tr>
-          <tr>
             <td style="padding: 0.5rem 0; font-weight: 600; color: #64748b;">Apoyo al Estudiante:</td>
             <td style="padding: 0.5rem 0;">${escapeHtml(perfil.apoyoEstudiante)}</td>
           </tr>
+          ${perfil.apoyoDetalle ? `
+          <tr>
+            <td style="padding: 0.5rem 0; font-weight: 600; color: #64748b;">Detalle del Incentivo:</td>
+            <td style="padding: 0.5rem 0;">${escapeHtml(perfil.apoyoDetalle)}</td>
+          </tr>
+          ` : ''}
           ${perfil.observaciones ? `
           <tr>
             <td style="padding: 0.5rem 0; font-weight: 600; color: #64748b;">Observaciones:</td>

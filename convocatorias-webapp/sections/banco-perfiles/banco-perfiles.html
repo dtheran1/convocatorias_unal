@@ -174,17 +174,6 @@
       font-size: 1.25rem;
     }
 
-    .char-counter {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      text-align: right;
-      margin-top: 0.25rem;
-    }
-
-    .char-counter.warning {
-      color: var(--warning);
-    }
-
     .required {
       color: var(--danger);
       margin-left: 0.2rem;
@@ -355,57 +344,6 @@
       font-weight: 600;
       color: var(--text-primary);
       flex: 1;
-    }
-
-    .perfil-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.25rem;
-      padding: 0.25rem 0.6rem;
-      border-radius: 12px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      margin-left: 0.5rem;
-    }
-
-    .perfil-badge.incomplete {
-      background: #fef3c7;
-      color: #92400e;
-    }
-
-    .perfil-badge.complete {
-      background: #d1fae5;
-      color: #065f46;
-    }
-
-    .perfil-badge .material-icons {
-      font-size: 0.9rem;
-    }
-
-    .perfil-progress {
-      margin-top: 1rem;
-      padding: 0 1.5rem 1rem;
-    }
-
-    .progress-bar-container {
-      height: 6px;
-      background: var(--border);
-      border-radius: 3px;
-      overflow: hidden;
-      margin-bottom: 0.5rem;
-    }
-
-    .progress-bar-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--unal-green) 0%, var(--unal-green-dark) 100%);
-      border-radius: 3px;
-      transition: width 0.3s ease;
-    }
-
-    .progress-text {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      text-align: right;
     }
 
     .perfil-body {
@@ -953,87 +891,6 @@
       }
     }
 
-    /* ========== PREVIEW MODAL ========== */
-    .preview-modal-content {
-      max-width: 900px;
-    }
-
-    .preview-section {
-      margin-bottom: 2rem;
-    }
-
-    .preview-section-title {
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 0.75rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 2px solid var(--border);
-    }
-
-    .preview-field {
-      margin-bottom: 1rem;
-    }
-
-    .preview-label {
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: var(--text-secondary);
-      margin-bottom: 0.25rem;
-    }
-
-    .preview-value {
-      font-size: 0.9rem;
-      color: var(--text-primary);
-      padding: 0.5rem;
-      background: var(--bg-primary);
-      border-radius: var(--radius-sm);
-    }
-
-    .preview-perfil-card {
-      background: var(--bg-primary);
-      border: 2px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1.5rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .preview-perfil-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 1rem;
-      padding-bottom: 0.75rem;
-      border-bottom: 2px solid var(--unal-green-light);
-    }
-
-    .preview-perfil-title {
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: var(--unal-green-dark);
-    }
-
-    .preview-actions {
-      display: flex;
-      gap: 0.75rem;
-      justify-content: flex-end;
-      margin-top: 1.5rem;
-      padding-top: 1.5rem;
-      border-top: 2px solid var(--border);
-    }
-
-    @media (max-width: 768px) {
-      .preview-actions {
-        flex-direction: column;
-      }
-
-      .preview-actions .btn {
-        width: 100%;
-      }
-    }
-
     /* ========== TOAST NOTIFICATIONS ========== */
     .toast-container {
       position: fixed;
@@ -1167,7 +1024,7 @@
   <!-- HEADER -->
   <div class="header">
     <h1>Convocatoria Interna - Banco de Perfiles de Prácticas y Pasantías</h1>
-    <p>Universidad Nacional de Colombia – Sede de La Paz - 2026-1</p>
+    <p>Universidad Nacional de Colombia – Sede de La Paz</p>
   </div>
 
   <!-- INFO BOX -->
@@ -1204,33 +1061,6 @@
       </div>
       <div class="modal-body" id="modalBody">
         <!-- Content will be injected here -->
-      </div>
-    </div>
-  </div>
-
-  <!-- PREVIEW MODAL -->
-  <div class="modal-overlay" id="previewModal">
-    <div class="modal-content preview-modal-content">
-      <div class="modal-header">
-        <div class="modal-header-text">
-          <h2 class="modal-title">Vista previa del formulario</h2>
-        </div>
-        <button type="button" class="btn-close-modal" id="btnClosePreview">
-          <span class="material-icons">close</span>
-        </button>
-      </div>
-      <div class="modal-body" id="previewBody">
-        <!-- Content will be injected here -->
-      </div>
-      <div class="preview-actions">
-        <button type="button" class="btn btn-secondary" id="btnEditFromPreview">
-          <span class="material-icons">edit</span>
-          Editar
-        </button>
-        <button type="button" class="btn btn-primary" id="btnSubmitFromPreview">
-          <span class="material-icons">send</span>
-          Enviar formulario
-        </button>
       </div>
     </div>
   </div>
@@ -1309,10 +1139,6 @@
         <button type="button" class="btn btn-secondary" id="btnReset">
           <span class="material-icons">restart_alt</span>
           Limpiar formulario
-        </button>
-        <button type="button" class="btn btn-secondary" id="btnPreview">
-          <span class="material-icons">visibility</span>
-          Vista previa
         </button>
         <button type="submit" class="btn btn-primary" id="btnSubmit">
           <span class="material-icons">send</span>
@@ -1432,10 +1258,6 @@ function createPerfilCard(index) {
         </div>
         <div class="perfil-title">
           Perfil #${index + 1}
-          <span class="perfil-badge incomplete" id="badge-${index}">
-            <span class="material-icons">schedule</span>
-            Incompleto
-          </span>
         </div>
       </div>
       <div class="perfil-header-right">
@@ -1448,13 +1270,6 @@ function createPerfilCard(index) {
           <span>Eliminar</span>
         </button>
       </div>
-    </div>
-
-    <div class="perfil-progress" id="progress-${index}">
-      <div class="progress-bar-container">
-        <div class="progress-bar-fill" style="width: 0%"></div>
-      </div>
-      <div class="progress-text">0 de 9 campos completados</div>
     </div>
 
     <div class="perfil-body">
@@ -1483,12 +1298,11 @@ function createPerfilCard(index) {
             Descripción general del perfil de acuerdo al tipo de modalidad <span class="required">*</span>
           </label>
           <div class="field-wrapper">
-            <textarea class="form-textarea" id="descripcionPerfil-${index}" maxlength="500" required></textarea>
+            <textarea class="form-textarea" id="descripcionPerfil-${index}" required></textarea>
             <div class="field-icon" id="icon-descripcionPerfil-${index}">
               <span class="material-icons">check_circle</span>
             </div>
           </div>
-          <div class="char-counter" id="counter-descripcionPerfil-${index}">0 / 500</div>
           <div class="form-error" id="error-descripcionPerfil-${index}">Este campo es obligatorio.</div>
         </div>
 
@@ -1554,48 +1368,45 @@ function createPerfilCard(index) {
             Competencias específicas o conocimientos deseados <span class="required">*</span>
           </label>
           <div class="field-wrapper">
-            <textarea class="form-textarea" id="competenciasEspecificas-${index}" maxlength="300" required></textarea>
+            <textarea class="form-textarea" id="competenciasEspecificas-${index}" required></textarea>
             <div class="field-icon" id="icon-competenciasEspecificas-${index}">
               <span class="material-icons">check_circle</span>
             </div>
           </div>
-          <div class="char-counter" id="counter-competenciasEspecificas-${index}">0 / 300</div>
           <div class="form-error" id="error-competenciasEspecificas-${index}">Este campo es obligatorio.</div>
         </div>
 
         <div class="form-group">
-          <label class="form-label" for="habilidadesValoradas-${index}">
-            Competencias/habilidades o actitudes valoradas <span class="required">*</span>
-          </label>
-          <div class="field-wrapper">
-            <textarea class="form-textarea" id="habilidadesValoradas-${index}" maxlength="300" required></textarea>
-            <div class="field-icon" id="icon-habilidadesValoradas-${index}">
-              <span class="material-icons">check_circle</span>
-            </div>
-          </div>
-          <div class="char-counter" id="counter-habilidadesValoradas-${index}">0 / 300</div>
-          <div class="form-error" id="error-habilidadesValoradas-${index}">Este campo es obligatorio.</div>
-        </div>
-
-        <div class="form-group">
           <label class="form-label" for="apoyoEstudiante-${index}">
-            ¿La Dirección/Dependencia/Proyecto ofrece algún tipo de apoyo al estudiante en Práctica y/o Pasantía? <span class="required">*</span>
+            ¿La Dirección/Dependencia/Proyecto ofrece algún incentivo económico a los estudiante en Práctica y/o Pasantía? <span class="required">*</span>
           </label>
           <div class="radio-group">
             <label class="radio-label">
-              <input type="radio" name="apoyoEstudiante-${index}" value="SI" required>
+              <input type="radio" name="apoyoEstudiante-${index}" value="SI" required onchange="toggleApoyoDetalle(${index})">
               SI
             </label>
             <label class="radio-label">
-              <input type="radio" name="apoyoEstudiante-${index}" value="NO">
+              <input type="radio" name="apoyoEstudiante-${index}" value="NO" onchange="toggleApoyoDetalle(${index})">
               NO
             </label>
             <label class="radio-label">
-              <input type="radio" name="apoyoEstudiante-${index}" value="Otro">
+              <input type="radio" name="apoyoEstudiante-${index}" value="Otro" onchange="toggleApoyoDetalle(${index})">
               Otro
             </label>
           </div>
           <div class="form-error" id="error-apoyoEstudiante-${index}">Selecciona una opción.</div>
+        </div>
+
+        <div class="form-group" id="apoyoDetalle-container-${index}" style="display: none;">
+          <label class="form-label" for="apoyoDetalle-${index}">
+            Especifique el incentivo <span class="required">*</span>
+          </label>
+          <textarea 
+            class="form-textarea" 
+            id="apoyoDetalle-${index}" 
+            placeholder="Describa el tipo de incentivo económico ofrecido..."
+          ></textarea>
+          <div class="form-error" id="error-apoyoDetalle-${index}">Este campo es obligatorio cuando seleccionas SI u Otro.</div>
         </div>
 
         <div class="form-group">
@@ -1611,6 +1422,28 @@ function createPerfilCard(index) {
   `;
   
   return card;
+}
+
+// ============================================================
+// APOYO DETALLE TOGGLE
+// ============================================================
+function toggleApoyoDetalle(index) {
+  const selectedValue = document.querySelector(`input[name="apoyoEstudiante-${index}"]:checked`)?.value;
+  const detalleContainer = document.getElementById(`apoyoDetalle-container-${index}`);
+  const detalleTextarea = document.getElementById(`apoyoDetalle-${index}`);
+  const errorDiv = document.getElementById(`error-apoyoDetalle-${index}`);
+  
+  if (selectedValue === 'SI' || selectedValue === 'Otro') {
+    detalleContainer.style.display = 'block';
+    detalleTextarea.required = true;
+  } else {
+    detalleContainer.style.display = 'none';
+    detalleTextarea.required = false;
+    detalleTextarea.value = '';
+    if (errorDiv) {
+      errorDiv.style.display = 'none';
+    }
+  }
 }
 
 // ============================================================
@@ -1640,12 +1473,6 @@ function addPerfil() {
   perfilCount++;
   updatePerfilNumbers();
   updateRemoveButtons();
-  
-  // Attach completion tracking listeners
-  setTimeout(() => {
-    attachCompletionListeners(currentIndex);
-    updatePerfilCompletion(currentIndex);
-  }, 100);
 }
 
 function removePerfil(index) {
@@ -1687,8 +1514,8 @@ function duplicatePerfil(sourceIndex) {
     modalidadTrabajo: document.querySelector(`input[name="modalidadTrabajo-${sourceIndex}"]:checked`)?.value || '',
     programas: Array.from(document.querySelectorAll(`input[name="programas-${sourceIndex}"]:checked`)).map(cb => cb.value),
     competenciasEspecificas: document.getElementById(`competenciasEspecificas-${sourceIndex}`)?.value || '',
-    habilidadesValoradas: document.getElementById(`habilidadesValoradas-${sourceIndex}`)?.value || '',
     apoyoEstudiante: document.querySelector(`input[name="apoyoEstudiante-${sourceIndex}"]:checked`)?.value || '',
+    apoyoDetalle: document.getElementById(`apoyoDetalle-${sourceIndex}`)?.value || '',
     observaciones: document.getElementById(`observaciones-${sourceIndex}`)?.value || ''
   };
   
@@ -1706,7 +1533,6 @@ function duplicatePerfil(sourceIndex) {
     if (sourceData.dependenciaProyecto) document.getElementById(`dependenciaProyecto-${newIndex}`).value = sourceData.dependenciaProyecto;
     if (sourceData.cantidadEstudiantes) document.getElementById(`cantidadEstudiantes-${newIndex}`).value = sourceData.cantidadEstudiantes;
     if (sourceData.competenciasEspecificas) document.getElementById(`competenciasEspecificas-${newIndex}`).value = sourceData.competenciasEspecificas;
-    if (sourceData.habilidadesValoradas) document.getElementById(`habilidadesValoradas-${newIndex}`).value = sourceData.habilidadesValoradas;
     if (sourceData.observaciones) document.getElementById(`observaciones-${newIndex}`).value = sourceData.observaciones;
     
     // Radio buttons
@@ -1720,7 +1546,18 @@ function duplicatePerfil(sourceIndex) {
     }
     if (sourceData.apoyoEstudiante) {
       const apoyoRadio = document.querySelector(`input[name="apoyoEstudiante-${newIndex}"][value="${sourceData.apoyoEstudiante}"]`);
-      if (apoyoRadio) apoyoRadio.checked = true;
+      if (apoyoRadio) {
+        apoyoRadio.checked = true;
+        toggleApoyoDetalle(newIndex);
+      }
+    }
+    
+    // ApoyoDetalle textarea (si aplica)
+    if (sourceData.apoyoDetalle) {
+      const apoyoDetalleTextarea = document.getElementById(`apoyoDetalle-${newIndex}`);
+      if (apoyoDetalleTextarea) {
+        apoyoDetalleTextarea.value = sourceData.apoyoDetalle;
+      }
     }
     
     // Checkboxes (programas)
@@ -1731,8 +1568,6 @@ function duplicatePerfil(sourceIndex) {
     
     updatePerfilNumbers();
     updateRemoveButtons();
-    attachCompletionListeners(newIndex);
-    updatePerfilCompletion(newIndex);
     
     // Scroll to new perfil
     newCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -1765,203 +1600,6 @@ function updateRemoveButtons() {
 }
 
 // ============================================================
-// PERFIL COMPLETION TRACKING
-// ============================================================
-function updatePerfilCompletion(index) {
-  const TOTAL_FIELDS = 9; // Total required fields per perfil
-  let completed = 0;
-  
-  // Text fields
-  const textFields = [
-    `descripcionPerfil-${index}`,
-    `dependenciaProyecto-${index}`,
-    `cantidadEstudiantes-${index}`,
-    `competenciasEspecificas-${index}`,
-    `habilidadesValoradas-${index}`
-  ];
-  
-  textFields.forEach(fieldId => {
-    const field = document.getElementById(fieldId);
-    if (field && field.value.trim() !== '') {
-      completed++;
-    }
-  });
-  
-  // Radio groups
-  const radioGroups = [
-    `tipoModalidad-${index}`,
-    `modalidadTrabajo-${index}`,
-    `apoyoEstudiante-${index}`
-  ];
-  
-  radioGroups.forEach(groupName => {
-    const checked = document.querySelector(`input[name="${groupName}"]:checked`);
-    if (checked) {
-      completed++;
-    }
-  });
-  
-  // Checkbox group (programas)
-  const checkedProgramas = document.querySelectorAll(`input[name="programas-${index}"]:checked`);
-  if (checkedProgramas.length > 0) {
-    completed++;
-  }
-  
-  // Update progress bar
-  const progressContainer = document.getElementById(`progress-${index}`);
-  if (progressContainer) {
-    const progressBar = progressContainer.querySelector('.progress-bar-fill');
-    const progressText = progressContainer.querySelector('.progress-text');
-    const percentage = (completed / TOTAL_FIELDS) * 100;
-    
-    if (progressBar) progressBar.style.width = percentage + '%';
-    if (progressText) progressText.textContent = `${completed} de ${TOTAL_FIELDS} campos completados`;
-  }
-  
-  // Update badge
-  const badge = document.getElementById(`badge-${index}`);
-  if (badge) {
-    if (completed === TOTAL_FIELDS) {
-      badge.className = 'perfil-badge complete';
-      badge.innerHTML = '<span class="material-icons">check_circle</span> Completo';
-    } else {
-      badge.className = 'perfil-badge incomplete';
-      badge.innerHTML = '<span class="material-icons">schedule</span> Incompleto';
-    }
-  }
-}
-
-function attachCompletionListeners(index) {
-  // Text inputs and textareas
-  const textFields = [
-    `descripcionPerfil-${index}`,
-    `dependenciaProyecto-${index}`,
-    `cantidadEstudiantes-${index}`,
-    `competenciasEspecificas-${index}`,
-    `habilidadesValoradas-${index}`
-  ];
-  
-  textFields.forEach(fieldId => {
-    const field = document.getElementById(fieldId);
-    if (field) {
-      field.addEventListener('input', () => {
-        updatePerfilCompletion(index);
-        updateFieldVisualState(fieldId);
-      });
-      field.addEventListener('blur', () => {
-        updatePerfilCompletion(index);
-        updateFieldVisualState(fieldId);
-      });
-      
-      // Initialize visual state
-      updateFieldVisualState(fieldId);
-    }
-  });
-  
-  // Radio groups
-  const radioGroups = [
-    `tipoModalidad-${index}`,
-    `modalidadTrabajo-${index}`,
-    `apoyoEstudiante-${index}`
-  ];
-  
-  radioGroups.forEach(groupName => {
-    const radios = document.querySelectorAll(`input[name="${groupName}"]`);
-    radios.forEach(radio => {
-      radio.addEventListener('change', () => updatePerfilCompletion(index));
-    });
-  });
-  
-  // Checkbox group
-  const checkboxes = document.querySelectorAll(`input[name="programas-${index}"]`);
-  checkboxes.forEach(checkbox => {
-    checkbox.addEventListener('change', () => updatePerfilCompletion(index));
-  });
-}
-
-// ============================================================
-// VALIDATION
-// ============================================================
-function validateField(field) {
-  const errorEl = document.getElementById(`error-${field.id}`);
-  
-  if (field.type === 'email' && field.value && !field.value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
-    field.classList.add('error');
-    if (errorEl) errorEl.classList.add('visible');
-    return false;
-  }
-  
-  if (field.required && !field.value.trim()) {
-    field.classList.add('error');
-    if (errorEl) errorEl.classList.add('visible');
-    return false;
-  }
-  
-  field.classList.remove('error');
-  if (errorEl) errorEl.classList.remove('visible');
-  return true;
-}
-
-function validateRadioGroup(name, index) {
-  const radios = document.querySelectorAll(`input[name="${name}"]`);
-  const errorEl = document.getElementById(`error-${name}`);
-  const checked = Array.from(radios).some(r => r.checked);
-  
-  if (!checked) {
-    if (errorEl) errorEl.classList.add('visible');
-    return false;
-  }
-  
-  if (errorEl) errorEl.classList.remove('visible');
-  return true;
-}
-
-function validateCheckboxGroup(index) {
-  const checkboxes = document.querySelectorAll(`input[name="programas-${index}"]:checked`);
-  const errorEl = document.getElementById(`error-programas-${index}`);
-  
-  if (checkboxes.length === 0) {
-    if (errorEl) errorEl.classList.add('visible');
-    return false;
-  }
-  
-  if (errorEl) errorEl.classList.remove('visible');
-  return true;
-}
-
-function validateForm() {
-  let isValid = true;
-  
-  // Validate dependencia fields
-  ['nombreDependencia', 'correoContacto', 'responsable'].forEach(fieldId => {
-    const field = document.getElementById(fieldId);
-    if (!validateField(field)) isValid = false;
-  });
-  
-  // Validate each perfil
-  const cards = document.querySelectorAll('.perfil-card');
-  cards.forEach((card, idx) => {
-    const index = card.dataset.perfilIndex;
-    
-    // Validate text fields
-    ['descripcionPerfil', 'dependenciaProyecto', 'cantidadEstudiantes', 'competenciasEspecificas', 'habilidadesValoradas'].forEach(fieldName => {
-      const field = document.getElementById(`${fieldName}-${index}`);
-      if (field && !validateField(field)) isValid = false;
-    });
-    
-    // Validate radio groups
-    if (!validateRadioGroup(`tipoModalidad-${index}`, index)) isValid = false;
-    if (!validateRadioGroup(`modalidadTrabajo-${index}`, index)) isValid = false;
-    if (!validateRadioGroup(`apoyoEstudiante-${index}`, index)) isValid = false;
-    
-    // Validate checkbox group
-    if (!validateCheckboxGroup(index)) isValid = false;
-  });
-  
-  return isValid;
-}
-
-// ============================================================
 // FIELD VISUAL STATE
 // ============================================================
 function updateFieldVisualState(fieldId) {
@@ -1969,7 +1607,6 @@ function updateFieldVisualState(fieldId) {
   if (!field) return;
   
   const icon = document.getElementById(`icon-${fieldId}`);
-  const counter = document.getElementById(`counter-${fieldId}`);
   const value = field.value.trim();
   
   // Update visual check icon
@@ -1980,20 +1617,6 @@ function updateFieldVisualState(fieldId) {
     } else {
       icon.classList.remove('visible');
       field.classList.remove('valid');
-    }
-  }
-  
-  // Update character counter for textareas
-  if (counter && field.tagName === 'TEXTAREA') {
-    const maxLength = field.getAttribute('maxlength') || 500;
-    const currentLength = value.length;
-    counter.textContent = `${currentLength} / ${maxLength}`;
-    
-    // Warning when approaching limit (>90%)
-    if (currentLength > maxLength * 0.9) {
-      counter.classList.add('warning');
-    } else {
-      counter.classList.remove('warning');
     }
   }
 }
@@ -2026,13 +1649,67 @@ function collectFormData() {
       modalidadTrabajo: modalidadTrabajo ? modalidadTrabajo.value : '',
       programas: programas,
       competenciasEspecificas: document.getElementById(`competenciasEspecificas-${index}`).value.trim(),
-      habilidadesValoradas: document.getElementById(`habilidadesValoradas-${index}`).value.trim(),
       apoyoEstudiante: apoyoEstudiante ? apoyoEstudiante.value : '',
+      apoyoDetalle: document.getElementById(`apoyoDetalle-${index}`)?.value.trim() || '',
       observaciones: document.getElementById(`observaciones-${index}`).value.trim()
     });
   });
   
   return data;
+}
+
+// ============================================================
+// FORM VALIDATION
+// ============================================================
+function validateForm() {
+  let isValid = true;
+  
+  // Validate general fields
+  const nombreDependencia = document.getElementById('nombreDependencia').value.trim();
+  const correoContacto = document.getElementById('correoContacto').value.trim();
+  const responsable = document.getElementById('responsable').value.trim();
+  
+  if (!nombreDependencia || !correoContacto || !responsable) {
+    isValid = false;
+  }
+  
+  // Validate each perfil
+  const cards = document.querySelectorAll('.perfil-card');
+  cards.forEach(card => {
+    const index = card.dataset.perfilIndex;
+    
+    // Check apoyoEstudiante selection
+    const apoyoEstudiante = document.querySelector(`input[name="apoyoEstudiante-${index}"]:checked`);
+    
+    if (apoyoEstudiante) {
+      const apoyoValue = apoyoEstudiante.value;
+      
+      // If SI or Otro is selected, validate apoyoDetalle
+      if (apoyoValue === 'SI' || apoyoValue === 'Otro') {
+        const apoyoDetalle = document.getElementById(`apoyoDetalle-${index}`);
+        const errorDiv = document.getElementById(`error-apoyoDetalle-${index}`);
+        
+        if (!apoyoDetalle || !apoyoDetalle.value.trim()) {
+          isValid = false;
+          if (errorDiv) {
+            errorDiv.style.display = 'block';
+          }
+          if (apoyoDetalle) {
+            apoyoDetalle.classList.add('error');
+          }
+        } else {
+          if (errorDiv) {
+            errorDiv.style.display = 'none';
+          }
+          if (apoyoDetalle) {
+            apoyoDetalle.classList.remove('error');
+          }
+        }
+      }
+    }
+  });
+  
+  return isValid;
 }
 
 // ============================================================
@@ -2138,123 +1815,8 @@ function closeModal() {
 }
 
 // ============================================================
-// PREVIEW MODAL
+// UTILITY FUNCTIONS
 // ============================================================
-function openPreviewModal() {
-  // Validate form first
-  if (!validateForm()) {
-    showError('Por favor completa todos los campos obligatorios antes de ver la vista previa.');
-    return;
-  }
-  
-  const formData = collectFormData();
-  
-  if (formData.perfiles.length === 0) {
-    showError('Debes agregar al menos un perfil.');
-    return;
-  }
-  
-  // Generate preview HTML
-  const previewBody = document.getElementById('previewBody');
-  
-  let html = `
-    <div class="preview-section">
-      <div class="preview-section-title">Datos de la Dirección/Dependencia/Proyecto</div>
-      <div class="preview-field">
-        <div class="preview-label">Nombre de la Dirección/Dependencia/Proyecto</div>
-        <div class="preview-value">${escapeHtml(formData.nombreDependencia)}</div>
-      </div>
-      <div class="preview-field">
-        <div class="preview-label">Correo electrónico</div>
-        <div class="preview-value">${escapeHtml(formData.correoContacto)}</div>
-      </div>
-      <div class="preview-field">
-        <div class="preview-label">Responsable</div>
-        <div class="preview-value">${escapeHtml(formData.responsable)}</div>
-      </div>
-    </div>
-    
-    <div class="preview-section">
-      <div class="preview-section-title">Perfiles (${formData.perfiles.length})</div>
-  `;
-  
-  formData.perfiles.forEach((perfil, idx) => {
-    html += `
-      <div class="preview-perfil-card">
-        <div class="preview-perfil-header">
-          <div class="preview-perfil-title">Perfil #${idx + 1}</div>
-        </div>
-        
-        <div class="preview-field">
-          <div class="preview-label">Tipo de modalidad</div>
-          <div class="preview-value">${escapeHtml(perfil.tipoModalidad)}</div>
-        </div>
-        
-        <div class="preview-field">
-          <div class="preview-label">Descripción del perfil</div>
-          <div class="preview-value">${escapeHtml(perfil.descripcionPerfil)}</div>
-        </div>
-        
-        <div class="preview-field">
-          <div class="preview-label">Dependencia/Proyecto</div>
-          <div class="preview-value">${escapeHtml(perfil.dependenciaProyecto)}</div>
-        </div>
-        
-        <div class="preview-field">
-          <div class="preview-label">Cantidad de estudiantes requeridos</div>
-          <div class="preview-value">${escapeHtml(perfil.cantidadEstudiantes)}</div>
-        </div>
-        
-        <div class="preview-field">
-          <div class="preview-label">Modalidad de trabajo</div>
-          <div class="preview-value">${escapeHtml(perfil.modalidadTrabajo)}</div>
-        </div>
-        
-        <div class="preview-field">
-          <div class="preview-label">Programas académicos</div>
-          <div class="preview-value">${perfil.programas.map(p => escapeHtml(p)).join(', ')}</div>
-        </div>
-        
-        <div class="preview-field">
-          <div class="preview-label">Competencias específicas</div>
-          <div class="preview-value">${escapeHtml(perfil.competenciasEspecificas)}</div>
-        </div>
-        
-        <div class="preview-field">
-          <div class="preview-label">Habilidades valoradas</div>
-          <div class="preview-value">${escapeHtml(perfil.habilidadesValoradas)}</div>
-        </div>
-        
-        <div class="preview-field">
-          <div class="preview-label">Apoyo al estudiante</div>
-          <div class="preview-value">${escapeHtml(perfil.apoyoEstudiante)}</div>
-        </div>
-        
-        ${perfil.observaciones ? `
-          <div class="preview-field">
-            <div class="preview-label">Observaciones</div>
-            <div class="preview-value">${escapeHtml(perfil.observaciones)}</div>
-          </div>
-        ` : ''}
-      </div>
-    `;
-  });
-  
-  html += `</div>`;
-  
-  previewBody.innerHTML = html;
-  
-  const modal = document.getElementById('previewModal');
-  modal.classList.add('visible');
-  document.body.style.overflow = 'hidden';
-}
-
-function closePreviewModal() {
-  const modal = document.getElementById('previewModal');
-  modal.classList.remove('visible');
-  document.body.style.overflow = '';
-}
-
 function escapeHtml(text) {
   if (!text) return '';
   const div = document.createElement('div');
@@ -2400,8 +1962,6 @@ document.getElementById('btnReset').addEventListener('click', function() {
   );
 });
 
-document.getElementById('btnPreview').addEventListener('click', openPreviewModal);
-
 document.getElementById('bancoPerfilesForm').addEventListener('submit', handleSubmit);
 
 // Add real-time validation
@@ -2437,19 +1997,6 @@ window.addEventListener('DOMContentLoaded', function() {
     }
   });
   
-  // Preview modal handlers
-  document.getElementById('btnClosePreview').addEventListener('click', closePreviewModal);
-  document.getElementById('btnEditFromPreview').addEventListener('click', closePreviewModal);
-  document.getElementById('btnSubmitFromPreview').addEventListener('click', function() {
-    closePreviewModal();
-    document.getElementById('bancoPerfilesForm').dispatchEvent(new Event('submit'));
-  });
-  document.getElementById('previewModal').addEventListener('click', function(e) {
-    if (e.target === this) {
-      closePreviewModal();
-    }
-  });
-  
   // Confirm modal handlers
   document.getElementById('btnAcceptConfirm').addEventListener('click', acceptConfirm);
   document.getElementById('btnCancelConfirm').addEventListener('click', hideConfirm);
@@ -2465,12 +2012,9 @@ window.addEventListener('DOMContentLoaded', function() {
     if (e.key === 'Escape') {
       const confirmModal = document.getElementById('confirmModal');
       const perfilModal = document.getElementById('modalPerfil');
-      const previewModal = document.getElementById('previewModal');
       
       if (confirmModal.classList.contains('visible')) {
         hideConfirm();
-      } else if (previewModal.classList.contains('visible')) {
-        closePreviewModal();
       } else if (perfilModal.classList.contains('visible')) {
         closeModal();
       }

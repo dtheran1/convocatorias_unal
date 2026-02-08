@@ -23,3 +23,6 @@ package-lock.json
 
 # Código.js es una copia de Code.gs (solo necesitamos Code.gs en Apps Script)
 Código.js
+
+# Tests de frontend (usan Jest/Mocha, no compatibles con Apps Script)
+tests/frontend.test.js

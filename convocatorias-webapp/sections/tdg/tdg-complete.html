@@ -214,6 +214,45 @@
       justify-content: center;
     }
 
+    /* Grid especifico para las 4 modalidades */
+    .quick-start-steps.modalidades-grid {
+      grid-template-columns: repeat(4, 1fr);
+      align-items: stretch;
+    }
+
+    .modalidades-grid .quick-step {
+      height: 100%;
+      box-sizing: border-box;
+    }
+
+    @media (max-width: 1100px) {
+      .quick-start-steps.modalidades-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .quick-start-steps.modalidades-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Estilos para click hint */
+    .quick-step .click-hint {
+      margin-top: auto;
+      padding-top: 0.75rem;
+      color: var(--unal-green);
+      font-weight: 600;
+      font-size: 0.85rem;
+      flex: 0 !important;
+    }
+
+    .quick-step .click-hint .material-icons {
+      font-size: 1rem;
+      vertical-align: middle;
+      margin-right: 0.25rem;
+    }
+
     /* Comparison Table */
     .comparison-table-wrapper {
       overflow-x: auto;
@@ -790,6 +829,56 @@
       transform: scale(1.1);
     }
 
+    /* Layout especifico para cards de modalidades */
+    .clickable-card .card-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .clickable-card .card-header .quick-step-number {
+      margin-bottom: 0;
+      flex-shrink: 0;
+    }
+
+    .clickable-card .card-header h4 {
+      margin-bottom: 0;
+    }
+
+    .clickable-card .card-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .clickable-card .card-body p:first-child {
+      flex: 1;
+    }
+
+    /* Step cards (no clickeables) */
+    .step-card .card-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .step-card .card-header .quick-step-number {
+      margin-bottom: 0;
+      flex-shrink: 0;
+    }
+
+    .step-card .card-header h4 {
+      margin-bottom: 0;
+    }
+
+    .step-card .card-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
     /* Responsive */
     @media (max-width: 768px) {
       .container {
@@ -902,45 +991,61 @@
         <p>Existen cuatro modalidades para desarrollar su Trabajo de Grado. Seleccione la que mejor se adapte a sus objetivos académicos.</p>
       </div>
 
-      <div class="quick-start-steps">
+      <div class="quick-start-steps modalidades-grid">
         <div class="quick-step clickable-card" onclick="openModal('modal-monografia')">
-          <div class="quick-step-number">1</div>
-          <h4>Monografía</h4>
-          <p>Documento expositivo o explicativo en el que se aborda un tema específico desde una perspectiva nueva o se muestran los resultados y conclusiones de una investigación.</p>
-          <p style="color: var(--unal-green); font-weight: 600; font-size: 0.85rem; margin-top: 0.75rem;">
-            <span class="material-icons" style="font-size: 1rem; vertical-align: middle;">touch_app</span>
-            Click para ver más información
-          </p>
+          <div class="card-header">
+            <div class="quick-step-number">1</div>
+            <h4>Monografía</h4>
+          </div>
+          <div class="card-body">
+            <p>Documento expositivo o explicativo en el que se aborda un tema específico desde una perspectiva nueva o se muestran los resultados y conclusiones de una investigación.</p>
+            <p class="click-hint">
+              <span class="material-icons">touch_app</span>
+              Click para ver más información
+            </p>
+          </div>
         </div>
 
         <div class="quick-step clickable-card" onclick="openModal('modal-proyecto')">
-          <div class="quick-step-number">2</div>
-          <h4>Participación en Proyecto de Investigación</h4>
-          <p>El estudiante se vincula a un proyecto de investigación ya existente, aportando con actividades, análisis o productos específicos.</p>
-          <p style="color: var(--unal-green); font-weight: 600; font-size: 0.85rem; margin-top: 0.75rem;">
-            <span class="material-icons" style="font-size: 1rem; vertical-align: middle;">touch_app</span>
-            Click para ver más información
-          </p>
+          <div class="card-header">
+            <div class="quick-step-number">2</div>
+            <h4>Participación en Proyecto de Investigación</h4>
+          </div>
+          <div class="card-body">
+            <p>El estudiante se vincula a un proyecto de investigación ya existente, aportando con actividades, análisis o productos específicos.</p>
+            <p class="click-hint">
+              <span class="material-icons">touch_app</span>
+              Click para ver más información
+            </p>
+          </div>
         </div>
 
         <div class="quick-step clickable-card" onclick="openModal('modal-pasantia')">
-          <div class="quick-step-number">3</div>
-          <h4>Pasantía</h4>
-          <p>El estudiante aplicará los métodos de investigación, de evaluación y análisis frente a situaciones específicas en la Entidad/Dependencia UNAL.</p>
-          <p style="color: var(--unal-green); font-weight: 600; font-size: 0.85rem; margin-top: 0.75rem;">
-            <span class="material-icons" style="font-size: 1rem; vertical-align: middle;">touch_app</span>
-            Click para ver más información
-          </p>
+          <div class="card-header">
+            <div class="quick-step-number">3</div>
+            <h4>Pasantía</h4>
+          </div>
+          <div class="card-body">
+            <p>El estudiante aplicará los métodos de investigación, de evaluación y análisis frente a situaciones específicas en la Entidad/Dependencia UNAL.</p>
+            <p class="click-hint">
+              <span class="material-icons">touch_app</span>
+              Click para ver más información
+            </p>
+          </div>
         </div>
 
         <div class="quick-step clickable-card" onclick="openModal('modal-postgrado')">
-          <div class="quick-step-number">4</div>
-          <h4>Asignaturas de Postgrado</h4>
-          <p>Opción que permite a estudiantes de pregrado cursar asignaturas en un programa de posgrado para cumplir con los créditos del Trabajo de Grado.</p>
-          <p style="color: var(--unal-green); font-weight: 600; font-size: 0.85rem; margin-top: 0.75rem;">
-            <span class="material-icons" style="font-size: 1rem; vertical-align: middle;">touch_app</span>
-            Click para ver más información
-          </p>
+          <div class="card-header">
+            <div class="quick-step-number">4</div>
+            <h4>Asignaturas de Postgrado</h4>
+          </div>
+          <div class="card-body">
+            <p>Opción que permite a estudiantes de pregrado cursar asignaturas en un programa de posgrado para cumplir con los créditos del Trabajo de Grado.</p>
+            <p class="click-hint">
+              <span class="material-icons">touch_app</span>
+              Click para ver más información
+            </p>
+          </div>
         </div>
       </div>
 
@@ -956,36 +1061,56 @@
           <span class="material-icons">rocket_launch</span>
           Inicio Rápido
         </h2>
-        <p>Complete su Trabajo de Grado siguiendo estos 4 pasos esenciales</p>
+        <p>Guía paso a paso para inscribir su Trabajo de Grado</p>
       </div>
 
       <div class="quick-start-box">
-        <p><strong>Guía paso a paso para completar exitosamente su Trabajo de Grado</strong></p>
+        <p><strong>📅 Período de Preinscripción:</strong> Se realiza dos veces al año, una en cada semestre. Consulte las fechas publicadas en Postmaster y el calendario académico oficial.</p>
       </div>
 
-      <div class="quick-start-steps">
-        <div class="quick-step">
-          <div class="quick-step-number">1</div>
-          <h4>Seleccione su Modalidad</h4>
-          <p>Revise las 4 modalidades de Trabajo de Grado disponibles y verifique los requisitos específicos de su programa académico.</p>
+      <div class="quick-start-steps modalidades-grid">
+        <div class="quick-step step-card">
+          <div class="card-header">
+            <div class="quick-step-number">1</div>
+            <h4>Conoce el Proceso</h4>
+          </div>
+          <div class="card-body">
+            <p>Revisa la normativa aplicable: 
+              <a href="http://www.legal.unal.edu.co/rlunal/home/doc.jsp?d_i=34800" target="_blank" style="color: var(--unal-green); text-decoration: underline;">Acuerdo 033 de 2007</a>, 
+              <a href="http://www.legal.unal.edu.co/rlunal/home/doc.jsp?d_i=34983" target="_blank" style="color: var(--unal-green); text-decoration: underline;">Acuerdo 026 de 2012</a> y el 
+              <a href="https://delapaz.unal.edu.co/index.php?id=23" target="_blank" style="color: var(--unal-green); text-decoration: underline;">acuerdo de creación de tu programa</a>.
+            </p>
+          </div>
         </div>
 
-        <div class="quick-step">
-          <div class="quick-step-number">2</div>
-          <h4>Descargue los Formatos</h4>
-          <p>Obtenga el formato de preinscripción y el plan general de Trabajo de Grado.</p>
+        <div class="quick-step step-card">
+          <div class="card-header">
+            <div class="quick-step-number">2</div>
+            <h4>Diligencia los Formatos</h4>
+          </div>
+          <div class="card-body">
+            <p>Descarga y diligencia los formatos de TDG</p>
+          </div>
         </div>
 
-        <div class="quick-step">
-          <div class="quick-step-number">3</div>
-          <h4>Consulte la Normativa</h4>
-          <p>Revise el Acuerdo 026 de 2012 (General) y la normativa específica de su programa curricular.</p>
+        <div class="quick-step step-card">
+          <div class="card-header">
+            <div class="quick-step-number">3</div>
+            <h4>Envía tu Solicitud</h4>
+          </div>
+          <div class="card-body">
+            <p>Envía tu solicitud a través del formulario de Pre Inscripciones. Contacto: practicas_paz@unal.edu.co</p>
+          </div>
         </div>
 
-        <div class="quick-step">
-          <div class="quick-step-number">4</div>
-          <h4>Inicie el Proceso</h4>
-          <p>Complete el formato de preinscripción, envíelo a coordinación y espere la aprobación del Comité (aproximadamente 2 semanas).</p>
+        <div class="quick-step step-card">
+          <div class="card-header">
+            <div class="quick-step-number">4</div>
+            <h4>Espera la Aprobación</h4>
+          </div>
+          <div class="card-body">
+            <p>El Comité Académico Asesor estudiará su solicitud. Posterior será notificada la decisión.</p>
+          </div>
         </div>
       </div>
     </section>
@@ -995,95 +1120,492 @@
       <div class="section-header">
         <h2>
           <span class="material-icons">timeline</span>
-          Proceso Completo - Timeline Paso a Paso
+          Proceso de Preinscripción - Trabajo de Grado (TDG)
         </h2>
-        <p>Conozca cada etapa del proceso de su Trabajo de Grado</p>
+        <p><strong>📅 Período:</strong> La fase de preinscripción se realiza dos veces al año, una en cada semestre. Consulte las fechas en el calendario académico.</p>
+      </div>
+
+      <div class="info-box" style="background: var(--unal-green-bg); border-left-color: var(--unal-green);">
+        <p><strong>📧 Formulario de Pre Inscripciones:</strong> Envíe su solicitud a través del formulario de Google. Cualquier inquietud u orientación sobre el proceso escribir a <a href="mailto:practicas_paz@unal.edu.co" style="color: var(--unal-green-dark); font-weight: 600;">practicas_paz@unal.edu.co</a></p>
+        <p style="margin-top: 0.5rem;"><em>(Aprobará el Comité Académico Asesor)</em></p>
       </div>
 
       <div class="timeline">
         <div class="timeline-item">
-          <div class="timeline-marker">📝</div>
+          <div class="timeline-marker">1</div>
           <div class="timeline-content">
-            <div class="timeline-title">Fase 1: Preinscripción</div>
-            <span class="timeline-duration">⏱️ 1-2 semanas</span>
-            <p>Complete el formato de preinscripción, elija su director/supervisor y defina el título tentativo de su proyecto.</p>
-            <strong style="font-size: 0.9rem;">Acciones a realizar:</strong>
-            <ul>
-              <li>Descargar y completar formato de preinscripción</li>
-              <li>Contactar y confirmar director/supervisor</li>
-              <li>Definir título y resumen del proyecto</li>
-              <li>Enviar documentos a coordinación académica</li>
+            <div class="timeline-title">Paso 1: Conoce el proceso</div>
+            <p>Revisa la normativa aplicable antes de iniciar tu solicitud:</p>
+            <ul style="list-style: none; padding-left: 0;">
+              <li style="margin-bottom: 0.5rem;">
+                📄 <a href="http://www.legal.unal.edu.co/rlunal/home/doc.jsp?d_i=34800" 
+                       target="_blank" 
+                       style="color: var(--unal-green); font-weight: 600; text-decoration: underline;">
+                  Acuerdo 033 de 2007
+                </a> del Consejo Académico
+              </li>
+              <li style="margin-bottom: 0.5rem;">
+                📄 <a href="http://www.legal.unal.edu.co/rlunal/home/doc.jsp?d_i=34983" 
+                       target="_blank" 
+                       style="color: var(--unal-green); font-weight: 600; text-decoration: underline;">
+                  Acuerdo 026 de 2012
+                </a> del CSU
+              </li>
+              <li>
+                📄 <a href="https://delapaz.unal.edu.co/index.php?id=23" 
+                       target="_blank" 
+                       style="color: var(--unal-green); font-weight: 600; text-decoration: underline;">
+                  Acuerdo de creación de programa
+                </a> (específico de tu carrera)
+              </li>
+          </ul>
+        </div>
+
+        <div class="modal-section">
+          <h4>
+            <span class="material-icons">route</span>
+            Rutas - Convenio Específico
+          </h4>
+          <div class="accordion" style="margin-top:1rem;">
+            <div class="accordion-item">
+              <div class="accordion-header" onclick="toggleAccordion(this)">
+                <span class="material-icons" style="color:#4CAF50; margin-right:0.5rem;">business</span>
+                <strong>Ruta 1: Entidades Gubernamentales</strong>
+                <span class="material-icons expand-icon">expand_more</span>
+              </div>
+              <div class="accordion-content">
+                <div class="accordion-body">
+                  <p>Se establece convenio con entidades del sector público que requieran apoyo en proyectos específicos. Los estudiantes pueden realizar pasantías en:</p>
+                  <ul>
+                    <li>Alcaldías municipales y departamentales</li>
+                    <li>Instituciones gubernamentales</li>
+                    <li>Entidades de control y vigilancia</li>
+                    <li>Corporaciones autónomas regionales</li>
+                  </ul>
+                  <p><strong>Contacto:</strong> <a href="mailto:practicas_paz@unal.edu.co">practicas_paz@unal.edu.co</a></p>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <div class="accordion-header" onclick="toggleAccordion(this)">
+                <span class="material-icons" style="color:#4CAF50; margin-right:0.5rem;">factory</span>
+                <strong>Ruta 2: Sector Productivo</strong>
+                <span class="material-icons expand-icon">expand_more</span>
+              </div>
+              <div class="accordion-content">
+                <div class="accordion-body">
+                  <p>Convenios con empresas privadas que permitan la aplicación de conocimientos en entornos productivos:</p>
+                  <ul>
+                    <li>Empresas de servicios</li>
+                    <li>Industrias manufactureras</li>
+                    <li>Empresas de tecnología</li>
+                    <li>Organizaciones del sector agroindustrial</li>
+                  </ul>
+                  <p><strong>Contacto:</strong> <a href="mailto:practicas_paz@unal.edu.co">practicas_paz@unal.edu.co</a></p>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <div class="accordion-header" onclick="toggleAccordion(this)">
+                <span class="material-icons" style="color:#4CAF50; margin-right:0.5rem;">school</span>
+                <strong>Ruta 3: Instituciones Educativas</strong>
+                <span class="material-icons expand-icon">expand_more</span>
+              </div>
+              <div class="accordion-content">
+                <div class="accordion-body">
+                  <p>Desarrollo de proyectos en instituciones educativas de diferentes niveles:</p>
+                  <ul>
+                    <li>Instituciones de educación básica y media</li>
+                    <li>Instituciones de educación superior</li>
+                    <li>Centros de investigación educativa</li>
+                    <li>Organizaciones de educación no formal</li>
+                  </ul>
+                  <p><strong>Contacto:</strong> <a href="mailto:practicas_paz@unal.edu.co">practicas_paz@unal.edu.co</a></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <h4>
+            <span class="material-icons">timeline</span>
+            Proceso Detallado
+          </h4>
+          <div class="accordion" style="margin-top:1rem;">
+            <div class="accordion-item">
+              <div class="accordion-header" onclick="toggleAccordion(this)">
+                <span class="material-icons" style="color:#4CAF50; margin-right:0.5rem;">contact_mail</span>
+                <strong>1. Contacto Inicial</strong>
+                <span class="material-icons expand-icon">expand_more</span>
+              </div>
+              <div class="accordion-content">
+                <div class="accordion-body">
+                  <p>Escriba al correo <strong><a href="mailto:practicas_paz@unal.edu.co">practicas_paz@unal.edu.co</a></strong> indicando:</p>
+                  <ul>
+                    <li>Nombre completo y programa académico</li>
+                    <li>Semestre actual y créditos aprobados</li>
+                    <li>Área de interés para la pasantía</li>
+                    <li>Entidad o sector donde desea realizarla</li>
+                    <li>Disponibilidad horaria</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <div class="accordion-header" onclick="toggleAccordion(this)">
+                <span class="material-icons" style="color:#4CAF50; margin-right:0.5rem;">search</span>
+                <strong>2. Identificación de Oportunidades</strong>
+                <span class="material-icons expand-icon">expand_more</span>
+              </div>
+              <div class="accordion-content">
+                <div class="accordion-body">
+                  <p>El coordinador de prácticas académicas le proporcionará:</p>
+                  <ul>
+                    <li>Lista de entidades con convenios vigentes</li>
+                    <li>Perfiles de pasantías disponibles</li>
+                    <li>Contactos en las organizaciones</li>
+                    <li>Formatos requeridos para postulación</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <div class="accordion-header" onclick="toggleAccordion(this)">
+                <span class="material-icons" style="color:#4CAF50; margin-right:0.5rem;">assignment</span>
+                <strong>3. Preparación de Documentos</strong>
+                <span class="material-icons expand-icon">expand_more</span>
+              </div>
+              <div class="accordion-content">
+                <div class="accordion-body">
+                  <p>Prepare la documentación necesaria:</p>
+                  <ul>
+                    <li>Hoja de vida actualizada</li>
+                    <li>Carta de presentación dirigida a la entidad</li>
+                    <li>Certificado de notas actualizado</li>
+                    <li>Propuesta inicial del proyecto de pasantía</li>
+                    <li>Formato de postulación diligenciado</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <div class="accordion-header" onclick="toggleAccordion(this)">
+                <span class="material-icons" style="color:#4CAF50; margin-right:0.5rem;">approval</span>
+                <strong>4. Proceso de Selección</strong>
+                <span class="material-icons expand-icon">expand_more</span>
+              </div>
+              <div class="accordion-content">
+                <div class="accordion-body">
+                  <p>La entidad receptora realizará:</p>
+                  <ul>
+                    <li>Evaluación de documentos presentados</li>
+                    <li>Entrevista personal (presencial o virtual)</li>
+                    <li>Verificación de competencias requeridas</li>
+                    <li>Comunicación de resultados</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <div class="accordion-header" onclick="toggleAccordion(this)">
+                <span class="material-icons" style="color:#4CAF50; margin-right:0.5rem;">assignment_turned_in</span>
+                <strong>5. Formalización</strong>
+                <span class="material-icons expand-icon">expand_more</span>
+              </div>
+              <div class="accordion-content">
+                <div class="accordion-body">
+                  <p>Una vez seleccionado, se procederá a:</p>
+                  <ul>
+                    <li>Firma del contrato de aprendizaje</li>
+                    <li>Definición del cronograma de actividades</li>
+                    <li>Asignación de supervisor en la entidad</li>
+                    <li>Asignación de tutor académico UNAL</li>
+                    <li>Inicio formal de la pasantía</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <h4>
+            <span class="material-icons">contract</span>
+            Contrato de Aprendizaje
+          </h4>
+          <div class="accordion" style="margin-top:1rem;">
+            <div class="accordion-item">
+              <div class="accordion-header" onclick="toggleAccordion(this)">
+                <span class="material-icons" style="color:#4CAF50; margin-right:0.5rem;">gavel</span>
+                <strong>Marco Legal</strong>
+                <span class="material-icons expand-icon">expand_more</span>
+              </div>
+              <div class="accordion-content">
+                <div class="accordion-body">
+                  <p>El contrato de aprendizaje se rige por:</p>
+                  <ul>
+                    <li>Ley 789 de 2002 - Contrato de aprendizaje</li>
+                    <li>Decreto 1072 de 2015 - Sector trabajo</li>
+                    <li>Resolución 3546 de 2011 - Modalidades de formación</li>
+                    <li>Normativa interna de la Universidad Nacional</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <div class="accordion-header" onclick="toggleAccordion(this)">
+                <span class="material-icons" style="color:#4CAF50; margin-right:0.5rem;">description</span>
+                <strong>Características del Contrato</strong>
+                <span class="material-icons expand-icon">expand_more</span>
+              </div>
+              <div class="accordion-content">
+                <div class="accordion-body">
+                  <ul>
+                    <li><strong>Duración:</strong> Un semestre académico (16 semanas)</li>
+                    <li><strong>Intensidad:</strong> 20 horas semanales máximo</li>
+                    <li><strong>Apoyo económico:</strong> Equivalente al auxilio de sostenimiento SENA</li>
+                    <li><strong>Afiliación:</strong> ARL cubierta por la entidad receptora</li>
+                    <li><strong>Certificación:</strong> Al finalizar exitosamente la pasantía</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <div class="accordion-header" onclick="toggleAccordion(this)">
+                <span class="material-icons" style="color:#4CAF50; margin-right:0.5rem;">assignment_ind</span>
+                <strong>Derechos y Deberes</strong>
+                <span class="material-icons expand-icon">expand_more</span>
+              </div>
+              <div class="accordion-content">
+                <div class="accordion-body">
+                  <p><strong>Derechos del estudiante:</strong></p>
+                  <ul>
+                    <li>Recibir formación integral en el área asignada</li>
+                    <li>Contar con supervisión académica y profesional</li>
+                    <li>Acceder a recursos necesarios para el desarrollo del proyecto</li>
+                    <li>Recibir certificación de la experiencia</li>
+                  </ul>
+                  <p><strong>Deberes del estudiante:</strong></p>
+                  <ul>
+                    <li>Cumplir con horarios y cronograma establecido</li>
+                    <li>Mantener confidencialidad de información institucional</li>
+                    <li>Presentar informes periódicos de avance</li>
+                    <li>Seguir las normas y procedimientos de la entidad</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <h4>
+            <span class="material-icons">tips_and_updates</span>
+            Recomendaciones "Pilla el Dato"
+          </h4>
+          <div class="accordion" style="margin-top:1rem;">
+            <div class="accordion-item">
+              <div class="accordion-header" onclick="toggleAccordion(this)">
+                <span class="material-icons" style="color:#4CAF50; margin-right:0.5rem;">timer</span>
+                <strong>Planificación Temporal</strong>
+                <span class="material-icons expand-icon">expand_more</span>
+              </div>
+              <div class="accordion-content">
+                <div class="accordion-body">
+                  <ul>
+                    <li><strong>Inicio temprano:</strong> Contacte con 2 meses de anticipación al semestre deseado</li>
+                    <li><strong>Flexibilidad:</strong> Tenga disponibilidad para entrevistas durante la semana</li>
+                    <li><strong>Cronograma:</strong> Considere tiempos de traslado y otras actividades académicas</li>
+                    <li><strong>Backup plan:</strong> Postúlese a 2-3 opciones simultáneamente</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <div class="accordion-header" onclick="toggleAccordion(this)">
+                <span class="material-icons" style="color:#4CAF50; margin-right:0.5rem;">psychology</span>
+                <strong>Perfil Competitivo</strong>
+                <span class="material-icons expand-icon">expand_more</span>
+              </div>
+              <div class="accordion-content">
+                <div class="accordion-body">
+                  <ul>
+                    <li><strong>Promedio académico:</strong> Mantenga un buen rendimiento académico</li>
+                    <li><strong>Habilidades blandas:</strong> Desarrolle comunicación efectiva y trabajo en equipo</li>
+                    <li><strong>Conocimientos técnicos:</strong> Fortalezca competencias específicas de su programa</li>
+                    <li><strong>Idiomas:</strong> Certificaciones en inglés u otros idiomas son un plus</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <div class="accordion-header" onclick="toggleAccordion(this)">
+                <span class="material-icons" style="color:#4CAF50; margin-right:0.5rem;">connect_without_contact</span>
+                <strong>Networking y Contactos</strong>
+                <span class="material-icons expand-icon">expand_more</span>
+              </div>
+              <div class="accordion-content">
+                <div class="accordion-body">
+                  <ul>
+                    <li><strong>Profesores:</strong> Consulte con docentes sobre contactos en el sector</li>
+                    <li><strong>Egresados:</strong> Conéctese con graduados que trabajen en áreas de interés</li>
+                    <li><strong>Eventos:</strong> Participe en ferias de empleo y eventos de networking</li>
+                    <li><strong>Redes sociales:</strong> Use LinkedIn para conectar profesionalmente</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <div class="accordion-header" onclick="toggleAccordion(this)">
+                <span class="material-icons" style="color:#4CAF50; margin-right:0.5rem;">psychology_alt</span>
+                <strong>Preparación para Entrevistas</strong>
+                <span class="material-icons expand-icon">expand_more</span>
+              </div>
+              <div class="accordion-content">
+                <div class="accordion-body">
+                  <ul>
+                    <li><strong>Investigación:</strong> Conozca bien la entidad y sus proyectos</li>
+                    <li><strong>Casos de estudio:</strong> Prepare ejemplos de proyectos académicos relevantes</li>
+                    <li><strong>Presentación personal:</strong> Vista apropiadamente y sea puntual</li>
+                    <li><strong>Preguntas:</strong> Prepare preguntas inteligentes sobre el proyecto y la organización</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <div class="modal-requirements">
+            <h5>Requisitos por Programa</h5>
+            <div class="accordion" style="margin-top:1rem;">
+              <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                  <span class="material-icons" style="color:#4CAF50; margin-right:0.5rem;">palette</span>
+                  <strong>Gestión Cultural y Comunicativa</strong>
+                  <span class="material-icons expand-icon">expand_more</span>
+                </div>
+                <div class="accordion-content">
+                  <div class="accordion-body">
+                    Haber aprobado 58 créditos (70%) del componente de Formación Disciplinar o Profesional.
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                  <span class="material-icons" style="color:#4CAF50; margin-right:0.5rem;">precision_manufacturing</span>
+                  <strong>Ingeniería Mecatrónica</strong>
+                  <span class="material-icons expand-icon">expand_more</span>
+                </div>
+                <div class="accordion-content">
+                  <div class="accordion-body">
+                    Haber aprobado 80% de los créditos exigidos (mínimo 146 créditos).
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                  <span class="material-icons" style="color:#4CAF50; margin-right:0.5rem;">public</span>
+                  <strong>Geografía</strong>
+                  <span class="material-icons expand-icon">expand_more</span>
+                </div>
+                <div class="accordion-content">
+                  <div class="accordion-body">
+                    Haber aprobado Trabajo de campo y Laboratorio de investigación.
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                  <span class="material-icons" style="color:#4CAF50; margin-right:0.5rem;">biotech</span>
+                  <strong>Ingeniería Biológica</strong>
+                  <span class="material-icons expand-icon">expand_more</span>
+                </div>
+                <div class="accordion-content">
+                  <div class="accordion-body">
+                    Haber aprobado 59 créditos (80%) del componente de Formación Disciplinar o Profesional.
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                  <span class="material-icons" style="color:#4CAF50; margin-right:0.5rem;">eco</span>
+                  <strong>Biología</strong>
+                  <span class="material-icons expand-icon">expand_more</span>
+                </div>
+                <div class="accordion-content">
+                  <div class="accordion-body">
+                    Haber aprobado 100% del componente de Fundamentación y Laboratorio molecular y celular "o" Trabajo de campo interdisciplinar.
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                  <span class="material-icons" style="color:#4CAF50; margin-right:0.5rem;">bar_chart</span>
+                  <strong>Estadística</strong>
+                  <span class="material-icons expand-icon">expand_more</span>
+                </div>
+                <div class="accordion-content">
+                  <div class="accordion-body">
+                    Haber aprobado 47 créditos (75%) del componente de Formación Disciplinar o Profesional.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker">2</div>
+          <div class="timeline-content">
+            <div class="timeline-title">Paso 2: Diligencia los formatos</div>
+            <p>Se diligencian los formatos respectivos dependiendo de la solicitud:</p>
+            <ul style="list-style: none; padding-left: 0;">
+              <li style="margin-bottom: 1rem;">
+                <strong>📄 Trabajo de Grado (TDG):</strong> 
+                <a href="https://docs.google.com/document/d/1hlpMUaCBm6L1ggzZB-0OY5SJ_cq5NubqFRp7ZBnOOe4/edit?usp=drive_link" 
+                   target="_blank" 
+                   style="color: var(--unal-green); font-weight: 600; text-decoration: underline;">
+                  Formato registro TDG
+                </a>
+              </li>
+              <li>
+                <strong>📋 Plan General de Trabajo de Grado:</strong> 
+                <a href="https://docs.google.com/document/d/1Ai_qkbEi5ZdIJGrvx_DhFzyG20c93Zbk3jiHeZ2oJJ4/edit?tab=t.0" 
+                   target="_blank" 
+                   style="color: var(--unal-green); font-weight: 600; text-decoration: underline;">
+                  Formato registro plan de Trabajo de Grado
+                </a>
+              </li>
             </ul>
+            <div class="info-box" style="margin-top: 1rem; background: #fff3cd; border-left-color: #856404;">
+              <p><strong>💡 Orientación:</strong> En caso de requerir orientación, diríjase al profesor tutor o al potencial director del TDG</p>
+            </div>
           </div>
         </div>
 
         <div class="timeline-item">
-          <div class="timeline-marker">✅</div>
+          <div class="timeline-marker">3</div>
           <div class="timeline-content">
-            <div class="timeline-title">Fase 2: Aprobación del Comité</div>
-            <span class="timeline-duration">⏱️ 2-4 semanas</span>
-            <p>El Comité de Trabajos de Grado revisará su propuesta y evaluará su viabilidad académica y pertinencia.</p>
-            <strong style="font-size: 0.9rem;">Qué esperar:</strong>
-            <ul>
-              <li>Revisión por el comité académico</li>
-              <li>Evaluación de viabilidad y pertinencia</li>
-              <li>Aprobación o solicitud de ajustes</li>
-              <li>Notificación por correo electrónico</li>
-            </ul>
+            <div class="timeline-title">Paso 3: Envía tu solicitud</div>
+            <p>Enviar a través del formulario de Google: <strong>Pre Inscripciones</strong></p>
+            <p style="margin-top: 0.75rem;">Cualquier inquietud u orientación sobre el proceso escribir a:</p>
+            <p><a href="mailto:practicas_paz@unal.edu.co" style="color: var(--unal-green); font-weight: 600;">📧 practicas_paz@unal.edu.co</a></p>
+            <p style="margin-top: 0.5rem; font-style: italic; color: var(--text-secondary);">(Aprobará el Comité Académico Asesor)</p>
           </div>
         </div>
 
         <div class="timeline-item">
-          <div class="timeline-marker">🔬</div>
+          <div class="timeline-marker">4</div>
           <div class="timeline-content">
-            <div class="timeline-title">Fase 3: Desarrollo del Proyecto</div>
-            <span class="timeline-duration">⏱️ 1-2 semestres</span>
-            <p>Desarrolle su investigación o práctica académica especial con seguimiento periódico de su director/supervisor.</p>
-            <strong style="font-size: 0.9rem;">Actividades principales:</strong>
-            <ul>
-              <li>Desarrollar el anteproyecto</li>
-              <li>Reuniones periódicas con director/supervisor</li>
-              <li>Seguimiento mensual con coordinación</li>
-              <li>Completar investigación o aplicación práctica</li>
-            </ul>
+            <div class="timeline-title">Paso 4: Inscripción y convenio (solo Pasantía)</div>
+            <p>Si el TDG aprobado es Pasantía, la inscripción dependerá del proceso administrativo y jurídico para establecer el convenio de Pasantía.</p>
+            <p style="margin-top: 0.75rem;">Estos formatos serán enviados al estudiante, al tutor y a la empresa. Por eso es importante que las solicitudes sean realizadas con tiempo.</p>
+            <div class="info-box" style="margin-top: 1rem; background: #fff3cd; border-left-color: #856404;">
+              <p><strong>⚠️ Importante:</strong> Si no cumples los requisitos debes esperar a poder cumplirlos e iniciar el proceso nuevamente en el siguiente semestre</p>
+            </div>
           </div>
         </div>
-
-        <div class="timeline-item">
-          <div class="timeline-marker">📄</div>
-          <div class="timeline-content">
-            <div class="timeline-title">Fase 4: Entrega y Evaluación</div>
-            <span class="timeline-duration">⏱️ 2-4 semanas</span>
-            <p>Finalice su documento escrito, obtenga la aprobación del director y prepárelo para evaluación de jurados.</p>
-            <strong style="font-size: 0.9rem;">Requisitos de entrega:</strong>
-            <ul>
-              <li>Documento final completo en formato oficial</li>
-              <li>Carta de aprobación del director</li>
-              <li>Resumen ejecutivo</li>
-              <li>Evaluación de jurados/evaluador</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-marker">🎓</div>
-          <div class="timeline-content">
-            <div class="timeline-title">Fase 5: Sustentación (solo TDG)</div>
-            <span class="timeline-duration">⏱️ 1-2 semanas</span>
-            <p>Presente su trabajo ante jurados y responda preguntas sobre su investigación en una defensa pública.</p>
-            <strong style="font-size: 0.9rem;">Formato de sustentación:</strong>
-            <ul>
-              <li>Presentación oral (20-30 minutos)</li>
-              <li>Sesión de preguntas de jurados</li>
-              <li>Defensa pública del trabajo</li>
-              <li>Calificación final</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <div class="info-box">
-        <p><strong>Tiempo total estimado:</strong> 6-12 meses (1-2 semestres académicos)</p>
       </div>
     </section>
 
@@ -1603,57 +2125,69 @@
             <div class="accordion-item">
               <div class="accordion-header" onclick="toggleAccordion(this)">
                 <div class="accordion-title"><strong>Fase 1 - Preinscripción</strong></div>
-                <span class="material-icons expand-icon">expand_more</span>
+                <!-- <span class="material-icons expand-icon">expand_more</span> -->
               </div>
-              <div class="accordion-content">
+              <!-- <div class="accordion-content">
                 <div class="accordion-body">
                   Elija el lugar o proyecto, diseñe con su tutor el plan de trabajo, diligencie el formato de preinscripción y regístrelo en el formulario anexando los documentos requeridos.
                 </div>
-              </div>
+              </div> -->
             </div>
             <div class="accordion-item">
               <div class="accordion-header" onclick="toggleAccordion(this)">
-                <div class="accordion-title"><strong>Fase 2 - Revisión Académica</strong></div>
-                <span class="material-icons expand-icon">expand_more</span>
+                <div class="accordion-title"><strong>Fase 2 - Revisión de Formatos</strong></div>
+                <!-- <span class="material-icons expand-icon">expand_more</span> -->
               </div>
-              <div class="accordion-content">
+              <!-- <div class="accordion-content">
                 <div class="accordion-body">
                   El Comité Académico Asesor de la sede de La Paz estudiará y recomendará su inscripción ante el Consejo de Escuelas.
                 </div>
-              </div>
+              </div> -->
             </div>
             <div class="accordion-item">
               <div class="accordion-header" onclick="toggleAccordion(this)">
-                <div class="accordion-title"><strong>Fase 3 - Aprobación</strong></div>
-                <span class="material-icons expand-icon">expand_more</span>
+                <div class="accordion-title"><strong>Fase 3 - Estudio por parte del comité académico asesor</strong></div>
+                <!-- <span class="material-icons expand-icon">expand_more</span> -->
               </div>
-              <div class="accordion-content">
+              <!-- <div class="accordion-content">
                 <div class="accordion-body">
                   El Consejo de Escuelas estudiará su solicitud para aprobación.
                 </div>
-              </div>
+              </div> -->
             </div>
             <div class="accordion-item">
               <div class="accordion-header" onclick="toggleAccordion(this)">
-                <div class="accordion-title"><strong>Fase 4 - Inscripción</strong></div>
-                <span class="material-icons expand-icon">expand_more</span>
+                <div class="accordion-title"><strong>Fase 4 - Decisión por parte del Comité Académico Asesor</strong></div>
+                <!-- <span class="material-icons expand-icon">expand_more</span> -->
               </div>
-              <div class="accordion-content">
+              <!-- <div class="accordion-content">
                 <div class="accordion-body">
                   Una vez aprobado el Trabajo de Grado, se inscribe como asignatura en el SIA.
                 </div>
-              </div>
+              </div> -->
             </div>
             <div class="accordion-item">
               <div class="accordion-header" onclick="toggleAccordion(this)">
-                <div class="accordion-title"><strong>Fase 5 - Seguimiento y evaluación</strong></div>
-                <span class="material-icons expand-icon">expand_more</span>
+                <div class="accordion-title"><strong>Fase 5 - Una vez aprobado, se inscribe como asignatura en el SIA</strong></div>
+                <!-- <span class="material-icons expand-icon">expand_more</span> -->
               </div>
-              <div class="accordion-content">
+              <!-- <div class="accordion-content">
                 <div class="accordion-body">
                   Durante el desarrollo, el docente tutor realiza seguimiento y al final se evalúa el desempeño del estudiante.
                 </div>
+              </div> -->
+            </div>
+            <div class="accordion-item">
+              <div class="accordion-header" onclick="toggleAccordion(this)">
+                <div class="accordion-title"><strong>Fase 6 - Seguimiento y evaluación
+                </strong></div>
+                <!-- <span class="material-icons expand-icon">expand_more</span> -->
               </div>
+              <!-- <div class="accordion-content">
+                <div class="accordion-body">
+                  Durante el desarrollo, el docente tutor realiza seguimiento y al final se evalúa el desempeño del estudiante.
+                </div>
+              </div> -->
             </div>
           </div>
         </div>
@@ -1702,7 +2236,81 @@
         <div class="modal-section">
           <div class="modal-requirements">
             <h5>Requisitos por Programa</h5>
-            <p>Los requisitos son los mismos que para la modalidad de Monografía. Consulte la sección "Normativa por Programa" para conocer los requisitos específicos de su carrera.</p>
+            <ul>
+            <div class="accordion" style="margin-top:1rem;">
+              <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                  <span class="material-icons" style="color:#4CAF50; margin-right:0.5rem;">palette</span>
+                  <strong>Gestión Cultural y Comunicativa</strong>
+                  <span class="material-icons expand-icon">expand_more</span>
+                </div>
+                <div class="accordion-content">
+                  <div class="accordion-body">
+                    Haber aprobado 58 créditos (70%) del componente de Formación Disciplinar o Profesional.
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                  <span class="material-icons" style="color:#4CAF50; margin-right:0.5rem;">precision_manufacturing</span>
+                  <strong>Ingeniería Mecatrónica</strong>
+                  <span class="material-icons expand-icon">expand_more</span>
+                </div>
+                <div class="accordion-content">
+                  <div class="accordion-body">
+                    Haber aprobado 80% de los créditos exigidos (mínimo 146 créditos).
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                  <span class="material-icons" style="color:#4CAF50; margin-right:0.5rem;">public</span>
+                  <strong>Geografía</strong>
+                  <span class="material-icons expand-icon">expand_more</span>
+                </div>
+                <div class="accordion-content">
+                  <div class="accordion-body">
+                    Haber aprobado Trabajo de campo y Laboratorio de investigación.
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                  <span class="material-icons" style="color:#4CAF50; margin-right:0.5rem;">biotech</span>
+                  <strong>Ingeniería Biológica</strong>
+                  <span class="material-icons expand-icon">expand_more</span>
+                </div>
+                <div class="accordion-content">
+                  <div class="accordion-body">
+                    Haber aprobado 59 créditos (80%) del componente de Formación Disciplinar o Profesional.
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                  <span class="material-icons" style="color:#4CAF50; margin-right:0.5rem;">eco</span>
+                  <strong>Biología</strong>
+                  <span class="material-icons expand-icon">expand_more</span>
+                </div>
+                <div class="accordion-content">
+                  <div class="accordion-body">
+                    Haber aprobado 100% del componente de Fundamentación y Laboratorio molecular y celular "o" Trabajo de campo interdisciplinar.
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                  <span class="material-icons" style="color:#4CAF50; margin-right:0.5rem;">bar_chart</span>
+                  <strong>Estadística</strong>
+                  <span class="material-icons expand-icon">expand_more</span>
+                </div>
+                <div class="accordion-content">
+                  <div class="accordion-body">
+                    Haber aprobado 47 créditos (75%) del componente de Formación Disciplinar o Profesional.
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -1711,14 +2319,68 @@
             <span class="material-icons">timeline</span>
             Fases de Inscripción
           </h4>
-          <p><strong>Periodo:</strong> Del 10 de septiembre al 10 de noviembre de 2025</p>
-          <ul>
-            <li><strong>Fase 1 - Preinscripción:</strong> Identifique el proyecto de investigación, coordine con el director del proyecto, diseñe su plan de trabajo y diligencie el formato de preinscripción</li>
-            <li><strong>Fase 2 - Revisión Académica:</strong> El Comité Académico Asesor estudiará y recomendará su inscripción</li>
-            <li><strong>Fase 3 - Aprobación:</strong> El Consejo de Escuelas estudiará su solicitud para aprobación</li>
-            <li><strong>Fase 4 - Inscripción:</strong> Una vez aprobado, se inscribe como asignatura en el SIA</li>
-            <li><strong>Fase 5 - Seguimiento y evaluación:</strong> El docente tutor realiza seguimiento y al final se evalúa el desempeño</li>
-          </ul>
+          <div class="accordion" style="margin-top:1rem;">
+            <div class="accordion-item">
+              <div class="accordion-header" onclick="toggleAccordion(this)">
+                <div class="accordion-title"><strong>Fase 1 - Preinscripción</strong></div>
+                <span class="material-icons expand-icon">expand_more</span>
+              </div>
+              <div class="accordion-content">
+                <div class="accordion-body">
+                  <ul style="list-style: disc; padding-left: 1.5rem;">
+                    <li><strong>Elija el lugar o proyecto</strong> en el que realizará su práctica.</li>
+                    <li><strong>Diseñe</strong> con su docente-director el plan de trabajo.</li>
+                    <li><strong>Diligencie</strong> el formato de preinscripción con su docente-director.</li>
+                    <li><strong>Registre</strong> su preinscripción en el google form anexando los formatos y el soporte del proyecto y/o semillero.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <div class="accordion-header" onclick="toggleAccordion(this)">
+                <div class="accordion-title"><strong>Fase 2 - Revisión Académica</strong></div>
+                <span class="material-icons expand-icon">expand_more</span>
+              </div>
+              <div class="accordion-content">
+                <div class="accordion-body">
+                  El Comité Académico Asesor estudiará y recomendará su inscripción ante el Consejo de Escuelas.
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <div class="accordion-header" onclick="toggleAccordion(this)">
+                <div class="accordion-title"><strong>Fase 3 - Aprobación</strong></div>
+                <span class="material-icons expand-icon">expand_more</span>
+              </div>
+              <div class="accordion-content">
+                <div class="accordion-body">
+                  El Consejo de Escuelas evaluará su solicitud para su aprobación final.
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <div class="accordion-header" onclick="toggleAccordion(this)">
+                <div class="accordion-title"><strong>Fase 4 - Inscripción</strong></div>
+                <span class="material-icons expand-icon">expand_more</span>
+              </div>
+              <div class="accordion-content">
+                <div class="accordion-body">
+                  Una vez aprobado el Trabajo de Grado, se procederá a inscribirlo como asignatura en el Sistema de Información Académica (SIA).
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <div class="accordion-header" onclick="toggleAccordion(this)">
+                <div class="accordion-title"><strong>Fase 5 - Seguimiento y Evaluación</strong></div>
+                <span class="material-icons expand-icon">expand_more</span>
+              </div>
+              <div class="accordion-content">
+                <div class="accordion-body">
+                  El docente tutor realizará seguimiento periódico durante el desarrollo del proyecto y evaluará el desempeño del estudiante al finalizar.
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -1750,7 +2412,7 @@
           <ul>
             <li>Se realiza en una Entidad o Dependencia de la Universidad Nacional de Colombia</li>
             <li>Tiene un enfoque práctico orientado a diagnóstico y solución de problemas reales</li>
-            <li>Permite aplicar conocimientos en contextos laborales reales dentro de la UNAL</li>
+            <li>Permite aplicar conocimientos en contextos laborales reales.</li>
             <li>Genera propuestas de mejora o solución a situaciones identificadas</li>
           </ul>
         </div>
@@ -1758,14 +2420,80 @@
         <div class="modal-section">
           <div class="modal-requirements">
             <h5>Requisitos por Programa</h5>
-            <ul>
-              <li><strong>Gestión Cultural y Comunicativa:</strong> Haber aprobado 58 créditos (70%) del componente de Formación Disciplinar o Profesional</li>
-              <li><strong>Ingeniería Mecatrónica:</strong> Haber aprobado 80% de los créditos exigidos (mínimo 146 créditos)</li>
-              <li><strong>Geografía:</strong> Haber aprobado Trabajo de campo y Laboratorio de investigación</li>
-              <li><strong>Ingeniería Biológica:</strong> Haber aprobado 59 créditos (80%) del componente de Formación Disciplinar o Profesional</li>
-              <li><strong>Biología:</strong> Haber aprobado 100% del componente de Fundamentación y Laboratorio molecular y celular "o" Trabajo de campo interdisciplinar</li>
-              <li><strong>Estadística:</strong> Haber aprobado 47 créditos (75%) del componente de Formación Disciplinar o Profesional</li>
-            </ul>
+            <div class="accordion" style="margin-top:1rem;">
+              <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                  <span class="material-icons" style="color:#4CAF50; margin-right:0.5rem;">palette</span>
+                  <strong>Gestión Cultural y Comunicativa</strong>
+                  <span class="material-icons expand-icon">expand_more</span>
+                </div>
+                <div class="accordion-content">
+                  <div class="accordion-body">
+                    Haber aprobado 58 créditos (70%) del componente de Formación Disciplinar o Profesional.
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                  <span class="material-icons" style="color:#4CAF50; margin-right:0.5rem;">precision_manufacturing</span>
+                  <strong>Ingeniería Mecatrónica</strong>
+                  <span class="material-icons expand-icon">expand_more</span>
+                </div>
+                <div class="accordion-content">
+                  <div class="accordion-body">
+                    Haber aprobado 80% de los créditos exigidos (mínimo 146 créditos).
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                  <span class="material-icons" style="color:#4CAF50; margin-right:0.5rem;">public</span>
+                  <strong>Geografía</strong>
+                  <span class="material-icons expand-icon">expand_more</span>
+                </div>
+                <div class="accordion-content">
+                  <div class="accordion-body">
+                    Haber aprobado Trabajo de campo y Laboratorio de investigación.
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                  <span class="material-icons" style="color:#4CAF50; margin-right:0.5rem;">biotech</span>
+                  <strong>Ingeniería Biológica</strong>
+                  <span class="material-icons expand-icon">expand_more</span>
+                </div>
+                <div class="accordion-content">
+                  <div class="accordion-body">
+                    Haber aprobado 59 créditos (80%) del componente de Formación Disciplinar o Profesional.
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                  <span class="material-icons" style="color:#4CAF50; margin-right:0.5rem;">eco</span>
+                  <strong>Biología</strong>
+                  <span class="material-icons expand-icon">expand_more</span>
+                </div>
+                <div class="accordion-content">
+                  <div class="accordion-body">
+                    Haber aprobado 100% del componente de Fundamentación y Laboratorio molecular y celular "o" Trabajo de campo interdisciplinar.
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                  <span class="material-icons" style="color:#4CAF50; margin-right:0.5rem;">bar_chart</span>
+                  <strong>Estadística</strong>
+                  <span class="material-icons expand-icon">expand_more</span>
+                </div>
+                <div class="accordion-content">
+                  <div class="accordion-body">
+                    Haber aprobado 47 créditos (75%) del componente de Formación Disciplinar o Profesional.
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -1813,14 +2541,80 @@
         <div class="modal-section">
           <div class="modal-requirements">
             <h5>Requisitos por Programa</h5>
-            <ul>
-              <li><strong>Gestión Cultural y Comunicativa:</strong> Haber aprobado 58 créditos (70%) del componente de Formación Disciplinar o Profesional</li>
-              <li><strong>Ingeniería Mecatrónica:</strong> Haber aprobado 80% de los créditos exigidos (mínimo 146 créditos)</li>
-              <li><strong>Geografía:</strong> Haber aprobado Trabajo de campo y Laboratorio de investigación</li>
-              <li><strong>Ingeniería Biológica:</strong> Haber aprobado 59 créditos (80%) del componente de Formación Disciplinar o Profesional</li>
-              <li><strong>Biología:</strong> Haber aprobado 100% del componente de Fundamentación y Laboratorio molecular y celular "o" Trabajo de campo interdisciplinar</li>
-              <li><strong>Estadística:</strong> Haber aprobado 47 créditos (75%) del componente de Formación Disciplinar o Profesional</li>
-            </ul>
+            <div class="accordion" style="margin-top:1rem;">
+              <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                  <span class="material-icons" style="color:#4CAF50; margin-right:0.5rem;">palette</span>
+                  <strong>Gestión Cultural y Comunicativa</strong>
+                  <span class="material-icons expand-icon">expand_more</span>
+                </div>
+                <div class="accordion-content">
+                  <div class="accordion-body">
+                    Haber aprobado 58 créditos (70%) del componente de Formación Disciplinar o Profesional.
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                  <span class="material-icons" style="color:#4CAF50; margin-right:0.5rem;">precision_manufacturing</span>
+                  <strong>Ingeniería Mecatrónica</strong>
+                  <span class="material-icons expand-icon">expand_more</span>
+                </div>
+                <div class="accordion-content">
+                  <div class="accordion-body">
+                    Haber aprobado 80% de los créditos exigidos (mínimo 146 créditos).
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                  <span class="material-icons" style="color:#4CAF50; margin-right:0.5rem;">public</span>
+                  <strong>Geografía</strong>
+                  <span class="material-icons expand-icon">expand_more</span>
+                </div>
+                <div class="accordion-content">
+                  <div class="accordion-body">
+                    Haber aprobado Trabajo de campo y Laboratorio de investigación.
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                  <span class="material-icons" style="color:#4CAF50; margin-right:0.5rem;">biotech</span>
+                  <strong>Ingeniería Biológica</strong>
+                  <span class="material-icons expand-icon">expand_more</span>
+                </div>
+                <div class="accordion-content">
+                  <div class="accordion-body">
+                    Haber aprobado 59 créditos (80%) del componente de Formación Disciplinar o Profesional.
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                  <span class="material-icons" style="color:#4CAF50; margin-right:0.5rem;">eco</span>
+                  <strong>Biología</strong>
+                  <span class="material-icons expand-icon">expand_more</span>
+                </div>
+                <div class="accordion-content">
+                  <div class="accordion-body">
+                    Haber aprobado 100% del componente de Fundamentación y Laboratorio molecular y celular "o" Trabajo de campo interdisciplinar.
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                  <span class="material-icons" style="color:#4CAF50; margin-right:0.5rem;">bar_chart</span>
+                  <strong>Estadística</strong>
+                  <span class="material-icons expand-icon">expand_more</span>
+                </div>
+                <div class="accordion-content">
+                  <div class="accordion-body">
+                    Haber aprobado 47 créditos (75%) del componente de Formación Disciplinar o Profesional.
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 

@@ -1017,6 +1017,136 @@
         width: 100%;
       }
     }
+
+    /* ========== COMPARISON SECTION ========== */
+    .comparison-section {
+      margin: 2rem 0;
+    }
+
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .comparison-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      border-top: 4px solid transparent;
+      box-shadow: var(--shadow);
+      transition: all 0.3s ease;
+    }
+
+    .comparison-card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+
+    .comparison-card.practica {
+      border-top-color: #2563eb;
+    }
+
+    .comparison-card.pasantia {
+      border-top-color: #f59e0b;
+    }
+
+    .comparison-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .comparison-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .comparison-card.practica .comparison-icon {
+      background: #dbeafe;
+    }
+
+    .comparison-card.practica .comparison-icon .material-icons {
+      color: #2563eb;
+      font-size: 1.75rem;
+    }
+
+    .comparison-card.pasantia .comparison-icon {
+      background: #fef3c7;
+    }
+
+    .comparison-card.pasantia .comparison-icon .material-icons {
+      color: #f59e0b;
+      font-size: 1.75rem;
+    }
+
+    .comparison-card h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin: 0;
+    }
+
+    .comparison-card p {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    .comparison-features {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .comparison-features li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      padding: 0.4rem 0;
+      color: var(--text-primary);
+      font-size: 0.85rem;
+    }
+
+    .comparison-features li .material-icons {
+      color: var(--unal-green);
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 768px) {
+      .comparison-grid {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+      }
+
+      .comparison-card {
+        padding: 1.25rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .comparison-card h3 {
+        font-size: 1rem;
+      }
+
+      .comparison-icon {
+        width: 48px;
+        height: 48px;
+      }
+
+      .comparison-icon .material-icons {
+        font-size: 1.5rem;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1043,6 +1173,67 @@
       <li data-programa="ing-biologica">🔹 L005 - Ingeniería Biológica</li>
       <li data-programa="ing-mecatronica">🔹 L006 - Ingeniería Mecatrónica</li>
     </ul>
+  </div>
+
+  <!-- COMPARISON SECTION -->
+  <div class="comparison-section">
+    <div class="comparison-grid">
+      <div class="comparison-card practica">
+        <div class="comparison-header">
+          <div class="comparison-icon">
+            <span class="material-icons">work</span>
+          </div>
+          <h3>Práctica Profesional</h3>
+        </div>
+        <p>Primera vinculación al contexto laboral enfocada en el área académica del estudiante, para conocer técnicas, procesos y métodos propios de la entidad receptora.</p>
+        <ul class="comparison-features">
+          <li>
+            <span class="material-icons">check_circle</span>
+            <span>Aplicación de conocimientos adquiridos</span>
+          </li>
+          <li>
+            <span class="material-icons">check_circle</span>
+            <span>Desarrollo de habilidades técnicas</span>
+          </li>
+          <li>
+            <span class="material-icons">check_circle</span>
+            <span>Experiencia laboral real</span>
+          </li>
+          <li>
+            <span class="material-icons">check_circle</span>
+            <span>Requisito curricular obligatorio</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="comparison-card pasantia">
+        <div class="comparison-header">
+          <div class="comparison-icon">
+            <span class="material-icons">science</span>
+          </div>
+          <h3>Pasantía (Trabajo de Grado)</h3>
+        </div>
+        <p>Aplicación de métodos de investigación, evaluación y análisis frente a situaciones específicas con propuestas de mejora.</p>
+        <ul class="comparison-features">
+          <li>
+            <span class="material-icons">check_circle</span>
+            <span>Modalidad de trabajo de grado</span>
+          </li>
+          <li>
+            <span class="material-icons">check_circle</span>
+            <span>Enfoque investigativo</span>
+          </li>
+          <li>
+            <span class="material-icons">check_circle</span>
+            <span>Diagnóstico y propuestas de solución</span>
+          </li>
+          <li>
+            <span class="material-icons">check_circle</span>
+            <span>Desarrollo de proyecto específico</span>
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
 
   <!-- MODAL PERFIL EGRESADO -->

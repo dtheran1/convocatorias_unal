@@ -35,7 +35,7 @@ function getConfig(key) {
       'SPREADSHEET_ID': '1iNF7VwBPS_Txxk7c14JSefGKFD_D-0eZPc6s8geBGkk',
       'SHEET_NAME': 'Hoja1',
       'SPREADSHEET_POSTULACIONES_ID': '1TPD-_1DjYE7hX7GLDQSuOpRiGsNT-GTjzeij-eG4Qts',
-      'SHEET_POSTULACIONES': 'Postulaciones_2026_1',
+      'SHEET_POSTULACIONES': 'Postulaciones_2026_2',
       'EMAIL_CONTACTO': 'practicas_paz@unal.edu.co'
     };
     return fallbacks[key];
@@ -1219,7 +1219,7 @@ function setupConfiguration() {
     'SPREADSHEET_ID': '1iNF7VwBPS_Txxk7c14JSefGKFD_D-0eZPc6s8geBGkk',
     'SHEET_NAME': 'Hoja1',
     'SPREADSHEET_POSTULACIONES_ID': '1TPD-_1DjYE7hX7GLDQSuOpRiGsNT-GTjzeij-eG4Qts',
-    'SHEET_POSTULACIONES': 'Postulaciones_2026_1',
+    'SHEET_POSTULACIONES': 'Postulaciones_2026_2',
     'EMAIL_CONTACTO': 'practicas_paz@unal.edu.co'
   };
 

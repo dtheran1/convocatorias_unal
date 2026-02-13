@@ -6,17 +6,49 @@ Agent instructions for the convocatorias-webapp codebase.
 
 ## Build / Lint / Test
 
-**There are no build, lint, or test commands.** This is a pure Google Apps Script project with no `package.json`, no bundler, and no test framework.
+**This project has a custom testing framework for Google Apps Script.** No npm, no bundler, no external test framework.
+
+### Running tests (Backend - Code.gs)
+1. Open your Apps Script project at script.google.com
+2. Add file `CodeTests.gs` from `tests/CodeTests.gs`
+3. Select function `runAllTests()` from dropdown
+4. Click Run ▶️ and authorize permissions
+5. View results: View → Logs (Ctrl+Enter)
+
+**Quick test coverage:**
+- ✅ Validation (emails, PAPA, PBM, phone, documents)
+- ✅ Sanitization (trim, lowercase, formatting)
+- ✅ Rate limiting (3 attempts / 10 min)
+- ⚠️ XSS prevention (pending `escapeHtml()` implementation)
+- ⚠️ Business logic (requires mock data spreadsheet)
+
+See `tests/QUICKSTART.md` for 5-minute setup guide.
+
+### Running a single test (Frontend - HTML)
+No automated test suite for frontend. Manual testing workflow:
+1. Open specific `.html` file in browser (uses mock data automatically)
+2. Test UI interactions locally with browser DevTools
+3. For full integration: Deploy to Apps Script staging and test via `/dev` URL
+4. Check Apps Script logs: View → Logs (Ctrl+Enter in script editor)
 
 ### Local development
 Open any `.html` file directly in a browser. Each file checks for `google.script.run` and falls back to inline mock data when unavailable.
+
+**Mock data pattern:**
+```javascript
+if (typeof google !== 'undefined' && google.script && google.script.run) {
+  google.script.run.withSuccessHandler(handleData).getData();
+} else {
+  handleData({ success: true, data: MOCK_DATA }); // Local fallback
+}
+```
 
 ### Deployment (manual)
 1. Open target Apps Script project at script.google.com
 2. Paste `Code.gs` and `.html` files
 3. Run `setupConfiguration()` once (root project only)
 4. Deploy: Implementar → Nueva implementación → App web
-5. Embed `/exec` URL in Google Sites
+5. Embed `/exec` URL in Google Sites iframe
 
 ---
 
@@ -62,6 +94,12 @@ Each section is **fully self-contained**—own CSS, JS, and optional backend.
 - Early returns for validation
 - Object destructuring where appropriate
 - 2-space indentation (implicit standard)
+- **Strict equality:** Always use `===` and `!==` (never `==` or `!=`)
+
+### Imports and dependencies
+- **No imports.** Everything is inline in `.gs` or `.html` files
+- External dependencies: Google Fonts (Inter), Material Icons CDN
+- No npm packages, no package.json, no bundler
 
 ### Column mapping
 Always use constant objects for spreadsheet columns—never raw indices or letters:

@@ -2630,35 +2630,170 @@
   </div>
 
   <script>
-    // Funciones para modales
+    // ============================================================
+    // ACCESSIBLE MODAL UTILITY (Enhanced v2.0)
+    // ============================================================
+    function initAccessibleModal(modalId, options = {}) {
+      const modal = document.getElementById(modalId);
+      if (!modal) {
+        console.error(`Modal with id "${modalId}" not found`);
+        return null;
+      }
+
+      const config = {
+        activeClass: options.activeClass || 'visible',
+        primaryButton: options.primaryButton,
+        secondaryButton: options.secondaryButton,
+        closeButton: options.closeButton,
+        firstFocusableElement: options.firstFocusableElement,
+        scrollToTop: options.scrollToTop !== false,
+        preserveScroll: options.preserveScroll || false,
+        focusDelay: options.focusDelay || 100
+      };
+
+      let lastFocusedElement = null;
+      let keydownHandler = null;
+      let savedScrollY = 0;
+
+      function trapFocusTwoButtons(e) {
+        if (e.key !== 'Tab') return;
+        const primaryBtn = document.getElementById(config.primaryButton);
+        const secondaryBtn = document.getElementById(config.secondaryButton);
+        if (!primaryBtn || !secondaryBtn) return;
+        if (!e.shiftKey && document.activeElement === secondaryBtn) {
+          e.preventDefault();
+          primaryBtn.focus();
+        } else if (e.shiftKey && document.activeElement === primaryBtn) {
+          e.preventDefault();
+          secondaryBtn.focus();
+        }
+      }
+
+      function trapFocusOneButton(e) {
+        if (e.key !== 'Tab') return;
+        const closeBtn = document.getElementById(config.closeButton);
+        if (!closeBtn) return;
+        e.preventDefault();
+        closeBtn.focus();
+      }
+
+      return {
+        show() {
+          lastFocusedElement = document.activeElement;
+          if (config.preserveScroll) {
+            savedScrollY = window.scrollY;
+            modal.dataset.scrollY = savedScrollY;
+            document.body.style.position = 'fixed';
+            document.body.style.top = '-' + savedScrollY + 'px';
+            document.body.style.width = '100%';
+          }
+          modal.classList.add(config.activeClass);
+          document.body.style.overflow = 'hidden';
+          if (config.scrollToTop) {
+            window.parent.postMessage({ type: 'scrollToTop' }, '*');
+          }
+          setTimeout(() => {
+            let focusTarget = null;
+            if (config.firstFocusableElement) {
+              focusTarget = modal.querySelector(config.firstFocusableElement);
+            } else if (config.primaryButton) {
+              focusTarget = document.getElementById(config.primaryButton);
+            } else if (config.closeButton) {
+              focusTarget = document.getElementById(config.closeButton);
+            }
+            if (focusTarget) {
+              focusTarget.focus();
+            }
+            if (config.primaryButton && config.secondaryButton) {
+              keydownHandler = trapFocusTwoButtons;
+            } else if (config.closeButton) {
+              keydownHandler = trapFocusOneButton;
+            }
+            if (keydownHandler) {
+              modal.addEventListener('keydown', keydownHandler);
+            }
+          }, config.focusDelay);
+        },
+        hide() {
+          if (keydownHandler) {
+            modal.removeEventListener('keydown', keydownHandler);
+            keydownHandler = null;
+          }
+          modal.classList.remove(config.activeClass);
+          if (config.preserveScroll) {
+            const scrollY = modal.dataset.scrollY || savedScrollY || 0;
+            document.body.style.position = '';
+            document.body.style.top = '';
+            document.body.style.width = '';
+            window.scrollTo(0, parseInt(scrollY));
+          }
+          document.body.style.overflow = '';
+          if (lastFocusedElement) {
+            setTimeout(() => {
+              lastFocusedElement.focus();
+              lastFocusedElement = null;
+            }, config.focusDelay);
+          }
+        },
+        isOpen() {
+          return modal.classList.contains(config.activeClass);
+        }
+      };
+    }
+
+    // ============================================================
+    // Modal Management
+    // ============================================================
+    const modalManagers = {};
+
     function openModal(modalId) {
       const modal = document.getElementById(modalId);
-      if (modal) {
-        modal.classList.add('active');
-        document.body.style.overflow = 'hidden';
+      if (!modal) return;
 
-        // Actualizar altura del iframe
-        setTimeout(() => {
-          if (window.self !== window.top) {
-            sendHeightToParent();
-          }
-        }, 100);
+      // Initialize modal manager if not already created for this modal
+      if (!modalManagers[modalId]) {
+        // Find the close button within this modal
+        const closeButton = modal.querySelector('.modal-close');
+        let closeButtonId = closeButton ? closeButton.id : null;
+
+        // If button doesn't have ID, generate one
+        if (closeButton && !closeButtonId) {
+          closeButtonId = modalId + '-close-btn';
+          closeButton.id = closeButtonId;
+        }
+
+        modalManagers[modalId] = initAccessibleModal(modalId, {
+          activeClass: 'active',
+          closeButton: closeButtonId,
+          scrollToTop: true
+        });
       }
+
+      // Show modal with accessibility features
+      if (modalManagers[modalId]) {
+        modalManagers[modalId].show();
+      }
+
+      // Actualizar altura del iframe
+      setTimeout(() => {
+        if (window.self !== window.top) {
+          sendHeightToParent();
+        }
+      }, 100);
     }
 
     function closeModal(modalId) {
-      const modal = document.getElementById(modalId);
-      if (modal) {
-        modal.classList.remove('active');
-        document.body.style.overflow = 'auto';
-
-        // Actualizar altura del iframe
-        setTimeout(() => {
-          if (window.self !== window.top) {
-            sendHeightToParent();
-          }
-        }, 100);
+      // Hide modal with accessibility features
+      if (modalManagers[modalId]) {
+        modalManagers[modalId].hide();
       }
+
+      // Actualizar altura del iframe
+      setTimeout(() => {
+        if (window.self !== window.top) {
+          sendHeightToParent();
+        }
+      }, 100);
     }
 
     // Cerrar modal al hacer click fuera del contenido

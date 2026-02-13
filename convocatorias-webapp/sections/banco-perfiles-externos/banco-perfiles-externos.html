@@ -1259,59 +1259,211 @@ function closeModal() {
 }
 
 // ============================================================
+// ACCESSIBLE MODAL UTILITY (Enhanced v2.0)
+// ============================================================
+/**
+ * Inicializa un modal con gestión de accesibilidad completa
+ * @param {string} modalId - ID del elemento modal
+ * @param {Object} options - Opciones de configuración
+ * @param {string} options.activeClass - Clase CSS para mostrar el modal (default: 'visible')
+ * @param {string} options.primaryButton - ID del botón primario (recibe foco inicial)
+ * @param {string} options.secondaryButton - ID del botón secundario (para focus trap de 2 botones)
+ * @param {string} options.closeButton - ID del botón de cerrar (para modales de 1 solo botón)
+ * @param {string} options.firstFocusableElement - Selector del primer elemento a enfocar (ej: primer input de formulario)
+ * @param {boolean} options.scrollToTop - Si debe hacer scroll al top del iframe (default: true)
+ * @param {boolean} options.preserveScroll - Si debe preservar posición del scroll (default: false)
+ * @param {number} options.focusDelay - Delay antes de enfocar en ms (default: 100)
+ * @returns {Object} Objeto con métodos show(), hide(), isOpen()
+ */
+function initAccessibleModal(modalId, options = {}) {
+  const modal = document.getElementById(modalId);
+  if (!modal) {
+    console.error(`Modal with id "${modalId}" not found`);
+    return null;
+  }
+
+  const config = {
+    activeClass: options.activeClass || 'visible',
+    primaryButton: options.primaryButton,
+    secondaryButton: options.secondaryButton,
+    closeButton: options.closeButton,
+    firstFocusableElement: options.firstFocusableElement,
+    scrollToTop: options.scrollToTop !== false,
+    preserveScroll: options.preserveScroll !== false, // default true para este archivo
+    focusDelay: options.focusDelay || 100
+  };
+
+  let lastFocusedElement = null;
+  let keydownHandler = null;
+  let savedScrollY = 0;
+
+  // Focus trap handler for 2-button modals
+  function trapFocusTwoButtons(e) {
+    if (e.key !== 'Tab') return;
+
+    const primaryBtn = document.getElementById(config.primaryButton);
+    const secondaryBtn = document.getElementById(config.secondaryButton);
+
+    if (!primaryBtn || !secondaryBtn) return;
+
+    if (!e.shiftKey && document.activeElement === secondaryBtn) {
+      e.preventDefault();
+      primaryBtn.focus();
+    } else if (e.shiftKey && document.activeElement === primaryBtn) {
+      e.preventDefault();
+      secondaryBtn.focus();
+    }
+  }
+
+  // Focus trap handler for 1-button modals
+  function trapFocusOneButton(e) {
+    if (e.key !== 'Tab') return;
+
+    const closeBtn = document.getElementById(config.closeButton);
+    if (!closeBtn) return;
+
+    // Keep focus on the close button
+    e.preventDefault();
+    closeBtn.focus();
+  }
+
+  return {
+    show() {
+      // Save current focused element
+      lastFocusedElement = document.activeElement;
+
+      // Save scroll position if preserveScroll is enabled
+      if (config.preserveScroll) {
+        savedScrollY = window.scrollY;
+        modal.dataset.scrollY = savedScrollY;
+        document.body.style.position = 'fixed';
+        document.body.style.top = '-' + savedScrollY + 'px';
+        document.body.style.width = '100%';
+      }
+
+      // Show modal
+      modal.classList.add(config.activeClass);
+      document.body.style.overflow = 'hidden';
+
+      // Scroll to top of iframe
+      if (config.scrollToTop) {
+        scrollToIframeTop();
+      }
+
+      // Focus management and setup focus trap
+      setTimeout(() => {
+        let focusTarget = null;
+
+        // Priority: firstFocusableElement > primaryButton > closeButton
+        if (config.firstFocusableElement) {
+          focusTarget = modal.querySelector(config.firstFocusableElement);
+        } else if (config.primaryButton) {
+          focusTarget = document.getElementById(config.primaryButton);
+        } else if (config.closeButton) {
+          focusTarget = document.getElementById(config.closeButton);
+        }
+
+        if (focusTarget) {
+          focusTarget.focus();
+        }
+
+        // Setup appropriate focus trap
+        if (config.primaryButton && config.secondaryButton) {
+          // Two-button modal
+          keydownHandler = trapFocusTwoButtons;
+        } else if (config.closeButton) {
+          // One-button modal
+          keydownHandler = trapFocusOneButton;
+        }
+
+        if (keydownHandler) {
+          modal.addEventListener('keydown', keydownHandler);
+        }
+      }, config.focusDelay);
+    },
+
+    hide() {
+      // Remove focus trap listener
+      if (keydownHandler) {
+        modal.removeEventListener('keydown', keydownHandler);
+        keydownHandler = null;
+      }
+
+      // Hide modal
+      modal.classList.remove(config.activeClass);
+
+      // Restore scroll if preserved
+      if (config.preserveScroll) {
+        const scrollY = modal.dataset.scrollY || savedScrollY || 0;
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.width = '';
+        window.scrollTo(0, parseInt(scrollY));
+      }
+
+      document.body.style.overflow = '';
+
+      // Restore focus to the element that opened the modal
+      if (lastFocusedElement) {
+        setTimeout(() => {
+          lastFocusedElement.focus();
+          lastFocusedElement = null;
+        }, config.focusDelay);
+      }
+    },
+
+    isOpen() {
+      return modal.classList.contains(config.activeClass);
+    }
+  };
+}
+
+// ============================================================
 // CONFIRM MODAL FUNCTIONS
 // ============================================================
+let confirmModalManager = null;
+
 function showConfirmModal(title, message, onConfirm) {
-  const modal = document.getElementById('confirmModal');
   const modalTitle = document.getElementById('confirmTitle');
   const modalMessage = document.getElementById('confirmMessage');
   const btnAccept = document.getElementById('btnAcceptConfirm');
   const btnCancel = document.getElementById('btnCancelConfirm');
-  
+
+  // Initialize modal manager if not already created
+  if (!confirmModalManager) {
+    confirmModalManager = initAccessibleModal('confirmModal', {
+      primaryButton: 'btnAcceptConfirm',
+      secondaryButton: 'btnCancelConfirm',
+      scrollToTop: true
+    });
+  }
+
   modalTitle.textContent = title;
   modalMessage.textContent = message;
-  
-  // Guardar posición actual del scroll
-  const scrollY = window.scrollY;
-  modal.dataset.scrollY = scrollY;
-  
-  // Fijar el body
-  document.body.style.position = 'fixed';
-  document.body.style.top = '-' + scrollY + 'px';
-  document.body.style.width = '100%';
-  document.body.style.overflow = 'hidden';
-  
-  modal.classList.add('visible');
-  
-  // Scroll al top del iframe
-  scrollToIframeTop();
-  
+
   // Remove previous listeners
   const newBtnAccept = btnAccept.cloneNode(true);
   btnAccept.parentNode.replaceChild(newBtnAccept, btnAccept);
   const newBtnCancel = btnCancel.cloneNode(true);
   btnCancel.parentNode.replaceChild(newBtnCancel, btnCancel);
-  
+
   // Add new listeners
   newBtnAccept.addEventListener('click', function() {
     closeConfirmModal();
     if (onConfirm) onConfirm();
   });
-  
+
   newBtnCancel.addEventListener('click', closeConfirmModal);
+
+  // Show modal with accessibility features
+  confirmModalManager.show();
 }
 
 function closeConfirmModal() {
-  const modal = document.getElementById('confirmModal');
-  modal.classList.remove('visible');
-  
-  // Restaurar el scroll del body
-  const scrollY = modal.dataset.scrollY || 0;
-  document.body.style.position = '';
-  document.body.style.top = '';
-  document.body.style.width = '';
-  document.body.style.overflow = '';
-  window.scrollTo(0, parseInt(scrollY));
+  // Hide modal with accessibility features
+  if (confirmModalManager) {
+    confirmModalManager.hide();
+  }
 }
 
 // ============================================================

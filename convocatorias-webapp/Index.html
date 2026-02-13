@@ -2166,7 +2166,7 @@
     <div class="modal">
       <div class="modal-header">
         <h2 class="modal-title" id="modalTitle">Detalles</h2>
-        <button class="modal-close" onclick="closeModal()">
+        <button class="modal-close" id="btnCloseDetailsModal" onclick="closeModal()">
           <span class="material-icons">close</span>
         </button>
       </div>
@@ -2180,7 +2180,7 @@
     <div class="modal" style="max-width: 550px;">
       <div class="modal-header">
         <h2 class="modal-title">Formulario de Postulación</h2>
-        <button class="modal-close" onclick="closePostulacionModal()">
+        <button class="modal-close" id="btnClosePostulacionModal" onclick="closePostulacionModal()">
           <span class="material-icons">close</span>
         </button>
       </div>
@@ -2708,7 +2708,128 @@
       `;
     }
 
-    // Modal
+    // ============================================================
+    // ACCESSIBLE MODAL UTILITY (Enhanced v2.0)
+    // ============================================================
+    /**
+     * Inicializa un modal con gestión de accesibilidad completa
+     * @param {string} modalId - ID del elemento modal
+     * @param {Object} options - Opciones de configuración
+     * @returns {Object} Objeto con métodos show(), hide(), isOpen()
+     */
+    function initAccessibleModal(modalId, options = {}) {
+      const modal = document.getElementById(modalId);
+      if (!modal) {
+        console.error(`Modal with id "${modalId}" not found`);
+        return null;
+      }
+
+      const config = {
+        activeClass: options.activeClass || 'visible',
+        primaryButton: options.primaryButton,
+        secondaryButton: options.secondaryButton,
+        closeButton: options.closeButton,
+        firstFocusableElement: options.firstFocusableElement,
+        scrollToTop: options.scrollToTop !== false,
+        preserveScroll: options.preserveScroll || false,
+        focusDelay: options.focusDelay || 100
+      };
+
+      let lastFocusedElement = null;
+      let keydownHandler = null;
+      let savedScrollY = 0;
+
+      function trapFocusTwoButtons(e) {
+        if (e.key !== 'Tab') return;
+        const primaryBtn = document.getElementById(config.primaryButton);
+        const secondaryBtn = document.getElementById(config.secondaryButton);
+        if (!primaryBtn || !secondaryBtn) return;
+        if (!e.shiftKey && document.activeElement === secondaryBtn) {
+          e.preventDefault();
+          primaryBtn.focus();
+        } else if (e.shiftKey && document.activeElement === primaryBtn) {
+          e.preventDefault();
+          secondaryBtn.focus();
+        }
+      }
+
+      function trapFocusOneButton(e) {
+        if (e.key !== 'Tab') return;
+        const closeBtn = document.getElementById(config.closeButton);
+        if (!closeBtn) return;
+        e.preventDefault();
+        closeBtn.focus();
+      }
+
+      return {
+        show() {
+          lastFocusedElement = document.activeElement;
+          if (config.preserveScroll) {
+            savedScrollY = window.scrollY;
+            modal.dataset.scrollY = savedScrollY;
+            document.body.style.position = 'fixed';
+            document.body.style.top = '-' + savedScrollY + 'px';
+            document.body.style.width = '100%';
+          }
+          modal.classList.add(config.activeClass);
+          document.body.style.overflow = 'hidden';
+          if (config.scrollToTop) {
+            window.parent.postMessage({ type: 'scrollToTop' }, '*');
+          }
+          setTimeout(() => {
+            let focusTarget = null;
+            if (config.firstFocusableElement) {
+              focusTarget = modal.querySelector(config.firstFocusableElement);
+            } else if (config.primaryButton) {
+              focusTarget = document.getElementById(config.primaryButton);
+            } else if (config.closeButton) {
+              focusTarget = document.getElementById(config.closeButton);
+            }
+            if (focusTarget) {
+              focusTarget.focus();
+            }
+            if (config.primaryButton && config.secondaryButton) {
+              keydownHandler = trapFocusTwoButtons;
+            } else if (config.closeButton) {
+              keydownHandler = trapFocusOneButton;
+            }
+            if (keydownHandler) {
+              modal.addEventListener('keydown', keydownHandler);
+            }
+          }, config.focusDelay);
+        },
+        hide() {
+          if (keydownHandler) {
+            modal.removeEventListener('keydown', keydownHandler);
+            keydownHandler = null;
+          }
+          modal.classList.remove(config.activeClass);
+          if (config.preserveScroll) {
+            const scrollY = modal.dataset.scrollY || savedScrollY || 0;
+            document.body.style.position = '';
+            document.body.style.top = '';
+            document.body.style.width = '';
+            window.scrollTo(0, parseInt(scrollY));
+          }
+          document.body.style.overflow = '';
+          if (lastFocusedElement) {
+            setTimeout(() => {
+              lastFocusedElement.focus();
+              lastFocusedElement = null;
+            }, config.focusDelay);
+          }
+        },
+        isOpen() {
+          return modal.classList.contains(config.activeClass);
+        }
+      };
+    }
+
+    // ============================================================
+    // Modal de Detalles
+    // ============================================================
+    let detailsModalManager = null;
+
     function openModal(id) {
       const conv = allConvocatorias.find(c => c.id === id);
       if (!conv) return;
@@ -2761,13 +2882,23 @@
         ` : ''}
       `;
 
-      document.getElementById('modalOverlay').classList.add('active');
-      document.body.style.overflow = 'hidden';
+      // Initialize modal manager if not already created
+      if (!detailsModalManager) {
+        detailsModalManager = initAccessibleModal('modalOverlay', {
+          activeClass: 'active',
+          closeButton: 'btnCloseDetailsModal',
+          scrollToTop: true
+        });
+      }
+
+      // Show modal with accessibility features
+      detailsModalManager.show();
     }
 
     function closeModal() {
-      document.getElementById('modalOverlay').classList.remove('active');
-      document.body.style.overflow = '';
+      if (detailsModalManager) {
+        detailsModalManager.hide();
+      }
     }
 
     // Event Listeners
@@ -3104,7 +3235,10 @@
     // Event listener para back to top
     window.addEventListener('scroll', debounce(handleBackToTopVisibility, 100));
 
-    // ========== POSTULACIÓN ==========
+    // ============================================================
+    // Modal de Postulación
+    // ============================================================
+    let postulacionModalManager = null;
     let currentConvocatoriaId = null;
     let formOriginalHTML = null;
 
@@ -3139,9 +3273,18 @@
       // Restaurar botón de envío
       resetSubmitButton();
 
-      // Abrir modal
-      document.getElementById('postulacionOverlay').classList.add('active');
-      document.body.style.overflow = 'hidden';
+      // Initialize modal manager if not already created
+      if (!postulacionModalManager) {
+        postulacionModalManager = initAccessibleModal('postulacionOverlay', {
+          activeClass: 'active',
+          closeButton: 'btnClosePostulacionModal',
+          firstFocusableElement: '#postNombreCompleto', // Primer campo del formulario
+          scrollToTop: true
+        });
+      }
+
+      // Show modal with accessibility features
+      postulacionModalManager.show();
 
       // Configurar validación en tiempo real
       setTimeout(() => {
@@ -3150,8 +3293,9 @@
     }
 
     function closePostulacionModal() {
-      document.getElementById('postulacionOverlay').classList.remove('active');
-      document.body.style.overflow = '';
+      if (postulacionModalManager) {
+        postulacionModalManager.hide();
+      }
       currentConvocatoriaId = null;
     }
 

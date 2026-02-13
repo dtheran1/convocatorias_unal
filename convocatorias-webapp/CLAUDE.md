@@ -117,6 +117,156 @@ Sheet IDs are stored in **Script Properties** (set by `setupConfiguration()`), w
 
 ---
 
+## Modal Accessibility Pattern
+
+All modals in this codebase must follow the **accessible modal pattern** to ensure keyboard navigation, screen reader support, and WCAG 2.1 AA compliance.
+
+### Using the initAccessibleModal() utility
+
+Every HTML file with modals includes an `initAccessibleModal()` utility function. Use it for all new modals:
+
+```javascript
+// Initialize modal with accessibility features
+const myModal = initAccessibleModal('myModalId', {
+  primaryButton: 'btnPrimaryId',      // Button that receives initial focus
+  secondaryButton: 'btnSecondaryId',  // Secondary button for focus trap
+  scrollToTop: true,                  // Scroll iframe to top (default: true)
+  focusDelay: 100                     // Delay before focusing (default: 100ms)
+});
+
+// Show modal
+myModal.show();
+
+// Hide modal
+myModal.hide();
+
+// Check if open
+if (myModal.isOpen()) { /* ... */ }
+```
+
+### What initAccessibleModal() provides
+
+1. **Focus Management**
+   - Saves current focused element when modal opens
+   - Automatically focuses primary button on open
+   - Restores focus to original element on close
+
+2. **Focus Trap**
+   - Tab/Shift+Tab cycles between buttons (cannot escape modal)
+   - Prevents accidental focus loss
+
+3. **Scroll Management**
+   - Scrolls iframe to top via postMessage
+   - Prevents body scroll while modal is open
+   - Preserves scroll position on close
+
+4. **Keyboard Support**
+   - Tab: navigate forward between buttons
+   - Shift+Tab: navigate backward
+   - Enter: activates focused button
+   - Escape: should be handled by modal's close button
+
+### Accessibility Checklist for New Modals
+
+When creating a new modal, ensure:
+
+- [ ] Modal uses `initAccessibleModal()` utility
+- [ ] Primary button is the **destructive or main action** (gets initial focus)
+- [ ] Secondary button is the **cancel/safe action**
+- [ ] Escape key closes modal without executing action
+- [ ] Modal has `role="dialog"` attribute in HTML
+- [ ] Modal has `aria-labelledby` pointing to title element
+- [ ] Modal has `aria-describedby` pointing to description element
+- [ ] Overlay prevents interaction with background content
+
+### HTML Structure Template
+
+```html
+<!-- Modal Overlay -->
+<div class="modal-overlay" id="myModal" role="dialog" aria-labelledby="myModalTitle" aria-describedby="myModalDesc">
+  <div class="modal-content">
+    <h2 id="myModalTitle">Modal Title</h2>
+    <p id="myModalDesc">Modal description text...</p>
+
+    <div class="modal-actions">
+      <button type="button" id="btnCancel">Cancelar</button>
+      <button type="button" id="btnAccept">Aceptar</button>
+    </div>
+  </div>
+</div>
+```
+
+### CSS Requirements
+
+Modals must use these classes for the utility to work:
+
+```css
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  display: none;  /* Hidden by default */
+  z-index: 1000;  /* Above other content */
+}
+
+.modal-overlay.visible {
+  display: flex;  /* Shown when utility calls show() */
+}
+```
+
+### Example: Implementing a New Modal
+
+```javascript
+// 1. Initialize modal manager (lazy - do once)
+let deleteModalManager = null;
+
+function showDeleteModal(itemName, onDelete) {
+  if (!deleteModalManager) {
+    deleteModalManager = initAccessibleModal('deleteModal', {
+      primaryButton: 'btnDelete',
+      secondaryButton: 'btnCancelDelete',
+      scrollToTop: true
+    });
+  }
+
+  // 2. Update modal content
+  document.getElementById('deleteModalTitle').textContent =
+    `¿Eliminar ${itemName}?`;
+
+  // 3. Setup button listeners (if needed)
+  document.getElementById('btnDelete').onclick = function() {
+    hideDeleteModal();
+    if (onDelete) onDelete();
+  };
+
+  document.getElementById('btnCancelDelete').onclick = hideDeleteModal;
+
+  // 4. Show with accessibility features
+  deleteModalManager.show();
+}
+
+function hideDeleteModal() {
+  if (deleteModalManager) {
+    deleteModalManager.hide();
+  }
+}
+```
+
+### Existing Implementations
+
+Reference these files for working examples:
+- `sections/banco-perfiles/banco-perfiles.html` - Confirm modal for delete/reset
+- `sections/banco-perfiles-externos/banco-perfiles-externos.html` - Confirm modal with scroll preservation
+
+### WCAG Compliance
+
+This pattern ensures compliance with:
+- **2.1.1 Keyboard** - All functionality available via keyboard
+- **2.1.2 No Keyboard Trap** - Focus can move away from modal (via Escape/close)
+- **2.4.3 Focus Order** - Logical focus sequence within modal
+- **4.1.2 Name, Role, Value** - ARIA attributes provide proper semantics
+
+---
+
 ## Open security issues (from CODE_REVIEW.md)
 
 These are known and tracked but **not yet fixed**. Do not re-introduce these patterns, and fix them opportunistically when touching the relevant code:

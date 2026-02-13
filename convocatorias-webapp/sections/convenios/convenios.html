@@ -2628,6 +2628,121 @@ function applyLightLogoStyle(cardId) {
 // ============================================================
 // MODAL FUNCTIONS
 // ============================================================
+// ACCESSIBLE MODAL UTILITY (Enhanced v2.0)
+// ============================================================
+function initAccessibleModal(modalId, options = {}) {
+  var modal = document.getElementById(modalId);
+  if (!modal) {
+    console.error('Modal with id "' + modalId + '" not found');
+    return null;
+  }
+
+  var config = {
+    activeClass: options.activeClass || 'visible',
+    primaryButton: options.primaryButton,
+    secondaryButton: options.secondaryButton,
+    closeButton: options.closeButton,
+    firstFocusableElement: options.firstFocusableElement,
+    scrollToTop: options.scrollToTop !== false,
+    preserveScroll: options.preserveScroll || false,
+    focusDelay: options.focusDelay || 100
+  };
+
+  var lastFocusedElement = null;
+  var keydownHandler = null;
+  var savedScrollY = 0;
+
+  function trapFocusTwoButtons(e) {
+    if (e.key !== 'Tab') return;
+    var primaryBtn = document.getElementById(config.primaryButton);
+    var secondaryBtn = document.getElementById(config.secondaryButton);
+    if (!primaryBtn || !secondaryBtn) return;
+    if (!e.shiftKey && document.activeElement === secondaryBtn) {
+      e.preventDefault();
+      primaryBtn.focus();
+    } else if (e.shiftKey && document.activeElement === primaryBtn) {
+      e.preventDefault();
+      secondaryBtn.focus();
+    }
+  }
+
+  function trapFocusOneButton(e) {
+    if (e.key !== 'Tab') return;
+    var closeBtn = document.getElementById(config.closeButton);
+    if (!closeBtn) return;
+    e.preventDefault();
+    closeBtn.focus();
+  }
+
+  return {
+    show: function() {
+      lastFocusedElement = document.activeElement;
+      if (config.preserveScroll) {
+        savedScrollY = window.scrollY;
+        modal.dataset.scrollY = savedScrollY;
+        document.body.style.position = 'fixed';
+        document.body.style.top = '-' + savedScrollY + 'px';
+        document.body.style.width = '100%';
+      }
+      modal.classList.add(config.activeClass);
+      document.body.style.overflow = 'hidden';
+      if (config.scrollToTop) {
+        window.parent.postMessage({ type: 'scrollToTop' }, '*');
+      }
+      setTimeout(function() {
+        var focusTarget = null;
+        if (config.firstFocusableElement) {
+          focusTarget = modal.querySelector(config.firstFocusableElement);
+        } else if (config.primaryButton) {
+          focusTarget = document.getElementById(config.primaryButton);
+        } else if (config.closeButton) {
+          focusTarget = document.getElementById(config.closeButton);
+        }
+        if (focusTarget) {
+          focusTarget.focus();
+        }
+        if (config.primaryButton && config.secondaryButton) {
+          keydownHandler = trapFocusTwoButtons;
+        } else if (config.closeButton) {
+          keydownHandler = trapFocusOneButton;
+        }
+        if (keydownHandler) {
+          modal.addEventListener('keydown', keydownHandler);
+        }
+      }, config.focusDelay);
+    },
+    hide: function() {
+      if (keydownHandler) {
+        modal.removeEventListener('keydown', keydownHandler);
+        keydownHandler = null;
+      }
+      modal.classList.remove(config.activeClass);
+      if (config.preserveScroll) {
+        var scrollY = modal.dataset.scrollY || savedScrollY || 0;
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.width = '';
+        window.scrollTo(0, parseInt(scrollY));
+      }
+      document.body.style.overflow = '';
+      if (lastFocusedElement) {
+        setTimeout(function() {
+          lastFocusedElement.focus();
+          lastFocusedElement = null;
+        }, config.focusDelay);
+      }
+    },
+    isOpen: function() {
+      return modal.classList.contains(config.activeClass);
+    }
+  };
+}
+
+// ============================================================
+// COMPANY MODAL
+// ============================================================
+var companyModalManager = null;
+
 function openModal(logoId) {
   var companyData = COMPANY_INFO[logoId];
   if (!companyData) {
@@ -2655,27 +2770,23 @@ function openModal(logoId) {
   document.getElementById('modalDescription').textContent = companyData.description;
   document.getElementById('modalConvenio').textContent = companyData.convenio;
 
+  // Initialize modal manager if not already created
+  if (!companyModalManager) {
+    companyModalManager = initAccessibleModal('companyModal', {
+      activeClass: 'show',
+      closeButton: 'modalClose',
+      scrollToTop: false, // Don't scroll iframe to top for this modal
+      preserveScroll: true
+    });
+  }
+
+  // Show modal with accessibility features
+  companyModalManager.show();
+
+  // Additional scroll management for modal content
   var modal = document.getElementById('companyModal');
-  modal.classList.add('show');
-  
-  // Guardar posición actual del scroll
-  var scrollY = window.scrollY;
-  
-  // Fijar la posición del body
-  document.body.style.position = 'fixed';
-  document.body.style.top = '-' + scrollY + 'px';
-  document.body.style.width = '100%';
-  document.body.style.overflow = 'hidden';
-  
-  // Guardar la posición para restaurarla al cerrar
-  modal.dataset.scrollY = scrollY;
-  
-  // Enfocar el modal y hacer scroll al contenido
   setTimeout(function() {
-    // Scroll al inicio del overlay del modal
     modal.scrollTop = 0;
-    
-    // Scroll al inicio del contenido del modal
     var modalContent = modal.querySelector('.modal-content');
     if (modalContent) {
       modalContent.scrollTop = 0;
@@ -2684,16 +2795,9 @@ function openModal(logoId) {
 }
 
 function closeModal() {
-  var modal = document.getElementById('companyModal');
-  modal.classList.remove('show');
-  
-  // Restaurar el scroll del body
-  var scrollY = modal.dataset.scrollY || 0;
-  document.body.style.position = '';
-  document.body.style.top = '';
-  document.body.style.width = '';
-  document.body.style.overflow = '';
-  window.scrollTo(0, parseInt(scrollY));
+  if (companyModalManager) {
+    companyModalManager.hide();
+  }
 }
 
 function setupModalEvents() {

@@ -519,17 +519,17 @@
     }
 
     .accordion-body li {
-      padding: 0.35rem 0;
-      display: flex;
-      align-items: flex-start;
-      gap: 0.5rem;
+      padding: 0.35rem 0 0.35rem 1.5rem;
+      position: relative;
     }
 
     .accordion-body li::before {
       content: '✓';
       color: var(--unal-green);
       font-weight: bold;
-      flex-shrink: 0;
+      position: absolute;
+      left: 0;
+      top: 0.4rem;
     }
 
     .accordion-body a {
@@ -1230,27 +1230,13 @@
         <div class="accordion-item">
           <div class="accordion-header" onclick="toggleAccordion(this)">
             <div class="accordion-title">
-              ¿Cuándo puedo inscribirme para cursar prácticas o Trabajo de grado en cualquiera de sus modalidades?
+              ¿Cuándo puedo preinscribirme para cursar prácticas o Trabajo de grado en cualquiera de sus modalidades?
             </div>
             <span class="material-icons expand-icon">expand_more</span>
           </div>
           <div class="accordion-content">
             <div class="accordion-body">
-              <p>Los estudiantes de todo los programas académicos pueden preinscribirse cuando cumplan con los requisitos que exige el acuerdo de creación de su programa curricular.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="accordion-item">
-          <div class="accordion-header" onclick="toggleAccordion(this)">
-            <div class="accordion-title">
-              ¿Cómo realizo mi inscripción?
-            </div>
-            <span class="material-icons expand-icon">expand_more</span>
-          </div>
-          <div class="accordion-content">
-            <div class="accordion-body">
-              <p>Una vez confirmes que cumples con los requisitos de preinscripción que exige el acuerdo de creación de tu programa curricular, debes diligenciar los respectivos formatos.</p>
+              <p>Los estudiantes de todos los programas académicos pueden preinscribirse cuando cumplan con los requisitos que exige el acuerdo de creación de su programa curricular.</p>
             </div>
           </div>
         </div>
@@ -1264,7 +1250,21 @@
           </div>
           <div class="accordion-content">
             <div class="accordion-body">
-              <p>La preinscripción del TDG o Práctica se realizará de acuerdo al calendario académico con fechas de recepción de documentos, para el período 2026-1s será del 10 de septiembre al 10 de noviembre.</p>
+              <p>La preinscripción del TDG o Práctica se realizará de acuerdo al <a href="https://delapaz.unal.edu.co/index.php?id=24" target="_blank" rel="noopener">calendario académico</a> con fechas de recepción de documentos, las cuales se publican posmaster.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div class="accordion-title">
+              ¿Cómo realizo mi inscripción?
+            </div>
+            <span class="material-icons expand-icon">expand_more</span>
+          </div>
+          <div class="accordion-content">
+            <div class="accordion-body">
+              <p>Una vez que cuentes con la aprobación por parte del Comité Académico Asesor, debes hacer la inscripción de la asignatura en las citas asignadas en el SIA.</p>
             </div>
           </div>
         </div>
@@ -1278,7 +1278,10 @@
           </div>
           <div class="accordion-content">
             <div class="accordion-body">
-              <p>Para formalizar el proceso de inscripción de prácticas o trabajo de grado además de cumplir con los requisitos que exige el acuerdo de creación de su programa curricular, se deben seguir los lineamientos aquí propuestos.</p>
+              <ul>
+                <li>Cumplir con los requisitos establecidos en el acuerdo de creación del programa curricular.</li>
+                <li>Presentar los formatos correspondientes, indicar la modalidad de vinculación y esperar la aprobación del Comité Académico Asesor.</li>
+              </ul>
             </div>
           </div>
         </div>
@@ -1292,7 +1295,11 @@
           </div>
           <div class="accordion-content">
             <div class="accordion-body">
-              <p>Para cursar la pasantía o la práctica, las empresas y entidades interesadas en recibir practicantes/pasantes se comunicarán con la Universidad. Desde la Escuela de pregrados (prácticas y pasantías), se enviará una comunicación a los estudiantes, para que se postulen en las vacantes ofertadas por las entidades/dependencias.</p>
+              <ul>
+                <li>Las entidades con <a href="https://sites.google.com/unal.edu.co/diracademicadelapaz/escuela-de-pregrados/pr%C3%A1cticas-y-pasant%C3%ADas/convenios-pp?authuser=0" target="_blank" rel="noopener">convenios específicos para P&amp;P</a> interesadas en recibir practicantes o pasantes informarán a la Universidad los perfiles requeridos, y desde la Escuela de Pregrados (Prácticas y Pasantías) se comunicarán las vacantes a los estudiantes para su postulación.</li>
+                <li>El estudiante también puede compartir la entidad de su interés, diligenciando el formulario en la <a href="https://sites.google.com/unal.edu.co/diracademicadelapaz/escuela-de-pregrados/pr%C3%A1cticas-y-pasant%C3%ADas/convenios-pp?authuser=0" target="_blank" rel="noopener">página de la oficina de Prácticas y Pasantías</a>, los datos correspondientes, para adelantar el trámite de suscripción del convenio específico.</li>
+                <li>Debe diligenciar el formulario para solicitar la carta de presentación, <a href="https://docs.google.com/forms/d/e/1FAIpQLSdj-Kqpw_VGfsBQBgbT_o8gh0V-fbIZ42Qlog0ywGO9Q5S8Pw/viewform" target="_blank" rel="noopener">(TDG)</a> <a href="https://docs.google.com/forms/d/e/1FAIpQLSe46cZB15GxQhaOzV7hMh25Vp1OrsO41BiKtzUPV1xWh-ckRA/viewform" target="_blank" rel="noopener">(Prácticas)</a> que certifica el cumplimiento de requisitos para Trabajo de Grado o Prácticas de Extensión. Este documento se presentará ante la entidad donde realizará la práctica o pasantía.</li>
+              </ul>
             </div>
           </div>
         </div>

@@ -6,6 +6,8 @@
   <title>Banco de Perfiles Externos - UNAL Sede de La Paz</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- Select2 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
   <style>
     :root {
       --unal-green: #4CAF50;
@@ -1141,6 +1143,11 @@
   </div>
 </div>
 
+<!-- jQuery (requerido para Select2) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Select2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 <script>
 // ============================================================
 // PERFILES DE EGRESADOS DATA
@@ -1532,6 +1539,44 @@ function createPerfilCard(index) {
             </div>
 
             <div class="form-group">
+              <label class="form-label" for="modalidadVinculacion-${index}">
+                Modo de vinculación <span class="required">*</span>
+              </label>
+              <div class="radio-group">
+                <label class="radio-label">
+                  <input type="radio" name="modalidadVinculacion-${index}" value="Convenio" required onchange="toggleOtraModalidadVinculacion(${index})">
+                  Convenio
+                </label>
+                <label class="radio-label">
+                  <input type="radio" name="modalidadVinculacion-${index}" value="Contrato de aprendizaje" onchange="toggleOtraModalidadVinculacion(${index})">
+                  Contrato de aprendizaje
+                </label>
+                <label class="radio-label">
+                  <input type="radio" name="modalidadVinculacion-${index}" value="Otro" onchange="toggleOtraModalidadVinculacion(${index})">
+                  Otro
+                </label>
+              </div>
+              <div class="form-error" id="error-modalidadVinculacion-${index}">Selecciona una modalidad de vinculación.</div>
+              
+              <div class="form-group" id="otraModalidadVinculacion-container-${index}" style="display: none; margin-top: 1rem;">
+                <label class="form-label" for="otraModalidadVinculacionTexto-${index}">
+                  Especifique el modo de vinculación <span class="required">*</span>
+                </label>
+                <div class="field-wrapper">
+                  <textarea 
+                    class="form-textarea" 
+                    id="otraModalidadVinculacionTexto-${index}" 
+                    placeholder="Describe el modo de vinculación"
+                  ></textarea>
+                  <div class="field-icon" id="icon-otraModalidadVinculacionTexto-${index}">
+                    <span class="material-icons">check_circle</span>
+                  </div>
+                </div>
+                <div class="form-error" id="error-otraModalidadVinculacionTexto-${index}">Este campo es obligatorio cuando seleccionas "Otro".</div>
+              </div>
+            </div>
+
+            <div class="form-group">
               <label class="form-label" for="descripcionPerfil-${index}">
                 Descripción general del perfil de acuerdo al tipo de modalidad (Práctica y/o Pasantía) <span class="required">*</span>
               </label>
@@ -1569,8 +1614,13 @@ function createPerfilCard(index) {
               <label class="form-label" for="duracionEstimada-${index}">
                 Duración estimada de la Práctica y/o Pasantía <span class="required">*</span>
               </label>
-              <input type="text" class="form-input" id="duracionEstimada-${index}" required placeholder="Ejemplo: 6 meses, 1 año, etc.">
-              <div class="form-error" id="error-duracionEstimada-${index}">Este campo es obligatorio.</div>
+              <select class="form-select" id="duracionEstimada-${index}" required>
+                <option value="" disabled selected>Selecciona la duración</option>
+                <option value="4 meses">4 meses</option>
+                <option value="5 meses">5 meses</option>
+                <option value="6 meses">6 meses</option>
+              </select>
+              <div class="form-error" id="error-duracionEstimada-${index}">Selecciona una duración.</div>
             </div>
 
             <div class="form-group">
@@ -1624,7 +1674,7 @@ function createPerfilCard(index) {
 
             <div class="form-group">
               <label class="form-label" for="apoyoEstudiante-${index}">
-                ¿La entidad ofrece algún tipo de apoyo al estudiante en Práctica y/o Pasantía? <span class="required">*</span>
+                ¿La entidad ofrece algún tipo de estímulo económico al estudiante en Práctica y/o Pasantía? <span class="required">*</span>
               </label>
               <div class="radio-group">
                 <label class="radio-label">
@@ -1641,7 +1691,7 @@ function createPerfilCard(index) {
 
             <div class="form-group" id="apoyoDetalle-container-${index}" style="display: none;">
               <label class="form-label" for="tipoApoyo-${index}">
-                La entidad ofrece algún tipo de apoyo al estudiante en Práctica y/o Pasantía, seleccione el tipo de apoyo <span class="required">*</span>
+                ¿Cuál? <span class="required">*</span>
               </label>
               <div class="checkbox-group">
                 <label class="checkbox-label">
@@ -1665,13 +1715,13 @@ function createPerfilCard(index) {
               
               <div class="form-group" id="otroApoyo-container-${index}" style="display: none; margin-top: 1rem;">
                 <label class="form-label" for="otroApoyoTexto-${index}">
-                  Especifique el tipo de apoyo <span class="required">*</span>
+                  Especifique el estímulo económico <span class="required">*</span>
                 </label>
                 <div class="field-wrapper">
                   <textarea 
                     class="form-textarea" 
                     id="otroApoyoTexto-${index}" 
-                    placeholder="Describe el tipo de apoyo que ofrece la entidad"
+                    placeholder="Describe el estímulo económico que ofrece la entidad"
                   ></textarea>
                   <div class="field-icon" id="icon-otroApoyoTexto-${index}">
                     <span class="material-icons">check_circle</span>
@@ -1713,11 +1763,10 @@ function toggleApoyoDetalle(index) {
   
   if (selectedValue === 'SI') {
     detalleContainer.style.display = 'block';
-    tipoApoyoCheckboxes.forEach(cb => cb.required = true);
+    // No marcamos los checkboxes como required - solo validamos si "Otro" está marcado
   } else {
     detalleContainer.style.display = 'none';
     tipoApoyoCheckboxes.forEach(cb => {
-      cb.required = false;
       cb.checked = false;
     });
     // Ocultar campo "Otro" si estaba visible
@@ -1726,6 +1775,30 @@ function toggleApoyoDetalle(index) {
       otroContainer.style.display = 'none';
       const otroTexto = document.getElementById(`otroApoyoTexto-${index}`);
       if (otroTexto) otroTexto.value = '';
+    }
+    if (errorDiv) {
+      errorDiv.classList.remove('visible');
+    }
+  }
+}
+
+// ============================================================
+// OTRA MODALIDAD VINCULACIÓN TOGGLE
+// ============================================================
+function toggleOtraModalidadVinculacion(index) {
+  const otroRadio = document.querySelector(`input[name="modalidadVinculacion-${index}"][value="Otro"]`);
+  const otroContainer = document.getElementById(`otraModalidadVinculacion-container-${index}`);
+  const otroTexto = document.getElementById(`otraModalidadVinculacionTexto-${index}`);
+  const errorDiv = document.getElementById(`error-otraModalidadVinculacionTexto-${index}`);
+  
+  if (otroRadio && otroRadio.checked) {
+    otroContainer.style.display = 'block';
+    if (otroTexto) otroTexto.required = true;
+  } else {
+    otroContainer.style.display = 'none';
+    if (otroTexto) {
+      otroTexto.required = false;
+      otroTexto.value = '';
     }
     if (errorDiv) {
       errorDiv.classList.remove('visible');
@@ -1817,6 +1890,8 @@ function duplicatePerfil(sourceIndex) {
   // Collect data from source perfil
   const sourceData = {
     tipoModalidad: document.querySelector(`input[name="tipoModalidad-${sourceIndex}"]:checked`)?.value || '',
+    modalidadVinculacion: document.querySelector(`input[name="modalidadVinculacion-${sourceIndex}"]:checked`)?.value || '',
+    otraModalidadVinculacionTexto: document.getElementById(`otraModalidadVinculacionTexto-${sourceIndex}`)?.value || '',
     descripcionPerfil: document.getElementById(`descripcionPerfil-${sourceIndex}`)?.value || '',
     dependenciaArea: document.getElementById(`dependenciaArea-${sourceIndex}`)?.value || '',
     cantidadEstudiantes: document.getElementById(`cantidadEstudiantes-${sourceIndex}`)?.value || '',
@@ -1851,6 +1926,19 @@ function duplicatePerfil(sourceIndex) {
     if (sourceData.tipoModalidad) {
       const tipoRadio = document.querySelector(`input[name="tipoModalidad-${newIndex}"][value="${sourceData.tipoModalidad}"]`);
       if (tipoRadio) tipoRadio.checked = true;
+    }
+    if (sourceData.modalidadVinculacion) {
+      const modalidadVinculacionRadio = document.querySelector(`input[name="modalidadVinculacion-${newIndex}"][value="${sourceData.modalidadVinculacion}"]`);
+      if (modalidadVinculacionRadio) {
+        modalidadVinculacionRadio.checked = true;
+        toggleOtraModalidadVinculacion(newIndex);
+        // Si es "Otro", copiar el texto
+        if (sourceData.modalidadVinculacion === 'Otro' && sourceData.otraModalidadVinculacionTexto) {
+          setTimeout(() => {
+            document.getElementById(`otraModalidadVinculacionTexto-${newIndex}`).value = sourceData.otraModalidadVinculacionTexto;
+          }, 100);
+        }
+      }
     }
     if (sourceData.modalidadTrabajo) {
       const modalidadRadio = document.querySelector(`input[name="modalidadTrabajo-${newIndex}"][value="${sourceData.modalidadTrabajo}"]`);
@@ -2006,6 +2094,8 @@ function validateField(field) {
     isValid = field.value.trim() !== '' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(field.value);
   } else if (field.type === 'number') {
     isValid = field.value.trim() !== '' && parseInt(field.value) > 0;
+  } else if (field.tagName === 'SELECT') {
+    isValid = field.value !== '' && field.value !== null;
   } else {
     isValid = field.value.trim() !== '';
   }
@@ -2095,6 +2185,7 @@ function validateForm() {
     // Radio buttons del perfil
     const perfilRadioGroups = [
       `tipoModalidad-${perfilIndex}`,
+      `modalidadVinculacion-${perfilIndex}`,
       `modalidadTrabajo-${perfilIndex}`,
       `apoyoEstudiante-${perfilIndex}`
     ];
@@ -2110,6 +2201,19 @@ function validateForm() {
       }
     });
     
+    // Validar campo de texto "Otra modalidad vinculación" si está seleccionado
+    const otraModalidadVinculacionChecked = document.querySelector(`input[name="modalidadVinculacion-${perfilIndex}"][value="Otro"]:checked`);
+    if (otraModalidadVinculacionChecked) {
+      const otraModalidadTexto = document.getElementById(`otraModalidadVinculacionTexto-${perfilIndex}`);
+      const errorOtraModalidad = document.getElementById(`error-otraModalidadVinculacionTexto-${perfilIndex}`);
+      if (!otraModalidadTexto || !otraModalidadTexto.value.trim()) {
+        isValid = false;
+        if (errorOtraModalidad) errorOtraModalidad.classList.add('visible');
+      } else {
+        if (errorOtraModalidad) errorOtraModalidad.classList.remove('visible');
+      }
+    }
+    
     // Validar programas (checkboxes)
     const programasChecked = document.querySelectorAll(`input[name="programas-${perfilIndex}"]:checked`);
     const errorProgramas = document.getElementById(`error-programas-${perfilIndex}`);
@@ -2123,25 +2227,16 @@ function validateForm() {
     // Validar tipo de apoyo si "SI" está seleccionado
     const apoyoSi = document.querySelector(`input[name="apoyoEstudiante-${perfilIndex}"][value="SI"]:checked`);
     if (apoyoSi) {
-      const tipoApoyoChecked = document.querySelectorAll(`input[name="tipoApoyo-${perfilIndex}"]:checked`);
-      const errorTipoApoyo = document.getElementById(`error-tipoApoyo-${perfilIndex}`);
-      if (tipoApoyoChecked.length === 0) {
-        isValid = false;
-        if (errorTipoApoyo) errorTipoApoyo.classList.add('visible');
-      } else {
-        if (errorTipoApoyo) errorTipoApoyo.classList.remove('visible');
-        
-        // Validar campo de texto "Otro" si está seleccionado
-        const otroChecked = document.querySelector(`input[name="tipoApoyo-${perfilIndex}"][value="Otro"]:checked`);
-        if (otroChecked) {
-          const otroTexto = document.getElementById(`otroApoyoTexto-${perfilIndex}`);
-          const errorOtro = document.getElementById(`error-otroApoyoTexto-${perfilIndex}`);
-          if (!otroTexto || !otroTexto.value.trim()) {
-            isValid = false;
-            if (errorOtro) errorOtro.classList.add('visible');
-          } else {
-            if (errorOtro) errorOtro.classList.remove('visible');
-          }
+      // Solo validamos si "Otro" está marcado y tiene texto
+      const otroChecked = document.querySelector(`input[name="tipoApoyo-${perfilIndex}"][value="Otro"]:checked`);
+      if (otroChecked) {
+        const otroTexto = document.getElementById(`otroApoyoTexto-${perfilIndex}`);
+        const errorOtro = document.getElementById(`error-otroApoyoTexto-${perfilIndex}`);
+        if (!otroTexto || !otroTexto.value.trim()) {
+          isValid = false;
+          if (errorOtro) errorOtro.classList.add('visible');
+        } else {
+          if (errorOtro) errorOtro.classList.remove('visible');
         }
       }
     }
@@ -2192,8 +2287,19 @@ function submitForm(e) {
       return value;
     });
     
+    // Recopilar modalidad de vinculación
+    const modalidadVinculacionValue = document.querySelector(`input[name="modalidadVinculacion-${index}"]:checked`)?.value || '';
+    const otraModalidadVinculacionTexto = document.getElementById(`otraModalidadVinculacionTexto-${index}`)?.value.trim();
+    
+    // Si "Otro" está seleccionado y tiene texto, usar el texto específico
+    let modalidadVinculacionFinal = modalidadVinculacionValue;
+    if (modalidadVinculacionValue === 'Otro' && otraModalidadVinculacionTexto) {
+      modalidadVinculacionFinal = `Otro: ${otraModalidadVinculacionTexto}`;
+    }
+    
     const perfilData = {
       tipoModalidad: document.querySelector(`input[name="tipoModalidad-${index}"]:checked`)?.value || '',
+      modalidadVinculacion: modalidadVinculacionFinal,
       descripcionPerfil: document.getElementById(`descripcionPerfil-${index}`)?.value.trim() || '',
       dependenciaArea: document.getElementById(`dependenciaArea-${index}`)?.value.trim() || '',
       cantidadEstudiantes: document.getElementById(`cantidadEstudiantes-${index}`)?.value.trim() || '',

@@ -128,6 +128,7 @@ function initializeSheetExternos(sheetId) {
     'Correo Contacto',
     'Teléfono Contacto',
     'Tipo Modalidad',
+    'Modalidad de Vinculación',
     'Descripción Perfil',
     'Dependencia/Área',
     'Cantidad Estudiantes',
@@ -263,6 +264,7 @@ function saveToSheetExternos(formData) {
       formData.correoContacto,
       formData.telefonoContacto || '',
       perfil.tipoModalidad,
+      perfil.modalidadVinculacion || '',
       perfil.descripcionPerfil,
       perfil.dependenciaArea,
       perfil.cantidadEstudiantes,
@@ -328,6 +330,10 @@ function buildEmailTemplateExternos(formData, rowsAdded) {
           <tr>
             <td class="label">Tipo de Modalidad:</td>
             <td>${escapeHtml(perfil.tipoModalidad)}</td>
+          </tr>
+          <tr>
+            <td class="label">Modalidad de Vinculación:</td>
+            <td>${escapeHtml(perfil.modalidadVinculacion)}</td>
           </tr>
           <tr>
             <td class="label">Descripción:</td>

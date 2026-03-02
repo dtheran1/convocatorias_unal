@@ -105,6 +105,89 @@ function setupBancoPerfilesExternos() {
 }
 
 /**
+ * EJECUTA ESTA FUNCIÓN para actualizar headers del Sheet existente
+ * Agrega la columna "Modalidad de Vinculación" al Sheet
+ */
+function actualizarHeadersSheetExternos() {
+  const config = getConfigExternos();
+  const ss = SpreadsheetApp.openById(config.spreadsheetId);
+  let sheet = ss.getSheetByName('Perfiles Externos');
+  
+  if (!sheet) {
+    console.log('❌ No se encontró la hoja "Perfiles Externos"');
+    console.log('Ejecuta initializeSheetExternos() primero');
+    return;
+  }
+  
+  // Definir headers actualizados
+  const headers = [
+    'Fecha de Registro',
+    'Nombre Entidad',
+    'Información Entidad',
+    'Tipo Entidad',
+    'Municipio y Departamento',
+    'Nombre Contacto',
+    'Cargo Contacto',
+    'Correo Contacto',
+    'Teléfono Contacto',
+    'Tipo Modalidad',
+    'Modalidad de Vinculación',
+    'Descripción Perfil',
+    'Dependencia/Área',
+    'Cantidad Estudiantes',
+    'Duración Estimada',
+    'Modalidad Trabajo',
+    'Programas Académicos',
+    'Competencias Específicas',
+    'Apoyo Estudiante',
+    'Tipo de Apoyo',
+    'Observaciones'
+  ];
+  
+  console.log('=== ACTUALIZANDO HEADERS DEL SHEET ===');
+  console.log('');
+  
+  // Leer headers actuales
+  const currentHeaders = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
+  console.log('Headers actuales: ' + currentHeaders.length + ' columnas');
+  console.log('Headers nuevos: ' + headers.length + ' columnas');
+  console.log('');
+  
+  // Verificar si necesita actualización
+  if (currentHeaders.length >= headers.length) {
+    console.log('⚠️ El Sheet ya tiene ' + currentHeaders.length + ' columnas');
+    console.log('Verificando si "Modalidad de Vinculación" existe...');
+    
+    if (currentHeaders.indexOf('Modalidad de Vinculación') !== -1) {
+      console.log('✅ La columna "Modalidad de Vinculación" YA EXISTE en posición ' + (currentHeaders.indexOf('Modalidad de Vinculación') + 1));
+      return;
+    }
+  }
+  
+  // Actualizar headers
+  sheet.getRange(1, 1, 1, headers.length).setValues([headers]);
+  
+  // Formatear headers
+  const headerRange = sheet.getRange(1, 1, 1, headers.length);
+  headerRange.setBackground('#2563eb');
+  headerRange.setFontColor('#FFFFFF');
+  headerRange.setFontWeight('bold');
+  headerRange.setHorizontalAlignment('center');
+  
+  // Auto-resize columnas
+  for (let i = 1; i <= headers.length; i++) {
+    sheet.autoResizeColumn(i);
+  }
+  
+  console.log('✅ Headers actualizados correctamente');
+  console.log('');
+  console.log('Nueva estructura:');
+  headers.forEach(function(header, index) {
+    console.log('  Columna ' + (index + 1) + ': ' + header);
+  });
+}
+
+/**
  * Inicializar el Google Sheet con las columnas necesarias para perfiles externos
  */
 function initializeSheetExternos(sheetId) {

@@ -340,6 +340,7 @@
       color: var(--unal-green);
       font-weight: bold;
       flex-shrink: 0;
+      margin-top: 0.1rem;
     }
 
     /* Timeline */
@@ -435,6 +436,7 @@
       color: var(--unal-green);
       font-weight: bold;
       flex-shrink: 0;
+      margin-top: 0.1rem;
     }
 
     /* Accordion (FAQ y Normativa) */
@@ -455,7 +457,7 @@
     .accordion-header {
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      gap: 0.5rem;
       padding: 1.25rem 1.5rem;
       cursor: pointer;
       transition: background 0.2s;
@@ -475,6 +477,7 @@
       display: flex;
       align-items: center;
       gap: 0.75rem;
+      flex: 1;
     }
 
     .accordion-title .material-icons {
@@ -485,6 +488,8 @@
     .accordion-header .expand-icon {
       color: var(--text-secondary);
       transition: transform 0.3s;
+      flex-shrink: 0;
+      margin-left: auto;
     }
 
     .accordion-item.active .expand-icon {
@@ -521,6 +526,7 @@
     .accordion-body li {
       padding: 0.35rem 0 0.35rem 1.5rem;
       position: relative;
+      line-height: 1.6;
     }
 
     .accordion-body li::before {
@@ -654,6 +660,30 @@
 
     .info-box strong {
       color: var(--warning-text);
+    }
+
+    .info-box ul {
+      list-style: none;
+      padding-left: 0;
+      margin: 0.5rem 0 0 0;
+    }
+
+    .info-box li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      padding: 0.35rem 0;
+      color: var(--text-primary);
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    .info-box li::before {
+      content: '✓';
+      color: var(--unal-green);
+      font-weight: bold;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
     }
 
     /* Modal Styles */
@@ -791,6 +821,7 @@
       color: var(--unal-green);
       font-weight: bold;
       flex-shrink: 0;
+      margin-top: 0.1rem;
     }
 
     .modal-requirements {
@@ -1166,7 +1197,7 @@
             <ul style="list-style: none; padding-left: 0;">
               <li style="margin-bottom: 1rem;">
                 <strong>📄 Trabajo de Grado (TDG):</strong> 
-                <a href="https://docs.google.com/document/d/1hlpMUaCBm6L1ggzZB-0OY5SJ_cq5NubqFRp7ZBnOOe4/edit?usp=drive_link" 
+                <a href="https://docs.google.com/document/d/18a0yvcHpD1WMf16eDmn4K0rH8omZr-nnEGeijUdamDU/edit?usp=sharing" 
                    target="_blank" 
                    style="color: var(--unal-green); font-weight: 600; text-decoration: underline;">
                   Formato registro TDG
@@ -1174,7 +1205,7 @@
               </li>
               <li>
                 <strong>📋 Plan General de Trabajo de Grado:</strong> 
-                <a href="https://docs.google.com/document/d/1Ai_qkbEi5ZdIJGrvx_DhFzyG20c93Zbk3jiHeZ2oJJ4/edit?tab=t.0" 
+                <a href="https://docs.google.com/document/d/1eLYPSnvZRWLMq5ROkZZbrC6ox7rcuSrecEtvKEb-yfI/edit?usp=sharing" 
                    target="_blank" 
                    style="color: var(--unal-green); font-weight: 600; text-decoration: underline;">
                   Formato registro plan de Trabajo de Grado

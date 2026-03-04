@@ -523,19 +523,44 @@
       margin-bottom: 0.75rem;
     }
 
-    .accordion-body li {
+    .accordion-body > ul > li,
+    .accordion-body > div > ul > li {
       padding: 0.35rem 0 0.35rem 1.5rem;
       position: relative;
       line-height: 1.6;
     }
 
-    .accordion-body li::before {
+    .accordion-body > ul > li::before,
+    .accordion-body > div > ul > li::before {
       content: '✓';
       color: var(--unal-green);
       font-weight: bold;
       position: absolute;
       left: 0;
       top: 0.4rem;
+    }
+
+    .accordion-body ul[style*="list-style"] li::before {
+      content: none;
+    }
+
+    .accordion-body ul[style*="list-style"] li {
+      padding-left: 0;
+    }
+
+    /* Info-box dentro de accordion-body tiene prioridad */
+    .accordion-body .info-box li {
+      padding: 0.35rem 0;
+      position: static;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+
+    .accordion-body .info-box li::before {
+      position: static;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
     }
 
     .accordion-body a {

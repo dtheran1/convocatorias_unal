@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Preinscripción PAE 2026-2s - UNAL Sede La Paz</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+    :root {
+      --unal-green: #4CAF50;
+      --unal-green-dark: #388E3C;
+      --unal-green-light: #C8E6C9;
+      --unal-green-bg: #f0f9f0;
+      --primary: #2563eb;
+      --text-primary: #1e293b;
+      --text-secondary: #64748b;
+      --bg-primary: #f8fafc;
+      --bg-white: #ffffff;
+      --border: #e2e8f0;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1);
+      --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1);
+      --radius: 12px;
+      --warning-bg: #FFF9C4;
+      --warning-border: #F57C00;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-white);
+      color: var(--text-primary);
+      line-height: 1.6;
+      padding: 2rem 1rem;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* Header Banner */
+    .pae-header {
+      background: linear-gradient(135deg, var(--unal-green), var(--unal-green-dark));
+      color: white;
+      padding: 2.5rem 2rem;
+      border-radius: var(--radius);
+      text-align: center;
+      margin-bottom: 3rem;
+      box-shadow: var(--shadow-lg);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .pae-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      opacity: 0.3;
+    }
+
+    .pae-header h1 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      line-height: 1.3;
+      position: relative;
+      z-index: 1;
+    }
+
+    .pae-header .period {
+      font-size: 1.25rem;
+      font-weight: 600;
+      opacity: 0.95;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Plazo destacado */
+    .deadline-box {
+      background: var(--bg-white);
+      border: 2px solid var(--unal-green);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin-bottom: 3rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      box-shadow: var(--shadow-md);
+    }
+
+    .deadline-box .material-icons {
+      font-size: 2.5rem;
+      color: var(--unal-green);
+    }
+
+    .deadline-box .deadline-text {
+      flex: 1;
+    }
+
+    .deadline-box .deadline-text strong {
+      display: block;
+      font-size: 1.1rem;
+      color: var(--text-primary);
+      margin-bottom: 0.25rem;
+    }
+
+    .deadline-box .deadline-text span {
+      font-size: 1.25rem;
+      color: var(--unal-green-dark);
+      font-weight: 700;
+    }
+
+    /* Secciones */
+    .section {
+      margin-bottom: 4rem;
+    }
+
+    .section-header {
+      margin-bottom: 2rem;
+    }
+
+    .section-header h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .section-header h2 .material-icons {
+      color: var(--unal-green);
+      font-size: 1.75rem;
+    }
+
+    .section-header p {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+    }
+
+    /* Timeline Vertical */
+    .process-timeline {
+      max-width: 900px;
+      margin: 3rem auto 0;
+      position: relative;
+      padding-left: 80px;
+    }
+
+    /* Línea vertical conectora */
+    .process-timeline::before {
+      content: '';
+      position: absolute;
+      left: 32px;
+      top: 40px;
+      bottom: 40px;
+      width: 3px;
+      background: linear-gradient(180deg, var(--unal-green), var(--unal-green-dark));
+      border-radius: 2px;
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 3rem;
+      padding-left: 0;
+    }
+
+    .timeline-item:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Número circular */
+    .timeline-number {
+      position: absolute;
+      left: -80px;
+      top: 0;
+      width: 64px;
+      height: 64px;
+      background: linear-gradient(135deg, var(--unal-green), var(--unal-green-dark));
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.75rem;
+      font-weight: 700;
+      box-shadow: 0 4px 12px rgba(76, 175, 80, 0.4);
+      z-index: 2;
+      border: 4px solid var(--bg-white);
+    }
+
+    /* Contenido del paso */
+    .timeline-content {
+      background: var(--bg-white);
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .timeline-content:hover {
+      box-shadow: var(--shadow-lg);
+      border-color: var(--unal-green-light);
+      transform: translateX(8px);
+    }
+
+    .timeline-content h3 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 1rem;
+    }
+
+    .timeline-content p {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      line-height: 1.7;
+      margin-bottom: 1.25rem;
+    }
+
+    .timeline-content p:last-child {
+      margin-bottom: 0;
+    }
+
+    .timeline-content ul {
+      list-style: none;
+      padding: 0;
+      margin: 1.25rem 0;
+    }
+
+    .timeline-content ul li {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      padding: 0.5rem 0 0.5rem 1.75rem;
+      position: relative;
+      line-height: 1.6;
+    }
+
+    .timeline-content ul li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--unal-green);
+      font-weight: 700;
+      font-size: 1rem;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background: linear-gradient(135deg, var(--unal-green), var(--unal-green-dark));
+      color: white;
+      padding: 0.875rem 1.75rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);
+      margin-top: 1.25rem;
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(135deg, var(--unal-green-dark), #2E7D32);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(76, 175, 80, 0.4);
+    }
+
+    .btn-primary .material-icons {
+      font-size: 1.15rem;
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background: var(--bg-white);
+      color: var(--unal-green);
+      border: 2px solid var(--unal-green);
+      padding: 0.875rem 1.75rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+      margin-top: 0.75rem;
+    }
+
+    .btn-secondary:hover {
+      background: var(--unal-green-bg);
+    }
+
+    .btn-secondary .material-icons {
+      font-size: 1.15rem;
+    }
+
+    /* Info Box */
+    .info-box {
+      background: var(--warning-bg);
+      border-left: 4px solid var(--warning-border);
+      padding: 1.25rem 1.5rem;
+      border-radius: 0 var(--radius) var(--radius) 0;
+      margin: 1.5rem 0;
+    }
+
+    .info-box p {
+      margin: 0;
+      color: var(--text-primary);
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    .info-box strong {
+      color: var(--warning-border);
+    }
+
+    /* Credits Table */
+    .credits-table {
+      background: var(--bg-white);
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+    }
+
+    .credits-table table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .credits-table thead {
+      background: linear-gradient(135deg, var(--unal-green-light), #A5D6A7);
+    }
+
+    .credits-table thead th {
+      padding: 1rem;
+      text-align: left;
+      font-weight: 600;
+      color: var(--unal-green-dark);
+      font-size: 0.9rem;
+    }
+
+    .credits-table tbody tr {
+      border-bottom: 1px solid var(--border);
+      transition: background 0.2s ease;
+    }
+
+    .credits-table tbody tr:hover {
+      background: var(--bg-primary);
+    }
+
+    .credits-table tbody td {
+      padding: 1rem;
+      color: var(--text-primary);
+      font-size: 0.9rem;
+    }
+
+    .credits-table tbody td:last-child {
+      font-weight: 600;
+      color: var(--unal-green-dark);
+    }
+
+    /* Video instructivo */
+    .video-box {
+      background: var(--unal-green-bg);
+      border: 2px solid var(--unal-green-light);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      margin: 1.5rem 0;
+    }
+
+    .video-box-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .video-box-header .material-icons {
+      font-size: 1.5rem;
+      color: var(--unal-green);
+    }
+
+    .video-box-header span {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .video-container {
+      position: relative;
+      padding-bottom: 56.25%; /* 16:9 aspect ratio */
+      height: 0;
+      overflow: hidden;
+      border-radius: 8px;
+      background: #000;
+      box-shadow: var(--shadow-md);
+    }
+
+    .video-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .video-note {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      font-style: italic;
+      margin-top: 1rem;
+      text-align: center;
+    }
+
+    /* Contact box */
+    .contact-box {
+      background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+      border-left: 4px solid var(--primary);
+      padding: 1.5rem;
+      border-radius: 0 var(--radius) var(--radius) 0;
+      margin: 2rem 0;
+    }
+
+    .contact-box p {
+      margin: 0.5rem 0;
+      color: var(--text-primary);
+      font-size: 0.9rem;
+    }
+
+    .contact-box a {
+      color: var(--primary);
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .contact-box a:hover {
+      text-decoration: underline;
+    }
+
+    /* Contact box compacta */
+    .contact-box-compact {
+      background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+      border-left: 4px solid var(--primary);
+      border-radius: 0 8px 8px 0;
+      padding: 1.25rem;
+      margin-top: 1.5rem;
+    }
+
+    .contact-box-compact p {
+      margin: 0.4rem 0;
+      font-size: 0.9rem;
+      color: var(--text-primary);
+      line-height: 1.6;
+    }
+
+    .contact-box-compact strong {
+      color: var(--primary);
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    .contact-box-compact a {
+      color: var(--primary);
+      font-weight: 600;
+      text-decoration: none;
+      word-break: break-word;
+    }
+
+    .contact-box-compact a:hover {
+      text-decoration: underline;
+    }
+
+    /* Normativa links */
+    .normativa-links {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .normativa-card {
+      background: var(--bg-white);
+      border: 2px solid var(--unal-green-light);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .normativa-card:hover {
+      border-color: var(--unal-green);
+      box-shadow: var(--shadow-md);
+    }
+
+    .normativa-card h4 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .normativa-card p {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+    }
+
+    .normativa-card a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--unal-green);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .normativa-card a:hover {
+      color: var(--unal-green-dark);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      body {
+        padding: 1.5rem 1rem;
+      }
+
+      .pae-header {
+        padding: 2rem 1.5rem;
+      }
+
+      .pae-header h1 {
+        font-size: 1.5rem;
+      }
+
+      .pae-header .period {
+        font-size: 1.1rem;
+      }
+
+      .deadline-box {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .section-header h2 {
+        font-size: 1.25rem;
+      }
+
+      .credits-table {
+        font-size: 0.85rem;
+      }
+
+      .credits-table thead th,
+      .credits-table tbody td {
+        padding: 0.75rem 0.5rem;
+      }
+
+      /* Timeline responsive */
+      .process-timeline {
+        padding-left: 60px;
+      }
+
+      .process-timeline::before {
+        left: 24px;
+      }
+
+      .timeline-number {
+        left: -60px;
+        width: 48px;
+        height: 48px;
+        font-size: 1.35rem;
+        border-width: 3px;
+      }
+
+      .timeline-content {
+        padding: 1.5rem;
+      }
+
+      .timeline-content h3 {
+        font-size: 1.2rem;
+      }
+
+      .timeline-content:hover {
+        transform: translateX(4px);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .pae-header h1 {
+        font-size: 1.3rem;
+      }
+
+      .deadline-box .material-icons {
+        font-size: 2rem;
+      }
+
+      .deadline-box .deadline-text span {
+        font-size: 1.1rem;
+      }
+
+      /* Timeline mobile */
+      .process-timeline {
+        padding-left: 48px;
+      }
+
+      .process-timeline::before {
+        left: 18px;
+        width: 2px;
+      }
+
+      .timeline-number {
+        left: -48px;
+        width: 40px;
+        height: 40px;
+        font-size: 1.15rem;
+      }
+
+      .timeline-content {
+        padding: 1.25rem;
+      }
+
+      .timeline-content h3 {
+        font-size: 1.1rem;
+      }
+
+      .btn-primary,
+      .btn-secondary {
+        padding: 0.75rem 1.25rem;
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="pae-header">
+      <h1>Preinscripción Práctica Académica Especial (PAE)</h1>
+      <!-- <p class="period">período 2026-2s</p> -->
+    </div>
+
+    <!-- Plazo -->
+    <!-- <div class="deadline-box">
+      <span class="material-icons">event</span>
+      <div class="deadline-text">
+        <strong>Plazo de Preinscripción:</strong>
+        <span>Del 18 de febrero al 10 de abril de 2026</span>
+      </div>
+    </div> -->
+
+    <!-- Proceso de Preinscripción -->
+    <section class="section">
+      <div class="section-header">
+        <h2>
+          <span class="material-icons">flag</span>
+          Proceso de Preinscripción PAE
+        </h2>
+        <p>Sigue estos 4 pasos para completar tu preinscripción correctamente</p>
+      </div>
+
+      <div class="process-timeline">
+        <!-- Paso 1 -->
+        <div class="timeline-item">
+          <div class="timeline-number">1</div>
+          <div class="timeline-content">
+            <h3>Conoce el proceso</h3>
+            <p>Revisa la normativa y documentos oficiales que regulan las Prácticas Académicas Especiales:</p>
+            <ul>
+              <li>Acuerdo 011 de 2012 del CSU</li>
+              <li>Acuerdo 033 de 2007 del Consejo Académico</li>
+            </ul>
+            <a href="#normativa" class="btn-primary">
+              <span class="material-icons">menu_book</span>
+              Ver Normativa Completa
+            </a>
+          </div>
+        </div>
+
+        <!-- Paso 2 -->
+        <div class="timeline-item">
+          <div class="timeline-number">2</div>
+          <div class="timeline-content">
+            <h3>Preinscripción PAE</h3>
+            <p>Se diligencian los formatos respectivos dependiendo de la solicitud. Revisa el video instructivo para conocer el proceso paso a paso.</p>
+            <div class="video-box">
+              <div class="video-box-header">
+                <span class="material-icons">play_circle_outline</span>
+                <span>Video instructivo</span>
+              </div>
+              <div class="video-container">
+                <iframe src="https://drive.google.com/file/d/1C2zIvSvgh1SUAlpk-QEkRRjqgziS8iVW/preview" allow="autoplay"></iframe>
+              </div>
+            </div>
+            <p class="video-note">(Aprobará el Consejo de Escuelas)</p>
+          </div>
+        </div>
+
+        <!-- Paso 3 -->
+        <div class="timeline-item">
+          <div class="timeline-number">3</div>
+          <div class="timeline-content">
+            <h3>Pre Inscripciones</h3>
+            <p>Envía tu solicitud completa a través del formulario oficial de Google. Asegúrate de tener todos los documentos requeridos antes de iniciar.</p>
+            <!-- <a href="https://forms.gle/ejemplo" target="_blank" class="btn-primary">
+              <span class="material-icons">send</span>
+              Ir al Formulario de Preinscripción
+            </a> -->
+            <!-- <div class="contact-box-compact">
+              <p><strong>¿Tienes dudas sobre el proceso?</strong></p>
+              <p>Escribe a: <a href="mailto:practicas_paz@unal.edu.co">practicas_paz@unal.edu.co</a></p>
+            </div> -->
+          </div>
+        </div>
+
+        <!-- Paso 4 -->
+        <div class="timeline-item">
+          <div class="timeline-number">4</div>
+          <div class="timeline-content">
+            <h3>Límite de Créditos</h3>
+            <p>Los créditos de la PAE son asignados en el componente de libre elección y <strong>NO DEBEN EXCEDER</strong> el 5% del total de créditos del plan de estudios.</p>
+            <p>Verifica el límite específico para tu programa académico en la tabla de créditos.</p>
+            <a href="#creditos" class="btn-primary">
+              <span class="material-icons">table_chart</span>
+              Ver Tabla de Créditos por Programa
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Información importante -->
+    <div class="info-box">
+      <p><strong>Importante:</strong> En caso de requerir orientación, dirígete al profesor tutor o al potencial director de la PAE.</p>
+    </div>
+
+    <!-- Tabla de créditos por carrera -->
+    <section class="section" id="creditos">
+      <div class="section-header">
+        <h2>
+          <span class="material-icons">school</span>
+          Límite de Créditos por Programa
+        </h2>
+        <p>Verifica el número máximo de créditos PAE permitidos para tu programa académico</p>
+      </div>
+
+      <div class="credits-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Programa Académico</th>
+              <th>Créditos Máximos PAE</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Biología</td>
+              <td>máx. (9)</td>
+            </tr>
+            <tr>
+              <td>Estadística</td>
+              <td>máx. (8)</td>
+            </tr>
+            <tr>
+              <td>Geografía</td>
+              <td>máx. (7)</td>
+            </tr>
+            <tr>
+              <td>Gestión Cultural y Comunicativa</td>
+              <td>máx. (8)</td>
+            </tr>
+            <tr>
+              <td>Ingeniería Biológica</td>
+              <td>máx. (9)</td>
+            </tr>
+            <tr>
+              <td>Ingeniería Mecatrónica</td>
+              <td>máx. (9)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="info-box" style="margin-top: 1.5rem;">
+        <p><strong>Nota:</strong> Estos valores corresponden al 5% del total de créditos de cada plan de estudios. No se permite exceder este límite.</p>
+      </div>
+    </section>
+
+    <!-- Normativa -->
+    <section class="section" id="normativa">
+      <div class="section-header">
+        <h2>
+          <span class="material-icons">gavel</span>
+          Normativa y Reglamentación
+        </h2>
+        <p>Documentos oficiales que regulan las Prácticas Académicas Especiales</p>
+      </div>
+
+      <div class="normativa-links">
+        <div class="normativa-card">
+          <h4>Acuerdo 011 de 2012 del CSU</h4>
+          <p>Consejo Superior Universitario - Marco general de las PAE</p>
+          <a href="http://www.legal.unal.edu.co/rlunal/home/doc.jsp?d_i=47025" target="_blank">
+            <span class="material-icons">open_in_new</span>
+            Consultar documento
+          </a>
+        </div>
+
+        <div class="normativa-card">
+          <h4>Acuerdo 033 de 2007</h4>
+          <p>Consejo Académico - Artículo 17 sobre PAE</p>
+          <a href="http://www.legal.unal.edu.co/rlunal/home/doc.jsp?d_i=34245" target="_blank">
+            <span class="material-icons">open_in_new</span>
+            Consultar documento
+          </a>
+        </div>
+
+        <div class="normativa-card">
+          <h4>Formato PAE General</h4>
+          <p>Formato de preinscripción para todas las modalidades de PAE</p>
+          <a href="https://docs.google.com/document/d/1WnQdkzcKJrZGA9UXzUwnTTLxRb7JGHK6bm3p1dJOn_Q/edit?usp=sharing" target="_blank">
+            <span class="material-icons">download</span>
+            Descargar formato
+          </a>
+        </div>
+
+        <div class="normativa-card">
+          <h4>PAE Gestión Cultural</h4>
+          <p>Formato específico para Gestión Cultural y Comunicativa</p>
+          <a href="https://drive.google.com/file/d/1llzKR3NV5PCWotiq1pb3ArxEt4PZNNY0/view?usp=sharing" target="_blank">
+            <span class="material-icons">download</span>
+            Descargar formato
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contacto final -->
+    <div class="contact-box">
+      <p><strong>¿Necesitas más información?</strong></p>
+      <p>Contacta a la oficina de prácticas:</p>
+      <p>📧 Email: <a href="mailto:practicas_paz@unal.edu.co">practicas_paz@unal.edu.co</a></p>
+    </div>
+  </div>
+
+  <script>
+    // Iframe height communication
+    function setupIframeHeight() {
+      const inIframe = window.self !== window.top;
+
+      if (inIframe) {
+        function sendHeightToParent() {
+          try {
+            const height = Math.max(
+              document.body.scrollHeight,
+              document.body.offsetHeight,
+              document.documentElement.scrollHeight
+            );
+
+            window.parent.postMessage({
+              type: 'setHeight',
+              height: height + 50
+            }, '*');
+          } catch (e) {
+            console.log('No se pudo comunicar con el iframe padre');
+          }
+        }
+
+        sendHeightToParent();
+
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+          clearTimeout(resizeTimeout);
+          resizeTimeout = setTimeout(sendHeightToParent, 250);
+        });
+
+        window.addEventListener('orientationchange', () => {
+          setTimeout(sendHeightToParent, 300);
+        });
+
+        // Recalcular después de que las imágenes carguen
+        window.addEventListener('load', sendHeightToParent);
+      }
+    }
+
+    // Smooth scroll para enlaces internos
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    document.addEventListener('DOMContentLoaded', setupIframeHeight);
+  </script>
+</body>
+</html>

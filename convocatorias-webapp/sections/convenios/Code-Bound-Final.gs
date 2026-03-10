@@ -160,6 +160,10 @@ function getOrCreateSugerenciasSheet() {
       sheet.setColumnWidth(10, 100); // Modalidad
       sheet.setColumnWidth(11, 120); // Estado
       
+      // Formatear columna de teléfono como texto plano (toda la columna)
+      var telefonoColumn = sheet.getRange(2, COL_SUG.TELEFONO_EMPRESA + 1, sheet.getMaxRows() - 1, 1);
+      telefonoColumn.setNumberFormat('@STRING@');
+      
       console.log('Hoja "' + SHEET_SUGERENCIAS + '" creada con encabezados');
     } else {
       console.log('Hoja "' + SHEET_SUGERENCIAS + '" ya existe');
@@ -270,6 +274,20 @@ function guardarSugerenciaEnSheet(datos) {
     
     var sheet = getOrCreateSugerenciasSheet();
     
+    // Obtener la próxima fila disponible
+    var lastRow = sheet.getLastRow();
+    var newRow = lastRow + 1;
+    
+    // IMPORTANTE: Formatear la celda de teléfono ANTES de insertar datos
+    var telefonoCell = sheet.getRange(newRow, COL_SUG.TELEFONO_EMPRESA + 1);
+    telefonoCell.setNumberFormat('@STRING@');
+    
+    // Sanitizar teléfono: si empieza con +, =, - o (, prefijarlo con comilla simple
+    var telefonoSanitizado = datos.telefonoEmpresa || '';
+    if (telefonoSanitizado && /^[\+\=\-\(]/.test(telefonoSanitizado)) {
+      telefonoSanitizado = "'" + telefonoSanitizado;
+    }
+    
     // Preparar datos para insertar
     var fecha = new Date();
     var row = [
@@ -279,24 +297,22 @@ function guardarSugerenciaEnSheet(datos) {
       datos.ciudad || '',
       datos.representante || '',
       datos.emailEmpresa || '',
-      datos.telefonoEmpresa || '',
+      telefonoSanitizado,
       datos.nombre || '',
       datos.correo || '',
       datos.modalidad || '',
       'Pendiente'
     ];
     
-    // Insertar en la siguiente fila disponible
-    sheet.appendRow(row);
+    // Insertar datos usando setValues para tener más control
+    sheet.getRange(newRow, 1, 1, row.length).setValues([row]);
     
-    // Formatear
-    var lastRow = sheet.getLastRow();
-    
+    // Formatear celdas adicionales
     try {
-      var fechaCell = sheet.getRange(lastRow, COL_SUG.FECHA_HORA + 1);
+      var fechaCell = sheet.getRange(newRow, COL_SUG.FECHA_HORA + 1);
       fechaCell.setNumberFormat('dd/mm/yyyy hh:mm:ss');
       
-      var estadoCell = sheet.getRange(lastRow, COL_SUG.ESTADO + 1);
+      var estadoCell = sheet.getRange(newRow, COL_SUG.ESTADO + 1);
       estadoCell.setBackground('#FEF3C7');
       estadoCell.setFontColor('#B45309');
       estadoCell.setFontWeight('bold');
@@ -304,6 +320,8 @@ function guardarSugerenciaEnSheet(datos) {
     } catch (e) {
       console.warn('Error al formatear celdas:', e);
     }
+    
+    lastRow = newRow;
     
     console.log('Sugerencia guardada en fila: ' + lastRow);
     return { success: true, row: lastRow };
@@ -509,8 +527,147 @@ function reconfigurarHojaSugerencias() {
     sheet.setColumnWidth(11, 120); // Estado
     console.log('✓ Anchos de columna configurados');
     
+    // FORMATEAR COLUMNA DE TELÉFONO COMO TEXTO
+    var telefonoColumn = sheet.getRange(2, COL_SUG.TELEFONO_EMPRESA + 1, sheet.getMaxRows() - 1, 1);
+    telefonoColumn.setNumberFormat('@STRING@');
+    console.log('✓ Columna de teléfono formateada como texto');
+    
     console.log('\n=== ✓ HOJA RECONFIGURADA CORRECTAMENTE ===');
     console.log('Ve a la pestaña "' + SHEET_SUGERENCIAS + '" para verificar');
+    
+    return true;
+    
+  } catch (error) {
+    console.error('✗ Error:', error.message);
+    return false;
+  }
+}
+
+/**
+ * Repara la columna de teléfono en una hoja existente (sin borrar datos)
+ * EJECUTAR ESTA FUNCIÓN si ya tienes datos y aparecen errores #ERROR!
+ */
+function repararColumnaTelefono() {
+  console.log('=== REPARANDO COLUMNA DE TELÉFONO ===');
+  
+  try {
+    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    var sheet = ss.getSheetByName(SHEET_SUGERENCIAS);
+    
+    if (!sheet) {
+      console.error('✗ La hoja "' + SHEET_SUGERENCIAS + '" no existe.');
+      return false;
+    }
+    
+    var lastRow = sheet.getLastRow();
+    
+    if (lastRow <= 1) {
+      console.log('ℹ La hoja no tiene datos (solo encabezados)');
+      return true;
+    }
+    
+    console.log('Procesando ' + (lastRow - 1) + ' filas...');
+    
+    // Primero: Formatear toda la columna como texto
+    var telefonoColumn = sheet.getRange('G:G');
+    telefonoColumn.setNumberFormat('@STRING@');
+    console.log('✓ Formato de columna configurado como texto');
+    
+    // Segundo: Reescribir los valores que tienen #ERROR!
+    var telefonoRange = sheet.getRange(2, COL_SUG.TELEFONO_EMPRESA + 1, lastRow - 1, 1);
+    var values = telefonoRange.getDisplayValues(); // Obtener valores como se muestran
+    var formulas = telefonoRange.getFormulas(); // Obtener fórmulas
+    var newValues = [];
+    var erroresReparados = 0;
+    
+    for (var i = 0; i < values.length; i++) {
+      var currentValue = values[i][0];
+      var formula = formulas[i][0];
+      
+      // Si la celda muestra #ERROR! o tiene una fórmula, intentar extraer el valor real
+      if (currentValue === '#ERROR!' || formula !== '') {
+        // Buscar el valor en la fórmula (si existe)
+        var valorExtraido = '';
+        
+        // Intentar extraer de diferentes formatos de fórmula
+        if (formula && formula.indexOf('+') !== -1) {
+          // Ej: =+57 (601) 4104799 → extraer "+57 (601) 4104799"
+          valorExtraido = formula.replace(/^=/, '').trim();
+        } else if (formula && formula.indexOf('(') !== -1) {
+          // Ej: =(601) 4104799 → extraer "(601) 4104799"
+          valorExtraido = formula.replace(/^=/, '').trim();
+        }
+        
+        newValues.push([valorExtraido]);
+        erroresReparados++;
+        console.log('Fila ' + (i + 2) + ': #ERROR! → "' + valorExtraido + '"');
+      } else {
+        // Mantener el valor actual si no hay error
+        newValues.push([currentValue]);
+      }
+    }
+    
+    // Escribir los valores limpios de vuelta
+    telefonoRange.setValues(newValues);
+    
+    console.log('\n✓ Columna de teléfono procesada');
+    console.log('✓ Errores reparados: ' + erroresReparados);
+    console.log('✓ Refresca la hoja en el navegador para ver los cambios');
+    console.log('\n=== ✓ REPARACIÓN COMPLETADA ===');
+    
+    return true;
+    
+  } catch (error) {
+    console.error('✗ Error:', error.message);
+    console.error('Stack:', error.stack);
+    return false;
+  }
+}
+
+/**
+ * Limpia TODAS las celdas con #ERROR! en la columna de teléfono
+ * Las deja vacías para que se puedan volver a llenar manualmente
+ */
+function limpiarErroresTelefono() {
+  console.log('=== LIMPIANDO ERRORES EN COLUMNA DE TELÉFONO ===');
+  
+  try {
+    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    var sheet = ss.getSheetByName(SHEET_SUGERENCIAS);
+    
+    if (!sheet) {
+      console.error('✗ La hoja "' + SHEET_SUGERENCIAS + '" no existe.');
+      return false;
+    }
+    
+    var lastRow = sheet.getLastRow();
+    
+    if (lastRow <= 1) {
+      console.log('ℹ La hoja no tiene datos (solo encabezados)');
+      return true;
+    }
+    
+    // Formatear columna como texto primero
+    var telefonoColumn = sheet.getRange('G:G');
+    telefonoColumn.setNumberFormat('@STRING@');
+    
+    // Leer todos los valores
+    var telefonoRange = sheet.getRange(2, COL_SUG.TELEFONO_EMPRESA + 1, lastRow - 1, 1);
+    var values = telefonoRange.getDisplayValues();
+    var erroresLimpiados = 0;
+    
+    // Limpiar celdas con error
+    for (var i = 0; i < values.length; i++) {
+      if (values[i][0] === '#ERROR!') {
+        sheet.getRange(i + 2, COL_SUG.TELEFONO_EMPRESA + 1).setValue('');
+        erroresLimpiados++;
+        console.log('Fila ' + (i + 2) + ': #ERROR! → (vacío)');
+      }
+    }
+    
+    console.log('\n✓ Errores limpiados: ' + erroresLimpiados);
+    console.log('✓ Las celdas están ahora vacías y listas para rellenar');
+    console.log('\n=== ✓ LIMPIEZA COMPLETADA ===');
     
     return true;
     

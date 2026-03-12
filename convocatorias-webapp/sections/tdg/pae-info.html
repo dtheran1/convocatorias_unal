@@ -18,6 +18,7 @@
       --bg-white: #ffffff;
       --border: #e2e8f0;
       --shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+      --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1);
       --radius: 12px;
     }
 
@@ -43,11 +44,11 @@
     /* Header */
     .page-header {
       text-align: center;
-      margin-bottom: 4rem;
+      margin-bottom: 3rem;
     }
 
     .page-header h1 {
-      font-size: 2rem;
+      font-size: 1.75rem;
       font-weight: 700;
       color: var(--text-primary);
       margin-bottom: 0.75rem;
@@ -55,14 +56,14 @@
 
     .page-header p {
       color: var(--text-secondary);
-      font-size: 1.1rem;
-      max-width: 700px;
+      font-size: 1rem;
+      max-width: 600px;
       margin: 0 auto;
     }
 
     /* Section */
     .section {
-      margin-bottom: 4rem;
+      margin-bottom: 3rem;
     }
 
     .section-header {
@@ -73,7 +74,7 @@
       font-size: 1.5rem;
       font-weight: 700;
       color: var(--text-primary);
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.75rem;
       display: flex;
       align-items: center;
       gap: 0.75rem;
@@ -81,6 +82,7 @@
 
     .section-header h2 .material-icons {
       color: var(--unal-green);
+      font-size: 1.75rem;
     }
 
     .section-header p {
@@ -113,44 +115,39 @@
       padding: 1.5rem;
       border-radius: var(--radius);
       box-shadow: var(--shadow);
-      min-height: 250px;
       display: flex;
       flex-direction: column;
-      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      position: relative;
-      overflow: hidden;
+      transition: all 0.3s ease;
+      border: 1px solid var(--border);
     }
 
-    .quick-step:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 20px 40px rgba(76, 175, 80, 0.15);
+    @media (hover: hover) {
+      .quick-step:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-md);
+        border-color: var(--unal-green-light);
+      }
     }
     .quick-step h4 {
       font-size: 1rem;
       font-weight: 600;
       color: var(--text-primary);
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.75rem;
     }
 
     .quick-step p {
       font-size: 0.9rem;
       color: var(--text-secondary);
-      line-height: 1.5;
+      line-height: 1.6;
       flex: 1;
-      margin-bottom: 0;
-    }
-
-    .quick-step .official-link {
-      margin-top: auto;
-      width: 100%;
-      justify-content: center;
+      margin-bottom: 1rem;
     }
 
     /* Info Box */
     .info-box {
-      background: #FFF9C4;
-      border-left: 4px solid #F57C00;
-      padding: 1rem 1.5rem;
+      background: #fff8e1;
+      border-left: 4px solid #f59e0b;
+      padding: 1.25rem 1.5rem;
       border-radius: 0 var(--radius) var(--radius) 0;
       margin: 1.5rem 0;
     }
@@ -159,55 +156,43 @@
       margin: 0;
       color: var(--text-primary);
       font-size: 0.9rem;
+      line-height: 1.6;
     }
 
     .info-box strong {
-      color: #F57C00;
+      color: #f59e0b;
     }
 
     /* Official Link */
     .official-link {
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 0.5rem;
-      background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+      background: var(--unal-green-bg);
       border: 2px solid var(--unal-green);
-      border-radius: 8px;
+      border-radius: var(--radius);
       padding: 0.875rem 1.25rem;
-      margin-top: 1rem;
+      margin-top: auto;
       transition: all 0.3s ease;
       font-size: 0.9rem;
       text-decoration: none;
       color: var(--text-primary);
-      position: relative;
-      overflow: hidden;
       font-weight: 600;
-    }
-
-    .official-link::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
       width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
-      transition: left 0.6s;
     }
 
-    .official-link:hover {
-      background: linear-gradient(135deg, #c8e6c9, #a5d6a7);
-      /* transform: translateY(-2px); */
-      /* box-shadow: 0 6px 16px rgba(76, 175, 80, 0.3); */
-    }
-
-    .official-link:hover::after {
-      /* left: 100%; */
+    @media (hover: hover) {
+      .official-link:hover {
+        background: var(--unal-green-light);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
     }
 
     .official-link .material-icons {
       font-size: 1.1rem;
-      color: var(--unal-green);
+      color: var(--unal-green-dark);
     }
 
     .official-link strong {
@@ -224,12 +209,34 @@
         font-size: 1.5rem;
       }
 
+      .page-header p {
+        font-size: 0.95rem;
+      }
+
       .section-header h2 {
         font-size: 1.25rem;
       }
 
       .quick-start-steps {
         grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 1.5rem 1rem;
+      }
+
+      .page-header {
+        margin-bottom: 2rem;
+      }
+
+      .section {
+        margin-bottom: 2rem;
+      }
+
+      .quick-start-box {
+        padding: 1.5rem;
       }
     }
   </style>
@@ -309,43 +316,16 @@
       <div class="section-header">
         <h2>
           <span class="material-icons">download</span>
-          Formatos Oficiales de TDG y PAE
+          Formato PAE
         </h2>
-        <p>Descargue los formatos necesarios para iniciar su proceso</p>
+        <p>Descargue el formato para iniciar su proceso</p>
       </div>
 
-      <div class="quick-start-steps">
+      <div style="max-width: 400px; margin: 0 auto;">
         <div class="quick-step">
-          <h4>📄 Formato Preinscripción TDG</h4>
-          <p>Formato oficial para inscribir su propuesta de Trabajo de Grado.</p>
-          <a href="https://docs.google.com/document/d/1hlpMUaCBm6L1ggzZB-0OY5SJ_cq5NubqFRp7ZBnOOe4/edit?usp=drive_link" target="_blank" class="official-link">
-            <span class="material-icons">download</span>
-            <span><strong>Descargar Formato</strong></span>
-          </a>
-        </div>
-
-        <div class="quick-step">
-          <h4>📋 Plan General TDG</h4>
-          <p>Documento para estructurar el plan de trabajo de su proyecto de grado.</p>
-          <a href="https://docs.google.com/document/d/1Ai_qkbEi5ZdIJGrvx_DhFzyG20c93Zbk3jiHeZ2oJJ4/edit?usp=drive_link" target="_blank" class="official-link">
-            <span class="material-icons">download</span>
-            <span><strong>Descargar Formato</strong></span>
-          </a>
-        </div>
-
-        <div class="quick-step">
-          <h4>✅ Formato PAE General</h4>
+          <h4>✅ Formato PAE</h4>
           <p>Formato para inscripción de Prácticas Académicas Especiales (todas las modalidades).</p>
           <a href="https://docs.google.com/document/d/1WnQdkzcKJrZGA9UXzUwnTTLxRb7JGHK6bm3p1dJOn_Q/edit?usp=sharing" target="_blank" class="official-link">
-            <span class="material-icons">download</span>
-            <span><strong>Descargar Formato</strong></span>
-          </a>
-        </div>
-
-        <div class="quick-step">
-          <h4>🎭 PAE Gestión Cultural</h4>
-          <p>Formato específico para práctica académica de Gestión Cultural y Comunicativa.</p>
-          <a href="https://drive.google.com/file/d/1llzKR3NV5PCWotiq1pb3ArxEt4PZNNY0/view?usp=sharing" target="_blank" class="official-link">
             <span class="material-icons">download</span>
             <span><strong>Descargar Formato</strong></span>
           </a>
@@ -363,7 +343,7 @@
         <p>Marco legal que regula las Prácticas Académicas Especiales</p>
       </div>
 
-      <div class="quick-start-box" style="background: linear-gradient(135deg, #e8f5e9, #f1f8f4);">
+      <div class="quick-start-box">
         <p><strong>Normativa de Prácticas Académicas Especiales:</strong></p>
         <p style="margin-top: 0.75rem;">La reglamentación completa de las PAE se encuentra en el <a href="http://www.legal.unal.edu.co/rlunal/home/doc.jsp?d_i=34245" target="_blank" style="color: var(--unal-green-dark); font-weight: 600; text-decoration: underline;">Artículo 17 del Acuerdo 033 de 2007</a>.</p>
       </div>

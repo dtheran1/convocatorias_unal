@@ -277,6 +277,75 @@
       cursor: pointer;
     }
 
+    /* ========== TOOLTIP ========== */
+    .tooltip {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      margin-left: 0.25rem;
+    }
+
+    .tooltip-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--text-muted);
+      color: white;
+      font-size: 0.7rem;
+      font-weight: 600;
+      cursor: help;
+      transition: background 0.2s;
+    }
+
+    .tooltip-icon:hover {
+      background: var(--unal-green);
+    }
+
+    .tooltip-text {
+      visibility: hidden;
+      opacity: 0;
+      position: absolute;
+      bottom: 125%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--text-primary);
+      color: white;
+      padding: 0.5rem 0.75rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.75rem;
+      white-space: nowrap;
+      z-index: 1000;
+      transition: opacity 0.2s, visibility 0.2s;
+      box-shadow: var(--shadow-md);
+      pointer-events: none;
+    }
+
+    .tooltip-text::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: var(--text-primary);
+    }
+
+    .tooltip:hover .tooltip-text {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    @media (max-width: 768px) {
+      .tooltip-text {
+        white-space: normal;
+        max-width: 200px;
+        text-align: center;
+      }
+    }
+
     /* ========== PERFIL CARD / ACCORDION ========== */
     .perfil-card {
       background: var(--bg-card);
@@ -1481,6 +1550,10 @@ function createPerfilCard(index) {
             <label class="radio-label">
               <input type="radio" name="tipoModalidad-${index}" value="Pasantía">
               Pasantía
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="tipoModalidad-${index}" value="Participación en Proyectos de Investigación">
+              Participación en Proyectos de Investigación
             </label>
           </div>
           <div class="form-error" id="error-tipoModalidad-${index}">Selecciona una modalidad.</div>

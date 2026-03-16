@@ -2122,7 +2122,7 @@
     <div class="controls">
       <div class="search-box">
         <span class="material-icons">search</span>
-        <input type="text" id="searchInput" placeholder="Busque por título, dependencia, programa o palabras clave...">
+        <input type="text" id="searchInput" placeholder="Buscar...">
       </div>
       <div class="filters">
         <button class="filter-btn active" data-filter="all" data-type="main">
@@ -2866,12 +2866,8 @@
         ${conv.emailContacto ? `
           <div class="modal-section">
             <div class="modal-contacto">
-              <div class="modal-contacto-label">Contacto para postulación</div>
+              <div class="modal-contacto-label">Correo de la empresa</div>
               <div class="modal-contacto-email">${escapeHtml(conv.emailContacto)}</div>
-              <a href="mailto:${conv.emailContacto}?subject=Interés en: ${encodeURIComponent(conv.titulo)}" class="btn-enviar-email">
-                <span class="material-icons">email</span>
-                Enviar correo
-              </a>
             </div>
           </div>
         ` : ''}

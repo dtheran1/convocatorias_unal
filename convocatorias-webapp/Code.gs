@@ -58,24 +58,24 @@ const SHEET_NAME = getConfig(CONFIG_KEYS.SHEET_NAME);
 
 // Mapeo de columnas (ajustar según tu sheet, índice base 0)
 const COLUMNAS = {
-  ESTADO: 0,                   // Estado (Abierto/Cerrado)
-  DEPENDENCIA_ENTIDAD: 1,      // Interna/Externa
-  NOMBRE_VACANTE: 2,           // Título de la convocatoria
-  EMAIL_CONTACTO: 3,           // Dirección de correo electrónico
-  NOMBRE_DEPENDENCIA: 4,       // Nombre de la Dirección/Dependencia/Proyecto
-  DEPENDENCIA_PROYECTO: 5,     // Dependencia/Proyecto donde se desarrollará
-  EMAIL_DEPENDENCIA: 6,        // Correo electrónico
-  TIPO_MODALIDAD: 7,           // Tipo de modalidad a vincular (Práctica/Pasantía)
-  DESCRIPCION_PERFIL: 8,       // Descripción general del perfil
-  CANTIDAD_ESTUDIANTES: 9,     // Cantidad de estudiantes requeridos
-  MODALIDAD_TRABAJO: 10,       // Modalidad (Presencial/Híbrida)
-  SELECCIONADO: 11,            // Seleccionado
-  PROGRAMAS_ACADEMICOS: 12,    // Programas académicos
-  COMPETENCIAS_ESPECIFICAS: 13, // Competencias específicas
-  COMPETENCIAS_ACTITUDES: 14,  // Competencias/habilidades o actitudes
-  OFRECE_APOYO: 15,            // ¿Ofrece apoyo?
-  TIPO_APOYO: 16,              // Tipo de apoyo
-  OBSERVACIONES: 17            // Observaciones
+  ESTADO: 0,                   // A: Estado (Abierto/Cerrado)
+  DEPENDENCIA_ENTIDAD: 1,      // B: Dependencia/Entidad
+  NOMBRE_VACANTE: 2,           // C: Nombre de la vacante
+  INFORMACION_ENTIDAD: 3,      // D: Información Entidad
+  EMAIL_CONTACTO: 4,           // E: Dirección de correo electrónico
+  EMAIL_DEPENDENCIA: 5,        // F: Correo electrónico
+  // Columnas G y H no están siendo utilizadas actualmente
+  TIPO_MODALIDAD: 8,           // I: Tipo de modalidad a vincular (Práctica/Pasantía)
+  DESCRIPCION_PERFIL: 9,       // J: Descripción general del perfil
+  CANTIDAD_ESTUDIANTES: 10,    // K: Cantidad de estudiantes requeridos
+  MODALIDAD_TRABAJO: 11,       // L: Modalidad (Presencial/Híbrida/Virtual)
+  SELECCIONADO: 12,            // M: Seleccionado
+  PROGRAMAS_ACADEMICOS: 13,    // N: Programas académicos
+  COMPETENCIAS_ESPECIFICAS: 14, // O: Competencias específicas o conocimientos
+  COMPETENCIAS_ACTITUDES: 15,  // P: Competencias/habilidades o actitudes valoradas
+  OFRECE_APOYO: 16,            // Q: Apoyo Estudiante
+  TIPO_APOYO: 17,              // R: Tipo de apoyo (si aplica)
+  OBSERVACIONES: 18            // S: Observaciones
 };
 
 /**
@@ -158,11 +158,10 @@ function getConvocatorias() {
         id: index + 1,
         titulo: row[COLUMNAS.NOMBRE_VACANTE] || '',
         dependenciaEntidad: row[COLUMNAS.DEPENDENCIA_ENTIDAD] || '',
-        nombreDependencia: row[COLUMNAS.NOMBRE_DEPENDENCIA] || '',
+        informacionEntidad: row[COLUMNAS.INFORMACION_ENTIDAD] || '',
         emailContacto: row[COLUMNAS.EMAIL_CONTACTO] || row[COLUMNAS.EMAIL_DEPENDENCIA] || '',
         tipoModalidad: row[COLUMNAS.TIPO_MODALIDAD] || '',
         descripcion: row[COLUMNAS.DESCRIPCION_PERFIL] || '',
-        dependenciaProyecto: row[COLUMNAS.DEPENDENCIA_PROYECTO] || '',
         cupos: cupos,
         modalidadTrabajo: row[COLUMNAS.MODALIDAD_TRABAJO] || '',
         programasAcademicos: row[COLUMNAS.PROGRAMAS_ACADEMICOS] || '',

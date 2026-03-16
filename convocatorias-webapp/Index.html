@@ -2638,6 +2638,21 @@
       }
     }
 
+    // Helper function para mostrar tipo de apoyo
+    function getTipoApoyoDisplay(tipoApoyo) {
+      if (!tipoApoyo) return 'No';
+      
+      const tipoApoyoLower = tipoApoyo.toLowerCase().trim();
+      
+      // Si es "ninguno" o está vacío, retornar "No"
+      if (tipoApoyoLower === 'ninguno' || tipoApoyoLower === '' || tipoApoyoLower === 'no') {
+        return 'No';
+      }
+      
+      // Cualquier otro valor se considera "Sí"
+      return 'Sí';
+    }
+
     function createCard(conv) {
       const tipoClass = conv.tipoModalidad.toLowerCase().includes('práctica') ? 'badge-practica' : 'badge-pasantia';
       const tipoText = conv.tipoModalidad.toLowerCase().includes('práctica') ? 'Práctica' : 'Pasantía';
@@ -2664,13 +2679,20 @@
           <div class="card-body">
             <div class="card-info">
               <span class="material-icons">business</span>
-              <span>${escapeHtml(conv.nombreDependencia || conv.dependenciaProyecto)}</span>
+              <span>${escapeHtml(conv.informacionEntidad || 'No especificado')}</span>
             </div>
 
             <div class="card-info">
               <span class="material-icons">school</span>
               <span>${escapeHtml(conv.programasAcademicos)}</span>
             </div>
+
+            ${conv.tipoApoyo ? `
+              <div class="card-info">
+                <span class="material-icons">payments</span>
+                <span>Apoyo Estudiantil: ${getTipoApoyoDisplay(conv.tipoApoyo)}</span>
+              </div>
+            ` : ''}
 
             <p class="card-description" id="desc-${conv.id}">${escapeHtml(descripcionCorta)}</p>
 
@@ -2834,7 +2856,7 @@
       document.getElementById('modalBody').innerHTML = `
         <div class="modal-section">
           <div class="modal-section-title">Dependencia</div>
-          <div class="modal-section-content">${escapeHtml(conv.nombreDependencia)}</div>
+          <div class="modal-section-content">${escapeHtml(conv.informacionEntidad || 'No especificado')}</div>
         </div>
 
         <div class="modal-section">

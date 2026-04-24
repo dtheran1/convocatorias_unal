@@ -2,12 +2,6 @@
  * SISTEMA DE CONVOCATORIAS - UNAL SEDE DE LA PAZ
  * Web App para visualizar convocatorias de prácticas y pasantías
  *
- * INSTRUCCIONES:
- * 1. Crea un nuevo proyecto en Google Apps Script (script.google.com)
- * 2. Copia este código en el archivo Code.gs
- * 3. Crea un archivo HTML llamado "Index" y pega el contenido de Index.html
- * 4. Ejecuta setupConfiguration() UNA VEZ para configurar IDs en Script Properties
- * 5. Implementa como Web App (Implementar > Nueva implementación > App web)
  */
 
 // ========== CONFIGURACIÓN ==========
@@ -574,7 +568,7 @@ function guardarPostulacion(datos) {
     const ultimaFila = sheet.getLastRow();
     const celdaEstado = sheet.getRange(ultimaFila, COL_POST.ESTADO + 1); // +1 porque getRange es 1-based
     const reglaEstado = SpreadsheetApp.newDataValidation()
-      .requireValueInList(['Pendiente', 'Seleccionado', 'No seleccionado'], true)
+      .requireValueInList(['Pendiente', 'Pre-seleccionado', 'Seleccionado', 'No seleccionado'], true)
       .setAllowInvalid(false)
       .build();
     celdaEstado.setDataValidation(reglaEstado);
@@ -615,25 +609,32 @@ function validarEstadoEstudiante(numeroDocumento, idConvocatoria) {
     
     let postulacionesPendientes = 0;
     let estaSeleccionado = null;
+    let estaPreSeleccionado = null;
     let yaPostuladoAEsta = false;
     let postulacionNoSeleccionada = null;
-    
+
     for (let i = 1; i < data.length; i++) {
       const row = data[i];
       const docRow = row[COL_POST.NUMERO_DOCUMENTO];
-      
+
       if (docRow == numeroDocumento) {
         const estado = (row[COL_POST.ESTADO] || '').toString().toLowerCase().trim();
         const idConv = row[COL_POST.ID_CONVOCATORIA];
-        
+
         // Verificar si ya se postuló a esta convocatoria
         if (idConv == idConvocatoria) {
           yaPostuladoAEsta = true;
         }
-        
+
         // Verificar estados
         if (estado === 'seleccionado') {
           estaSeleccionado = {
+            titulo: row[COL_POST.TITULO] || '',
+            programa: row[COL_POST.PROGRAMA] || '',
+            fecha: row[COL_POST.FECHA] || ''
+          };
+        } else if (estado === 'pre-seleccionado') {
+          estaPreSeleccionado = {
             titulo: row[COL_POST.TITULO] || '',
             programa: row[COL_POST.PROGRAMA] || '',
             fecha: row[COL_POST.FECHA] || ''
@@ -648,7 +649,7 @@ function validarEstadoEstudiante(numeroDocumento, idConvocatoria) {
         }
       }
     }
-    
+
     // Prioridad 1: Si ya está seleccionado en alguna convocatoria
     if (estaSeleccionado) {
       return {
@@ -656,6 +657,16 @@ function validarEstadoEstudiante(numeroDocumento, idConvocatoria) {
         tipo: 'ESTUDIANTE_SELECCIONADO',
         mensaje: 'Felicitaciones. Ya ha sido seleccionado para una vacante.',
         datos: estaSeleccionado
+      };
+    }
+
+    // Prioridad 1.5: Si ya está pre-seleccionado en alguna convocatoria
+    if (estaPreSeleccionado) {
+      return {
+        puedePostularse: false,
+        tipo: 'ESTUDIANTE_PRE_SELECCIONADO',
+        mensaje: 'Ha sido pre-seleccionado para una vacante. Espere la confirmación definitiva.',
+        datos: estaPreSeleccionado
       };
     }
 
@@ -910,8 +921,8 @@ function onEditPostulaciones(e) {
     
     console.log(`Cambio de estado detectado en fila ${filaEditada}: "${estadoAnterior}" → "${nuevoEstado}"`);
     
-    // Solo procesar si el estado cambió a "seleccionado" o "no seleccionado"
-    if (nuevoEstado !== 'seleccionado' && nuevoEstado !== 'no seleccionado') {
+    // Solo procesar si el estado cambió a "pre-seleccionado", "seleccionado" o "no seleccionado"
+    if (nuevoEstado !== 'pre-seleccionado' && nuevoEstado !== 'seleccionado' && nuevoEstado !== 'no seleccionado') {
       return;
     }
     
@@ -937,7 +948,9 @@ function onEditPostulaciones(e) {
     }
     
     // Enviar notificación según el nuevo estado
-    if (nuevoEstado === 'seleccionado') {
+    if (nuevoEstado === 'pre-seleccionado') {
+      enviarNotificacionPreSeleccionado(datosEstudiante);
+    } else if (nuevoEstado === 'seleccionado') {
       enviarNotificacionSeleccionado(datosEstudiante);
     } else if (nuevoEstado === 'no seleccionado') {
       enviarNotificacionNoSeleccionado(datosEstudiante);
@@ -946,6 +959,121 @@ function onEditPostulaciones(e) {
   } catch (error) {
     console.error('Error en onEditPostulaciones:', error);
   }
+}
+
+/**
+ * Envía notificación cuando el estudiante es PRE-SELECCIONADO
+ */
+function enviarNotificacionPreSeleccionado(datos) {
+  try {
+    const nombreCompleto = construirNombreCompleto(datos);
+
+    const asunto = '📋 Ha sido pre-seleccionado - ' + datos.titulo;
+
+    const cuerpoHtml = generarCorreoPreSeleccionado(nombreCompleto, datos);
+
+    MailApp.sendEmail({
+      to: datos.email,
+      subject: asunto,
+      htmlBody: cuerpoHtml,
+      name: 'Prácticas UNAL Sede de La Paz'
+    });
+
+    console.log('✅ Notificación de PRE-SELECCIÓN enviada a: ' + datos.email);
+
+  } catch (error) {
+    console.error('Error al enviar notificación de pre-selección:', error);
+  }
+}
+
+/**
+ * Genera el HTML del correo de PRE-SELECCIÓN
+ */
+function generarCorreoPreSeleccionado(nombreCompleto, datos) {
+  return `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0; }
+    .container { max-width: 600px; margin: 0 auto; }
+    .header { background: linear-gradient(135deg, #2563eb, #1d4ed8); color: white; padding: 40px 30px; text-align: center; }
+    .header h1 { margin: 0 0 10px 0; font-size: 28px; }
+    .header p { margin: 0; opacity: 0.9; font-size: 16px; }
+    .content { background: #ffffff; padding: 30px; }
+    .greeting { font-size: 18px; margin-bottom: 20px; }
+    .preselect-card { background: linear-gradient(135deg, #dbeafe, #bfdbfe); border: 2px solid #3b82f6; border-radius: 16px; padding: 25px; margin: 25px 0; text-align: center; }
+    .preselect-card h2 { margin: 0 0 10px 0; color: #1e3a8a; font-size: 22px; }
+    .preselect-card p { margin: 0; color: #1d4ed8; font-size: 16px; }
+    .info-card { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 12px; padding: 20px; margin: 20px 0; }
+    .info-card h3 { margin: 0 0 15px 0; color: #1e40af; font-size: 16px; }
+    .info-row { margin-bottom: 12px; }
+    .info-label { font-weight: 600; color: #374151; display: block; margin-bottom: 4px; }
+    .info-value { color: #1f2937; font-size: 15px; }
+    .next-steps { background: #eff6ff; border-left: 4px solid #3b82f6; padding: 20px; margin: 25px 0; border-radius: 0 8px 8px 0; }
+    .next-steps h4 { margin: 0 0 15px 0; color: #1e40af; }
+    .next-steps ul { margin: 0; padding-left: 20px; color: #1e3a8a; }
+    .next-steps li { margin-bottom: 10px; }
+    .footer { background: #f8fafc; padding: 25px 30px; text-align: center; border-top: 1px solid #e2e8f0; }
+    .footer p { margin: 5px 0; color: #64748b; font-size: 13px; }
+    .footer a { color: #2563eb; text-decoration: none; }
+    .icon { font-size: 64px; margin-bottom: 15px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="icon">📋</div>
+      <h1>Pre-seleccionado/a</h1>
+      <p>Su perfil ha avanzado en el proceso de selección</p>
+    </div>
+
+    <div class="content">
+      <p class="greeting">Estimado(a) <strong>${nombreCompleto}</strong>,</p>
+
+      <div class="preselect-card">
+        <h2>⭐ Ha sido pre-seleccionado/a</h2>
+        <p>Su perfil ha sido considerado para continuar en el proceso</p>
+      </div>
+
+      <div class="info-card">
+        <h3>📌 Detalles de la vacante</h3>
+        <div class="info-row">
+          <span class="info-label">Vacante:</span>
+          <span class="info-value">${datos.titulo || 'No especificada'}</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Modalidad:</span>
+          <span class="info-value">${datos.modalidad || 'No especificada'}</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Su programa:</span>
+          <span class="info-value">${datos.programa || 'No especificado'}</span>
+        </div>
+      </div>
+
+      <div class="next-steps">
+        <h4>📋 Próximos pasos</h4>
+        <ul>
+          <li><strong>Este atento/a a su correo:</strong> Su pre-selección aún no es definitiva.
+          <li><strong>Preguntas:</strong> Si tiene dudas, contáctenos a ${EMAIL_CONTACTO}</li>
+        </ul>
+      </div>
+
+      <p style="margin-top: 30px;">Saludos cordiales,<br>
+      <strong>Prácticas y Pasantías</strong><br>
+      Universidad Nacional de Colombia - Sede de La Paz</p>
+    </div>
+
+    <div class="footer">
+      <p><strong>Universidad Nacional de Colombia - Sede de La Paz</strong></p>
+      <p>📧 <a href="mailto:${EMAIL_CONTACTO}">${EMAIL_CONTACTO}</a></p>
+    </div>
+  </div>
+</body>
+</html>
+  `;
 }
 
 /**

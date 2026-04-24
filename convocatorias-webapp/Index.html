@@ -2280,7 +2280,7 @@
 
           <!-- Botones -->
           <div class="form-actions">
-            <button type="button" class="btn-cancelar" onclick="closePostulacionModal()">Cancelar</button>
+            <button type="button" class="btn-cancelar" id="btnCancelarPostulacion" onclick="closePostulacionModal()">Cancelar</button>
             <button type="submit" class="btn-postular" id="btnSubmitPostulacion">
               <span class="material-icons">send</span>
               Enviar Postulación
@@ -2931,11 +2931,10 @@
         }
       });
 
-      // ESC para cerrar modales
+      // ESC para cerrar modales (excluye el modal de postulación — es estático)
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
           closeModal();
-          closePostulacionModal();
         }
       });
     }
@@ -3377,12 +3376,18 @@
 
     function setSubmitButtonLoading(loading) {
       const btn = document.getElementById('btnSubmitPostulacion');
+      const btnCancelar = document.getElementById('btnCancelarPostulacion');
+      const btnClose = document.getElementById('btnClosePostulacionModal');
       if (loading) {
         btn.disabled = true;
         btn.innerHTML = '<div class="spinner-small"></div> Enviando...';
+        if (btnCancelar) btnCancelar.disabled = true;
+        if (btnClose) btnClose.disabled = true;
       } else {
         btn.disabled = false;
         btn.innerHTML = '<span class="material-icons">send</span> Enviar Postulación';
+        if (btnCancelar) btnCancelar.disabled = false;
+        if (btnClose) btnClose.disabled = false;
       }
     }
 
@@ -3452,6 +3457,9 @@
           case 'ESTUDIANTE_SELECCIONADO':
             showSeleccionadoMessage(result.datos);
             break;
+          case 'ESTUDIANTE_PRE_SELECCIONADO':
+            showPreSeleccionadoMessage(result.datos);
+            break;
           case 'POSTULACION_NO_SELECCIONADA':
             showNoSeleccionadoMessage(result.datos);
             break;
@@ -3501,6 +3509,30 @@
             Puede intentar nuevamente después de las <strong>${resetTimeStr}</strong>
           </p>
           <button class="btn-postular" onclick="closePostulacionModal()" style="background: #f59e0b;">
+            <span class="material-icons">check</span>
+            Entendido
+          </button>
+        </div>
+      `;
+    }
+
+    function showPreSeleccionadoMessage(datos) {
+      document.getElementById('postulacionBody').innerHTML = `
+        <div class="success-message">
+          <div class="success-icon" style="background: #dbeafe;">
+            <span class="material-icons" style="color: #2563eb;">star</span>
+          </div>
+          <h3 style="color: #1d4ed8;">Ha sido pre-seleccionado/a</h3>
+          <p>Su perfil ha avanzado en el proceso. No puede postularse a otras vacantes mientras espera la confirmación definitiva.</p>
+          <div style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 12px; padding: 16px; margin: 16px 0; text-align: left;">
+            <p style="margin: 0 0 8px 0; font-weight: 600; color: #1e40af;">
+              <span class="material-icons" style="font-size: 18px; vertical-align: middle; margin-right: 4px;">work</span>
+              Convocatoria:
+            </p>
+            <p style="margin: 0; color: #1d4ed8; font-size: 1.1em;">${datos ? datos.titulo || 'No disponible' : 'No disponible'}</p>
+          </div>
+          <p style="font-size: 0.9em; color: #64748b;">Recibirá un correo adicional con el resultado final del proceso.</p>
+          <button class="btn-postular" onclick="closePostulacionModal()" style="background: #2563eb;">
             <span class="material-icons">check</span>
             Entendido
           </button>
@@ -3578,11 +3610,7 @@
     }
 
     // Cerrar modal de postulación con ESC o clic fuera
-    document.getElementById('postulacionOverlay').addEventListener('click', (e) => {
-      if (e.target === document.getElementById('postulacionOverlay')) {
-        closePostulacionModal();
-      }
-    });
+    // El modal de postulación es estático: no se cierra al hacer click en el overlay.
   </script>
 
   <!-- Back to Top Button -->

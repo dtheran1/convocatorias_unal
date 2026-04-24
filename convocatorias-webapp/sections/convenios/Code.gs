@@ -4,6 +4,7 @@
  * 
  * Este proyecto está vinculado directamente al spreadsheet,
  * por lo que usa getActiveSpreadsheet() en lugar de openById()
+ * Este es el sheet para listar los convenios https://docs.google.com/spreadsheets/d/1WEpLg_AV8W6DEw9r5clS34eHWPN1IlOqGCWDUDyBMQs/edit?gid=0#gid=0
  */
 
 // ========== CONFIGURACIÓN ==========

@@ -819,19 +819,20 @@ function generarCorreoConfirmacion(nombreCompleto, datos) {
       <div class="next-steps">
         <h4>📋 Próximos pasos</h4>
         <ul>
-          <li>Su solicitud será revisada por el equipo encargado.</li>
+          <li>Su solicitud será revisada.</li>
           <li>Recibirá una notificación por correo electrónico cuando haya una actualización sobre su estado.</li>
           <li>El proceso de selección puede tomar algunos días.</li>
           <li>Por favor, revise su correo frecuentemente (incluyendo la carpeta de spam).</li>
         </ul>
       </div>
-      <p>Si tiene alguna pregunta sobre su solicitud, no dude en contactarnos.</p>
-      <p>Agradecemos su interés en las oportunidades de prácticas y pasantías ofrecidas por la Universidad Nacional de Colombia - Sede de La Paz.</p>
+      <p>Si tiene alguna pregunta sobre su solicitud, no dude en contactarnos, Oficina 234.</p>
+
       <p style="margin-top: 30px;">Atentamente,<br>
-      <strong>Oficina de Prácticas y Pasantías</strong><br>
+      <strong>Eberlin Caro</strong><br>
+      <strong>Profesional de apoyo, Oficina de Prácticas y Pasantías</strong><br>
       Universidad Nacional de Colombia - Sede de La Paz</p>
     </div>
-    
+
     <div class="footer">
       <p><strong>Universidad Nacional de Colombia - Sede de La Paz</strong></p>
       <p>📧 <a href="mailto:${EMAIL_CONTACTO}">${EMAIL_CONTACTO}</a></p>

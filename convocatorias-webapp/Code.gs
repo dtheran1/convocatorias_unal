@@ -26,8 +26,8 @@ function getConfig(key) {
   // Fallbacks para backwards compatibility
   if (!value) {
     const fallbacks = {
-      'SPREADSHEET_ID': '1iNF7VwBPS_Txxk7c14JSefGKFD_D-0eZPc6s8geBGkk',
-      'SHEET_NAME': 'Hoja1',
+      'SPREADSHEET_ID': '1TPD-_1DjYE7hX7GLDQSuOpRiGsNT-GTjzeij-eG4Qts',
+      'SHEET_NAME': 'Vacantes Publicadas',
       'SPREADSHEET_POSTULACIONES_ID': '1TPD-_1DjYE7hX7GLDQSuOpRiGsNT-GTjzeij-eG4Qts',
       'SHEET_POSTULACIONES': 'Postulaciones_2026_2',
       'EMAIL_CONTACTO': 'practicas_paz@unal.edu.co'
@@ -1344,8 +1344,8 @@ function setupConfiguration() {
   console.log('=== CONFIGURANDO SCRIPT PROPERTIES ===');
 
   const config = {
-    'SPREADSHEET_ID': '1iNF7VwBPS_Txxk7c14JSefGKFD_D-0eZPc6s8geBGkk',
-    'SHEET_NAME': 'Hoja1',
+    'SPREADSHEET_ID': '1TPD-_1DjYE7hX7GLDQSuOpRiGsNT-GTjzeij-eG4Qts',
+    'SHEET_NAME': 'Vacantes Publicadas',
     'SPREADSHEET_POSTULACIONES_ID': '1TPD-_1DjYE7hX7GLDQSuOpRiGsNT-GTjzeij-eG4Qts',
     'SHEET_POSTULACIONES': 'Postulaciones_2026_2',
     'EMAIL_CONTACTO': 'practicas_paz@unal.edu.co'
